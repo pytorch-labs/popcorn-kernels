@@ -8,6 +8,7 @@ import sys
 from contextlib import redirect_stderr, redirect_stdout
 
 import torch
+import tqdm
 
 
 def try_compile(input_file_path):
@@ -56,23 +57,16 @@ def try_compile(input_file_path):
         return
 
 
-def main():
+def compile_from_folder(gen_folder, output_folder="inductor_dump"):
     # Grab all files in the 'generated' folder that match random_torch_{uuid}.py
-    py_files = glob.glob("generated/random_torch_*.py")
-    for file_path in py_files:
+    py_files = glob.glob(f"{gen_folder}/random_torch_*.py")
+    for file_path in tqdm.tqdm(py_files, desc="Compiling files"):
         match = re.search(r"random_torch_(.+)\.py", file_path)
         if match:
             uuid_str = match.group(1)
-            output_file_path = f"inductor_dump/generated_torch_compiled_{uuid_str}.txt"
-            print("--------------------------------------------")
-            print(f"Compiling {file_path} to {output_file_path}, uuid: {uuid_str}")
-            print("--------------------------------------------")
-            # set env var
+            output_file_path = (
+                f"{output_folder}/generated_torch_compiled_{uuid_str}.txt"
+            )
             os.environ["TORCH_LOGS_OUT"] = output_file_path
             torch._logging.set_logs(output_code=True)
             try_compile(file_path)
-            print(f"Compiled Triton code written to: {output_file_path}")
-
-
-if __name__ == "__main__":
-    main()
