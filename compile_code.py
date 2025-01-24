@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+import glob
+import os
+import re
+import shutil
+import sys
+from contextlib import redirect_stderr, redirect_stdout
+
+import torch
+
+
+def try_compile(input_file_path):
+    """
+    Reads a Python file assumed to define a callable named 'model',
+    compiles it with torch.compile, and dumps the generated Triton code.
+    The code is then saved to the given output file path.
+    """
+
+    # Read and execute the Python source file in an isolated dict
+    # sys.stdout = open(output_file_path, "w")
+    # sys.stderr = open(output_file_path, "w")
+    local_dict = {}
+    with open(input_file_path, "r") as f:
+        code = f.read()
+    exec(code, local_dict)
+
+    # Retrieve the model/function and compile it with torch.compile
+    # (Adjust 'model' to the actual name if needed)
+    model = local_dict.get("RandomModel", None)
+    init_inputs = local_dict.get("get_init_inputs", None)
+    dummy_init_inputs = []
+    dummy_input = []
+    if init_inputs is not None:
+        dummy_init_inputs = init_inputs()
+    input_fn = local_dict.get("get_random_inputs", None)
+    if input_fn is not None:
+        dummy_input = input_fn()
+
+    dummy_init_inputs = [x.cuda() for x in dummy_init_inputs]
+    dummy_input = [x.cuda() for x in dummy_input]
+
+    if model is None:
+        print(f"No 'model' found in {input_file_path}. Skipping.")
+        return
+    try:
+        model = model(*dummy_init_inputs)
+        model = model.cuda()
+        compiled_model = torch.compile(model, backend="inductor")
+
+        # Run the compiled model to ensure Triton code is actually generated.
+        # Here, we just call it with a random tensor as an example.
+        _ = compiled_model(*dummy_input)
+    except Exception as e:
+        print(f"Error compiling {input_file_path}: {e}")
+        return
+
+
+def main():
+    # Grab all files in the 'generated' folder that match random_torch_{uuid}.py
+    py_files = glob.glob("generated/random_torch_*.py")
+    for file_path in py_files:
+        match = re.search(r"random_torch_(.+)\.py", file_path)
+        if match:
+            uuid_str = match.group(1)
+            output_file_path = f"inductor_dump/generated_torch_compiled_{uuid_str}.txt"
+            print("--------------------------------------------")
+            print(f"Compiling {file_path} to {output_file_path}, uuid: {uuid_str}")
+            print("--------------------------------------------")
+            # set env var
+            os.environ["TORCH_LOGS_OUT"] = output_file_path
+            torch._logging.set_logs(output_code=True)
+            try_compile(file_path)
+            print(f"Compiled Triton code written to: {output_file_path}")
+
+
+if __name__ == "__main__":
+    main()
