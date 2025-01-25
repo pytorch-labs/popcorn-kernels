@@ -263,13 +263,13 @@ def call(args):
         buf1 = buf0; del buf0  # reuse
         # Topologically Sorted Source Nodes: [conv2d, relu], Original ATen: [aten.convolution, aten.relu]
         stream0 = get_raw_stream(0)
-        triton_poi_fused_convolution_relu_0[grid(65536)](buf1, primals_2, 65536, XBLOCK=512, num_warps=4, num_stages=1)
+        triton_poi_fused_convolution_relu_0[grid(65536)](buf1, primals_2, 65536, XBLOCK=256, num_warps=4, num_stages=1)
         del primals_2
         buf2 = empty_strided_cuda((1, 16, 32, 32), (16384, 1024, 32, 1), torch.float32)
         buf3 = empty_strided_cuda((1, 16, 32, 32), (16384, 1024, 32, 1), torch.int8)
         # Topologically Sorted Source Nodes: [x], Original ATen: [aten.max_pool2d_with_indices]
         stream0 = get_raw_stream(0)
-        triton_poi_fused_max_pool2d_with_indices_1[grid(16384)](buf1, buf2, buf3, 16384, XBLOCK=256, num_warps=4, num_stages=1)
+        triton_poi_fused_max_pool2d_with_indices_1[grid(16384)](buf1, buf2, buf3, 16384, XBLOCK=128, num_warps=4, num_stages=1)
         # Topologically Sorted Source Nodes: [conv2d_1], Original ATen: [aten.convolution]
         buf4 = extern_kernels.convolution(buf2, primals_4, stride=(1, 1), padding=(1, 1), dilation=(1, 1), transposed=False, output_padding=(0, 0), groups=1, bias=None)
         assert_size_stride(buf4, (1, 32, 32, 32), (32768, 1024, 32, 1))
@@ -282,7 +282,7 @@ def call(args):
         buf7 = empty_strided_cuda((1, 32, 16, 16), (8192, 256, 16, 1), torch.float32)
         # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.max_pool2d_with_indices]
         stream0 = get_raw_stream(0)
-        triton_poi_fused_max_pool2d_with_indices_3[grid(8192)](buf5, buf6, buf7, 8192, XBLOCK=128, num_warps=4, num_stages=1)
+        triton_poi_fused_max_pool2d_with_indices_3[grid(8192)](buf5, buf6, buf7, 8192, XBLOCK=256, num_warps=4, num_stages=1)
         buf8 = empty_strided_cuda((1, 120), (120, 1), torch.float32)
         # Topologically Sorted Source Nodes: [linear], Original ATen: [aten.addmm]
         extern_kernels.mm(reinterpret_tensor(buf7, (1, 8192), (0, 1), 0), reinterpret_tensor(primals_6, (8192, 120), (1, 8192), 0), out=buf8)

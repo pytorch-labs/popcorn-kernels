@@ -333,14 +333,14 @@ def call(args):
         buf5 = buf4; del buf4  # reuse
         # Topologically Sorted Source Nodes: [conv2d_1], Original ATen: [aten.convolution]
         stream0 = get_raw_stream(0)
-        triton_poi_fused_convolution_2[grid(5408)](buf5, primals_5, 5408, XBLOCK=256, num_warps=4, num_stages=1)
+        triton_poi_fused_convolution_2[grid(5408)](buf5, primals_5, 5408, XBLOCK=128, num_warps=4, num_stages=1)
         del primals_5
         buf6 = empty_strided_cuda((1, 32, 6, 6), (1152, 36, 6, 1), torch.int8)
         buf7 = empty_strided_cuda((1, 32, 6, 6), (1152, 36, 6, 1), torch.float32)
         buf14 = empty_strided_cuda((1, 32, 6, 6), (1152, 36, 6, 1), torch.bool)
         # Topologically Sorted Source Nodes: [max_pool2d_1, x_1], Original ATen: [aten.max_pool2d_with_indices, aten.relu, aten.threshold_backward]
         stream0 = get_raw_stream(0)
-        triton_poi_fused_max_pool2d_with_indices_relu_threshold_backward_3[grid(1152)](buf5, buf6, buf7, buf14, 1152, XBLOCK=128, num_warps=4, num_stages=1)
+        triton_poi_fused_max_pool2d_with_indices_relu_threshold_backward_3[grid(1152)](buf5, buf6, buf7, buf14, 1152, XBLOCK=256, num_warps=4, num_stages=1)
         buf8 = empty_strided_cuda((1, 128), (128, 1), torch.float32)
         # Topologically Sorted Source Nodes: [linear], Original ATen: [aten.addmm]
         extern_kernels.mm(reinterpret_tensor(buf7, (1, 1152), (0, 1), 0), reinterpret_tensor(primals_6, (1152, 128), (1, 1152), 0), out=buf8)

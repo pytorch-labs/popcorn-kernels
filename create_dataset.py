@@ -55,7 +55,7 @@ def extract_output_code(dir_path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--gen_dir_path", type=str, default="generated")
-    parser.add_argument("--output_file", type=str, default="dataset.jsonl")
+    parser.add_argument("--output_file", type=str, default="dataset.json")
     args = parser.parse_args()
 
     intermediate_output_path = "inductor_dump"
