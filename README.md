@@ -1,0 +1,18 @@
+## Project Popcorn Synthetic Data Generation
+
+### Requirements
+
+```
+uv pip install -r requirements.txt
+```
+
+### Running the code
+
+```
+python generate_code.py --num_files <some number we used 3000>
+python clean.py --input_dir generated 
+python create_dataset.py --gen_dir_path generated --uuid_file filtered_uuids.json
+```
+
+### Todo:
+- [ ] Put clean.py into generate_code.py
