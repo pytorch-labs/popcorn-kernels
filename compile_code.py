@@ -9,7 +9,7 @@ from contextlib import redirect_stderr, redirect_stdout
 
 import torch
 import tqdm
-
+import json
 
 def try_compile(input_file_path):
     """
@@ -34,7 +34,7 @@ def try_compile(input_file_path):
     dummy_input = []
     if init_inputs is not None:
         dummy_init_inputs = init_inputs()
-    input_fn = local_dict.get("get_random_inputs", None)
+    input_fn = local_dict.get("get_inputs", None)
     if input_fn is not None:
         dummy_input = input_fn()
 
@@ -57,9 +57,10 @@ def try_compile(input_file_path):
         return
 
 
-def compile_from_folder(gen_folder, output_folder="inductor_dump"):
+def compile_from_folder(gen_folder, uuid_file, output_folder="inductor_dump"):
     # Grab all files in the 'generated' folder that match random_torch_{uuid}.py
-    py_files = glob.glob(f"{gen_folder}/random_torch_*.py")
+    valid_uuids = json.load(open(uuid_file, "r"))
+    py_files = [f"{gen_folder}/random_torch_{uuid}.py" for uuid in valid_uuids]
     for file_path in tqdm.tqdm(py_files, desc="Compiling files"):
         match = re.search(r"random_torch_(.+)\.py", file_path)
         if match:

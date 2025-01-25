@@ -35,10 +35,14 @@ class Model(nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-def get_random_inputs():
+def get_inputs():
     # randomly generate input tensors based on the model architecture
     x = torch.randn(1, 1, 64, 64).cuda()
     return [x]
+
+def get_init_inputs():
+    # randomly generate tensors required for initialization based on the model architecture
+    return []
 
 ```
 """

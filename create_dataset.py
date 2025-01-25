@@ -46,7 +46,7 @@ def extract_output_code(dir_path):
         with open(code_file, "r") as f:
             triton_code = f.read()
         dataset.append(
-            {"uuid": uuid, "generated_code": generated_code, "triton_code": triton_code}
+            {"uuid": uuid, "pytorch_code": generated_code, "triton_code": triton_code}
         )
 
     return dataset
