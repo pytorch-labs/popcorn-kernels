@@ -1,0 +1,34 @@
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0] failed while attempting to run meta for aten.add.Tensor
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0] Traceback (most recent call last):
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     r = func(*args, **kwargs)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     return self._op(*args, **kwargs)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     result = fn(*args, **kwargs)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 146, in _fn
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     result = fn(**bound.arguments)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 1120, in add
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     a, b = _maybe_broadcast(a, b)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]            ~~~~~~~~~~~~~~~~^^^^^^
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 427, in _maybe_broadcast
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     common_shape = _broadcast_shapes(
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]         *(t.shape if isinstance(t, TensorLike) else None for t in args)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     )
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 415, in _broadcast_shapes
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     torch._check(
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     ~~~~~~~~~~~~^
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]         common_shape[idx] == shape[idx],
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     ...<2 lines>...
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]         f"should be broadcastable to {common_shape}",
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     )
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     ^
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     _check_with(RuntimeError, cond, message)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0]     raise error_type(message_evaluated)
+E0124 17:38:49.124000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [105/0] RuntimeError: Attempting to broadcast a dimension of length 10 at -1! Mismatching argument at index 1 had torch.Size([10]); but expected shape should be broadcastable to [30]

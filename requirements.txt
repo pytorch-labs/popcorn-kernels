@@ -1,9 +1,8 @@
 datasketch==1.6.5
-matplotlib==3.8.3
+matplotlib
 numpy==2.2.2
 openai==1.60.1
 python-dotenv==1.0.1
 tomli==2.2.1
-torch==2.5.1
 tqdm==4.67.1
 triton==3.2.0

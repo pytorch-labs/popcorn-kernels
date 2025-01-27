@@ -1,0 +1,8 @@
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0] failed while attempting to run meta for aten.fractional_max_pool3d.default
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0] Traceback (most recent call last):
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0]     r = func(*args, **kwargs)
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0]     return self._op(*args, **kwargs)
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0124 17:40:41.813000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [288/0] RuntimeError: fractional_max_pool3d_out(): pool time 2 too large relative to input time 1

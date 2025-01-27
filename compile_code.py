@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import glob
+import json
 import os
 import re
 import shutil
@@ -9,7 +10,7 @@ from contextlib import redirect_stderr, redirect_stdout
 
 import torch
 import tqdm
-import json
+
 
 def try_compile(input_file_path):
     """
@@ -28,7 +29,7 @@ def try_compile(input_file_path):
 
     # Retrieve the model/function and compile it with torch.compile
     # (Adjust 'model' to the actual name if needed)
-    model = local_dict.get("RandomModel", None)
+    model = local_dict.get("Model", None)
     init_inputs = local_dict.get("get_init_inputs", None)
     dummy_init_inputs = []
     dummy_input = []
@@ -38,13 +39,14 @@ def try_compile(input_file_path):
     if input_fn is not None:
         dummy_input = input_fn()
 
-    dummy_init_inputs = [x.cuda() for x in dummy_init_inputs]
-    dummy_input = [x.cuda() for x in dummy_input]
-
     if model is None:
         print(f"No 'model' found in {input_file_path}. Skipping.")
         return
     try:
+        # todo: make inputs work for tuples
+        dummy_init_inputs = [x.cuda() for x in dummy_init_inputs]
+        dummy_input = [x.cuda() for x in dummy_input]
+
         model = model(*dummy_init_inputs)
         model = model.cuda()
         compiled_model = torch.compile(model, backend="inductor")
@@ -60,14 +62,9 @@ def try_compile(input_file_path):
 def compile_from_folder(gen_folder, uuid_file, output_folder="inductor_dump"):
     # Grab all files in the 'generated' folder that match random_torch_{uuid}.py
     valid_uuids = json.load(open(uuid_file, "r"))
-    py_files = [f"{gen_folder}/random_torch_{uuid}.py" for uuid in valid_uuids]
-    for file_path in tqdm.tqdm(py_files, desc="Compiling files"):
-        match = re.search(r"random_torch_(.+)\.py", file_path)
-        if match:
-            uuid_str = match.group(1)
-            output_file_path = (
-                f"{output_folder}/generated_torch_compiled_{uuid_str}.txt"
-            )
-            os.environ["TORCH_LOGS_OUT"] = output_file_path
-            torch._logging.set_logs(output_code=True)
-            try_compile(file_path)
+    for uuid in tqdm.tqdm(valid_uuids, desc="Compiling files"):
+        file_path = f"{gen_folder}/random_torch_{uuid}.py"
+        output_file_path = f"{output_folder}/generated_torch_compiled_{uuid}.txt"
+        os.environ["TORCH_LOGS_OUT"] = output_file_path
+        torch._logging.set_logs(output_code=True)
+        try_compile(file_path)

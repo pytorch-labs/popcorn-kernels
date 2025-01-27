@@ -56,10 +56,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--gen_dir_path", type=str, default="generated")
     parser.add_argument("--output_file", type=str, default="dataset.json")
+    parser.add_argument("--uuid_file", type=str, default="filtered_uuids.json")
     args = parser.parse_args()
 
     intermediate_output_path = "inductor_dump"
-    compile_from_folder(args.gen_dir_path)
+    compile_from_folder(args.gen_dir_path, args.uuid_file, intermediate_output_path)
 
     dataset = extract_output_code(intermediate_output_path)
     with open(args.output_file, "w") as f:
