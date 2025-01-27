@@ -1,27 +1,27 @@
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0] failed while attempting to run meta for aten.reflection_pad2d.default
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0] Traceback (most recent call last):
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     r = func(*args, **kwargs)
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     return self._op(*args, **kwargs)
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     result = fn(*args, **kwargs)
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 1850, in meta_reflection_pad2d
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     return _pad2d_common(input, padding, is_reflection=True)
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 1818, in _pad2d_common
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     torch._check(
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ~~~~~~~~~~~~^
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         pad_l < input_w and pad_r < input_w,
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ...<3 lines>...
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         ),
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         ^^
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     )
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ^
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     _check_with(RuntimeError, cond, message)
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     raise error_type(message_evaluated)
-E0124 17:39:19.754000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0] RuntimeError: Argument #4: Padding size should be less than the corresponding input dimension, but got: padding (2, 2) at dimension 3 of input torch.Size([1, 10, s0 + 4, 1])
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0] failed while attempting to run meta for aten.reflection_pad2d.default
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0] Traceback (most recent call last):
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     r = func(*args, **kwargs)
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     return self._op(*args, **kwargs)
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     result = fn(*args, **kwargs)
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 1850, in meta_reflection_pad2d
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     return _pad2d_common(input, padding, is_reflection=True)
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 1818, in _pad2d_common
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     torch._check(
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ~~~~~~~~~~~~^
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         pad_l < input_w and pad_r < input_w,
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ...<3 lines>...
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         ),
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]         ^^
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     )
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ^
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     _check_with(RuntimeError, cond, message)
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0]     raise error_type(message_evaluated)
+E0127 09:54:36.713000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [156/0] RuntimeError: Argument #4: Padding size should be less than the corresponding input dimension, but got: padding (2, 2) at dimension 3 of input torch.Size([1, 10, s0 + 4, 1])

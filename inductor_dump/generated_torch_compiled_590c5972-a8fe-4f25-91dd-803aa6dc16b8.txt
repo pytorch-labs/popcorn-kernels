@@ -1,0 +1,34 @@
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0] failed while attempting to run meta for aten.avg_pool2d.default
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0] Traceback (most recent call last):
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     r = func(*args, **kwargs)
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     return self._op(*args, **kwargs)
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 2628, in meta_avg_pool2d
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     pool2d_shape_check(
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     ~~~~~~~~~~~~~~~~~~^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         input,
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         ^^^^^^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     ...<13 lines>...
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         memory_format,
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         ^^^^^^^^^^^^^^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     )
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     ^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 4276, in pool2d_shape_check
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     torch._check(
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     ~~~~~~~~~~~~^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         (ndim == 3 and input.size(0) != 0 and valid_dims)
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         or (ndim == 4 and valid_dims and input.size(3) != 0),
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         lambda: f"Expected 3D or 4D (batch mode) tensor with optional 0 dim batch size for input, but got: {input.size()}",
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     )
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     ^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     _check_with(RuntimeError, cond, message)
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0]     raise error_type(message_evaluated)
+E0127 11:37:28.355000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [509/0] RuntimeError: Expected 3D or 4D (batch mode) tensor with optional 0 dim batch size for input, but got: torch.Size([1, s0, s1 + 2, s2 + 2, s3 + 2])

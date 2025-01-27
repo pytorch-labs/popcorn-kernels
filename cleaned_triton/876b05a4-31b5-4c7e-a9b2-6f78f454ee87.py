@@ -1,0 +1,84 @@
+
+import torch 
+import triton 
+import triton .language as tl 
+from torch ._inductor .runtime .triton_heuristics import (
+grid ,
+)
+from torch ._C import _cuda_getCurrentRawStream as get_raw_stream 
+from torch ._C import _cuda_getCurrentRawStream as get_raw_stream 
+
+aten =torch .ops .aten 
+inductor_ops =torch .ops .inductor 
+_quantized =torch .ops ._quantized 
+assert_size_stride =torch ._C ._dynamo .guards .assert_size_stride 
+empty_strided_cpu =torch ._C ._dynamo .guards ._empty_strided_cpu 
+empty_strided_cuda =torch ._C ._dynamo .guards ._empty_strided_cuda 
+empty_strided_xpu =torch ._C ._dynamo .guards ._empty_strided_xpu 
+reinterpret_tensor =torch ._C ._dynamo .guards ._reinterpret_tensor 
+alloc_from_pool =torch .ops .inductor ._alloc_from_pool 
+
+empty_strided_p2p =torch ._C ._distributed_c10d ._SymmetricMemory .empty_strided_p2p 
+
+import triton 
+import triton .language as tl 
+
+from torch ._inductor .runtime import triton_helpers 
+triton_helpers .set_driver_to_gpu ()
+
+@triton .jit 
+def triton_poi_fused__adaptive_avg_pool2d_0 (in_ptr0 ,out_ptr0 ,xnumel ,XBLOCK :tl .constexpr ):
+    xoffset =tl .program_id (0 )*XBLOCK 
+    xindex =xoffset +tl .arange (0 ,XBLOCK )[:]
+    xmask =xindex <xnumel 
+    x0 =xindex 
+    tmp0 =tl .load (in_ptr0 +(10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp1 =tl .load (in_ptr0 +(1 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp3 =tl .load (in_ptr0 +(2 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp5 =tl .load (in_ptr0 +(3 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp7 =tl .load (in_ptr0 +(4 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp9 =tl .load (in_ptr0 +(5 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp11 =tl .load (in_ptr0 +(6 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp13 =tl .load (in_ptr0 +(7 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp15 =tl .load (in_ptr0 +(8 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp17 =tl .load (in_ptr0 +(9 +10 *x0 ),xmask ,eviction_policy ='evict_last')
+    tmp2 =tmp1 +tmp0 
+    tmp4 =tmp3 +tmp2 
+    tmp6 =tmp5 +tmp4 
+    tmp8 =tmp7 +tmp6 
+    tmp10 =tmp9 +tmp8 
+    tmp12 =tmp11 +tmp10 
+    tmp14 =tmp13 +tmp12 
+    tmp16 =tmp15 +tmp14 
+    tmp18 =tmp17 +tmp16 
+    tmp19 =0.1 
+    tmp20 =tmp18 *tmp19 
+    tl .store (out_ptr0 +(x0 ),tmp20 ,xmask )
+
+def call (args ):
+    arg0_1 ,arg1_1 ,arg2_1 =args 
+    args .clear ()
+    s0 =arg0_1 
+    assert_size_stride (arg2_1 ,(1 ,s0 ,100 ),(100 *s0 ,100 ,1 ))
+    with torch .cuda ._DeviceGuard (0 ):
+        torch .cuda .set_device (0 )
+        buf0 =empty_strided_cuda ((1 ,s0 ,1 ,10 ),(10 *s0 ,10 ,10 ,1 ),torch .float32 )
+
+        triton_poi_fused__adaptive_avg_pool2d_0_xnumel =10 *s0 
+        get_raw_stream (0 )
+        triton_poi_fused__adaptive_avg_pool2d_0 [grid (triton_poi_fused__adaptive_avg_pool2d_0_xnumel )](arg2_1 ,buf0 ,30 ,XBLOCK =32 ,num_warps =1 ,num_stages =1 )
+        del arg2_1 
+    return (reinterpret_tensor (buf0 ,(1 ,10 ,s0 ),(10 *s0 ,1 ,10 ),0 ),)
+
+def benchmark_compiled_module (times =10 ,repeat =10 ):
+    from torch ._dynamo .testing import rand_strided 
+    from torch ._inductor .utils import print_performance 
+    arg0_1 =3 
+    arg1_1 =100 
+    arg2_1 =rand_strided ((1 ,3 ,100 ),(300 ,100 ,1 ),device ='cuda:0',dtype =torch .float32 )
+    fn =lambda :call ([arg0_1 ,arg1_1 ,arg2_1 ])
+    return print_performance (fn ,times =times ,repeat =repeat )
+
+if __name__ =="__main__":
+    from torch ._inductor .wrapper_benchmark import compiled_module_main 
+    compiled_module_main ('None',benchmark_compiled_module )

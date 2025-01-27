@@ -65,6 +65,9 @@ def compile_from_folder(gen_folder, uuid_file, output_folder="inductor_dump"):
     for uuid in tqdm.tqdm(valid_uuids, desc="Compiling files"):
         file_path = f"{gen_folder}/random_torch_{uuid}.py"
         output_file_path = f"{output_folder}/generated_torch_compiled_{uuid}.txt"
+        if os.path.exists(output_file_path):
+            print(f"Skipping {file_path} because {output_file_path} already exists.")
+            continue
         os.environ["TORCH_LOGS_OUT"] = output_file_path
         torch._logging.set_logs(output_code=True)
         try_compile(file_path)

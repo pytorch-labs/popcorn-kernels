@@ -1,24 +1,24 @@
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0] failed while attempting to run meta for aten.mm.default
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0] Traceback (most recent call last):
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     r = func(*args, **kwargs)
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     return self._op(*args, **kwargs)
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     result = fn(*args, **kwargs)
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 2129, in meta_mm
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     torch._check(
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     ~~~~~~~~~~~~^
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         M1 == M2,
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         ^^^^^^^^^
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         lambda: f"a and b must have same reduction dim, but got [{N}, {M1}] X [{M2}, {P}].",
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     )
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     ^
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     _check_with(RuntimeError, cond, message)
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     raise error_type(message_evaluated)
-E0124 17:40:03.384000 1685906 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0] RuntimeError: a and b must have same reduction dim, but got [1, 256*s0] X [256, 512].
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0] failed while attempting to run meta for aten.mm.default
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0] Traceback (most recent call last):
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     r = func(*args, **kwargs)
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     return self._op(*args, **kwargs)
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     result = fn(*args, **kwargs)
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 2129, in meta_mm
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     torch._check(
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     ~~~~~~~~~~~~^
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         M1 == M2,
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         ^^^^^^^^^
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         lambda: f"a and b must have same reduction dim, but got [{N}, {M1}] X [{M2}, {P}].",
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     )
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     ^
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     _check_with(RuntimeError, cond, message)
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0]     raise error_type(message_evaluated)
+E0127 09:55:19.283000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [230/0] RuntimeError: a and b must have same reduction dim, but got [1, 256*s0] X [256, 512].
