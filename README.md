@@ -1,5 +1,7 @@
 ## Project Popcorn Synthetic Data Generation
 
+This is repo synthetically generate pytorch programs and then create <pytorch, torch inductor> pairs to form a dataset
+
 ### Requirements
 
 ```
