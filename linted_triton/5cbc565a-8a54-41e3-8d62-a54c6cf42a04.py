@@ -1,4 +1,4 @@
-# AOT ID: ['141_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/s6/cs63hy43hmhsdb5yyaxfmzidptgr442sknxf64c2jkfhnuaayt4h.py
-# Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.max_pool2d_with_indices]
-# Source node to ATen node mapping:
-#   x_1 => getitem
-# Graph fragment:
-#   %getitem : [num_users=1] = call_function[target=operator.getitem](args = (%_low_memory_max_pool2d_with_offsets, 0), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -87,7 +80,7 @@ def call(args):
         1 + (s1 // 2)
         1 + (s1 // 2)*(s2 // 2) + (s1 // 2) + (s2 // 2)
         buf0 = empty_strided_cuda((1, s0, 1 + (s1 // 2), 1 + (s2 // 2)), (s0 + s0*(s1 // 2) + s0*(s2 // 2) + s0*(s1 // 2)*(s2 // 2), 1 + (s1 // 2)*(s2 // 2) + (s1 // 2) + (s2 // 2), 1 + (s2 // 2), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.max_pool2d_with_indices]
+
         triton_poi_fused_max_pool2d_with_indices_0_xnumel = s0 + s0*(s1 // 2) + s0*(s2 // 2) + s0*(s1 // 2)*(s2 // 2)
         get_raw_stream(0)
         triton_poi_fused_max_pool2d_with_indices_0[grid(triton_poi_fused_max_pool2d_with_indices_0_xnumel)](arg3_1, buf0, 33, 33, 64, 64, 1089, 3267, XBLOCK=128, num_warps=4, num_stages=1)

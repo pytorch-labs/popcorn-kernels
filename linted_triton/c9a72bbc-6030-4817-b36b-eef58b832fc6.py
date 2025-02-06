@@ -1,4 +1,4 @@
-# AOT ID: ['123_inference']
+
 from ctypes import c_void_p, c_long, c_int
 import torch
 import math
@@ -40,7 +40,7 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-#include "/tmp/torchinductor_sahanp/3b/c3bi5gk6mslf6u4iaqafhxm64z6u65e3eain4xlary5blqnvv6xx.h"
+
 extern "C"  void kernel(const int64_t* in_ptr0,
                        int64_t* out_ptr0,
                        const int64_t ks0,
@@ -177,24 +177,24 @@ extern "C"  void kernel(const int64_t* in_ptr0,
 ''')
 
 
-# kernel path: /tmp/torchinductor_sahanp/sc/csc2k4b4wsteluq3fz3ghayywzyiriflexierf4h3qd5t2idsen2.py
-# Topologically Sorted Source Nodes: [loss1, loss2, add], Original ATen: [aten.mean, aten.nll_loss2d_forward, aten.add]
-# Source node to ATen node mapping:
-#   add => add_35
-#   loss1 => mean
-#   loss2 => convert_element_type_2, div_1, full_default_2, ne_6, ne_7, neg, sum_1, sum_2, where_3
-# Graph fragment:
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%where_1,), kwargs = {})
-#   %ne_6 : [num_users=1] = call_function[target=torch.ops.aten.ne.Scalar](args = (%device_put_1, -100), kwargs = {})
-#   %neg : [num_users=1] = call_function[target=torch.ops.aten.neg.default](args = (%squeeze,), kwargs = {})
-#   %full_default_2 : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where_3 : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%ne_6, %neg, %full_default_2), kwargs = {})
-#   %sum_2 : [num_users=1] = call_function[target=torch.ops.aten.sum.default](args = (%where_3,), kwargs = {})
-#   %ne_7 : [num_users=1] = call_function[target=torch.ops.aten.ne.Scalar](args = (%device_put_1, -100), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.default](args = (%ne_7,), kwargs = {})
-#   %convert_element_type_2 : [num_users=1] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%sum_1, torch.float32), kwargs = {})
-#   %div_1 : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%sum_2, %convert_element_type_2), kwargs = {})
-#   %add_35 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mean, %div_1), kwargs = {})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import triton
 import triton.language as tl
 from triton.compiler.compiler import AttrsDescriptor
@@ -286,7 +286,7 @@ def call(args):
     s2 = arg2_1
     assert_size_stride(arg3_1, (1, s0, s1, s2), (s0*s1*s2, s1*s2, s2, 1))
     buf0 = empty_strided_cpu((2, ), (1, ), torch.int64)
-    # Topologically Sorted Source Nodes: [], Original ATen: []
+
     aten.randint.low_out(-9223372036854775808, 9223372036854775807, [2], out=buf0)
     buf1 = empty_strided_cpu((1, ), (1, ), torch.int64)
     cpp_fused_randint_0(buf0, buf1, s1, s2)
@@ -296,7 +296,7 @@ def call(args):
         buf2.copy_(buf1, False)
         del buf1
         buf4 = empty_strided_cuda((), (), torch.float32)
-        # Topologically Sorted Source Nodes: [loss1], Original ATen: [aten.arange, aten.ne, aten.gather, aten.rsub, aten.add, aten.clamp_min, aten.scalar_tensor, aten.where, aten.mean]
+
         triton_red_fused_add_arange_clamp_min_gather_mean_ne_rsub_scalar_tensor_where_1_r0_numel = 2*s1*s2*(s0 // (2*(s0 // 4)))
         stream0 = get_raw_stream(0)
         triton_red_fused_add_arange_clamp_min_gather_mean_ne_rsub_scalar_tensor_where_1[grid(1)](buf2, arg3_1, buf4, 4, 16, 16, 1, 1024, XBLOCK=1, R0_BLOCK=1024, num_warps=8, num_stages=1)
@@ -310,8 +310,8 @@ def call(args):
         buf6.copy_(buf5, False)
         del buf5
         ps0 = (2*s1*s2*(s0 // (2*(s0 // 4)))) // (math.trunc(torch.sym_float(4*s1*s2) ** 0.5))
-        buf9 = buf4; del buf4  # reuse
-        # Topologically Sorted Source Nodes: [loss1, loss2, add], Original ATen: [aten.mean, aten.nll_loss2d_forward, aten.add]
+        buf9 = buf4; del buf4
+
         triton_red_fused_add_mean_nll_loss2d_forward_3_r0_numel = ((2*s1*s2*(s0 // (2*(s0 // 4)))) // (math.trunc(torch.sym_float(4*s1*s2) ** 0.5)))*math.trunc(torch.sym_float(4*s1*s2) ** 0.5)
         stream0 = get_raw_stream(0)
         triton_red_fused_add_mean_nll_loss2d_forward_3[grid(1)](buf9, buf6, arg3_1, 32, 16, 16, 4, 1, 1024, XBLOCK=1, R0_BLOCK=1024, num_warps=8, num_stages=1)

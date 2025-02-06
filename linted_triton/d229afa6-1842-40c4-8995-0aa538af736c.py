@@ -1,4 +1,4 @@
-# AOT ID: ['155_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,16 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/x3/cx3b7vohoijhrlayhs2obf5pi24gxblujn3br24pozpkpc6l6r76.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten._softmax]
-# Source node to ATen node mapping:
-#   x => amax, exp, sub, sum_1
-# Graph fragment:
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%arg3_1, [-3], True), kwargs = {})
-#   %sub : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%arg3_1, %amax), kwargs = {})
-#   %exp : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [-3], True), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -67,14 +57,6 @@ def triton_red_fused__softmax_0(in_ptr0, out_ptr0, out_ptr1, ks0, ks1, xnumel, r
     tl.store(out_ptr1 + (x0), tmp8, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/ep/cepjdqxnliodybjxbfxdq7xif34dzy43akkpbibvkltay3wfqgsm.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten._softmax]
-# Source node to ATen node mapping:
-#   x => div, exp, sub
-# Graph fragment:
-#   %sub : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%arg3_1, %amax), kwargs = {})
-#   %exp : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub,), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%exp, %sum_1), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -108,13 +90,13 @@ def call(args):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 1, s1, s2), (s1*s2, s1*s2, s2, 1), torch.float32)
         buf1 = empty_strided_cuda((1, 1, s1, s2), (s1*s2, s1*s2, s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten._softmax]
+
         triton_red_fused__softmax_0_xnumel = s1*s2
         get_raw_stream(0)
         triton_red_fused__softmax_0[grid(triton_red_fused__softmax_0_xnumel)](arg3_1, buf0, buf1, 64, 64, 4096, 3, XBLOCK=64, R0_BLOCK=4, num_warps=2, num_stages=1)
         s1*s2
         buf2 = empty_strided_cuda((1, s0, s1, s2), (s0*s1*s2, s1*s2, s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten._softmax]
+
         triton_poi_fused__softmax_1_xnumel = s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused__softmax_1[grid(triton_poi_fused__softmax_1_xnumel)](arg3_1, buf0, buf1, buf2, 4096, 12288, XBLOCK=256, num_warps=4, num_stages=1)

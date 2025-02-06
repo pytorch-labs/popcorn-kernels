@@ -1,4 +1,4 @@
-# AOT ID: ['65_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -20,14 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/p4/cp45mfwilwtwhghc43cre73xipta5opvvemqxyf7yi7m3rgq65nh.py
-# Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.bernoulli]
-# Source node to ATen node mapping:
-#   x_1 => inductor_lookup_seed_default, inductor_random_default
-# Graph fragment:
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_random_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %mul, 1], %inductor_lookup_seed_default, rand), kwargs = {})
-
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
 
@@ -43,14 +35,6 @@ def triton_poi_fused_bernoulli_0(in_ptr0, out_ptr0, load_seed_offset, xnumel, XB
     tl.store(out_ptr0 + (x0), tmp2, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/oo/coo6myy5o2qhvb5cvrcltofkmiuu26ppzr2u4xxo5mjntt5f5fcr.py
-# Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.leaky_relu]
-# Source node to ATen node mapping:
-#   x_3 => gt, mul_23, where
-# Graph fragment:
-#   %gt : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%view_1, 0), kwargs = {})
-#   %mul_23 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%view_1, 0.1), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt, %view_1, %mul_23), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -80,16 +64,6 @@ def triton_poi_fused_leaky_relu_1(in_ptr0, in_ptr1, out_ptr0, ks0, xnumel, XBLOC
     tl.store(out_ptr0 + (x2), tmp12, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/qg/cqgmw7yyvboxkwe23fix65hicsx25bdp56u3x6mrqd3ng22apziv.py
-# Topologically Sorted Source Nodes: [x_3, x_4], Original ATen: [aten.leaky_relu, aten.view]
-# Source node to ATen node mapping:
-#   x_3 => gt, mul_23, where
-#   x_4 => view_2
-# Graph fragment:
-#   %gt : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%view_1, 0), kwargs = {})
-#   %mul_23 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%view_1, 0.1), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt, %view_1, %mul_23), kwargs = {})
-#   %view_2 : [num_users=1] = call_function[target=torch.ops.aten.reshape.default](args = (%where, [1, %arg1_1, %mul_28]), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -118,16 +92,16 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [1], out=buf0)
         buf1 = empty_strided_cuda((1, s0*s1, 1), (s0*s1, 1, s0*s1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.bernoulli]
+
         triton_poi_fused_bernoulli_0_xnumel = s0*s1
         get_raw_stream(0)
         triton_poi_fused_bernoulli_0[grid(triton_poi_fused_bernoulli_0_xnumel)](buf0, buf1, 0, 96, XBLOCK=128, num_warps=4, num_stages=1)
         del buf0
         buf2 = empty_strided_cuda((1, s0, s1, s2), (s0*s1*s2, s1*s2, s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.leaky_relu]
+
         triton_poi_fused_leaky_relu_1_xnumel = s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_leaky_relu_1[grid(triton_poi_fused_leaky_relu_1_xnumel)](arg3_1, buf1, buf2, 32, 3072, XBLOCK=256, num_warps=4, num_stages=1)
@@ -135,7 +109,7 @@ def call(args):
         del buf1
         s0*s2
         buf3 = empty_strided_cuda((1, s1, s0*s2), (s0*s1*s2, s0*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3, x_4], Original ATen: [aten.leaky_relu, aten.view]
+
         triton_poi_fused_leaky_relu_view_2_xnumel = s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_leaky_relu_view_2[grid(triton_poi_fused_leaky_relu_view_2_xnumel)](buf2, buf3, 96, 3, 32, 32, 3072, XBLOCK=256, num_warps=4, num_stages=1)

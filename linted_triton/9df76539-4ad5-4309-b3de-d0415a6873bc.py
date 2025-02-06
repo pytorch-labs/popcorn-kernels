@@ -1,4 +1,4 @@
-# AOT ID: ['10_forward']
+
 import torch
 from torch._inductor.select_algorithm import extern_kernels
 import triton
@@ -20,13 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/k3/ck3i2sf2gge4ersrig3t2ehgz2ccpeaxabgnxoyg475rkil64lzj.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.convolution]
-# Source node to ATen node mapping:
-#   x => convolution
-# Graph fragment:
-#   %convolution : [num_users=1] = call_function[target=torch.ops.aten.convolution.default](args = (%primals_3, %primals_1, %primals_2, [1, 1], [0, 0], [1, 1], False, [0, 0], 1), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -53,11 +46,11 @@ def call(args):
     assert_size_stride(primals_3, (1, 3, 64, 64), (12288, 4096, 64, 1))
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.convolution]
+
         buf0 = extern_kernels.convolution(primals_3, primals_1, stride=(1, 1), padding=(0, 0), dilation=(1, 1), transposed=False, output_padding=(0, 0), groups=1, bias=None)
         assert_size_stride(buf0, (1, 32, 62, 62), (123008, 3844, 62, 1))
-        buf1 = buf0; del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.convolution]
+        buf1 = buf0; del buf0
+
         get_raw_stream(0)
         triton_poi_fused_convolution_0[grid(123008)](buf1, primals_2, 123008, XBLOCK=512, num_warps=8, num_stages=1)
         del primals_2

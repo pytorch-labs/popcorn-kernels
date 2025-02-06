@@ -1,4 +1,4 @@
-# AOT ID: ['51_inference']
+
 from ctypes import c_void_p, c_long, c_int
 import torch
 import math
@@ -40,7 +40,7 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-#include "/tmp/torchinductor_sahanp/3b/c3bi5gk6mslf6u4iaqafhxm64z6u65e3eain4xlary5blqnvv6xx.h"
+
 extern "C"  void kernel(int64_t* out_ptr0,
                        const int64_t ks0,
                        const int64_t ks1,
@@ -101,18 +101,18 @@ extern "C"  void kernel(const int64_t* in_ptr0,
 ''')
 
 
-# kernel path: /tmp/torchinductor_sahanp/be/cbe4xbrvza7bnuszuvwuu3z4lg7hbwd35th6dwep4wvtdusububu.py
-# Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.log_sigmoid_forward]
-# Source node to ATen node mapping:
-#   x_3 => abs_1, exp, full_default, log1p, minimum, neg, sub_9
-# Graph fragment:
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %minimum : [num_users=1] = call_function[target=torch.ops.aten.minimum.default](args = (%full_default, %view_3), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%view_3,), kwargs = {})
-#   %neg : [num_users=1] = call_function[target=torch.ops.aten.neg.default](args = (%abs_1,), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%neg,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp,), kwargs = {})
-#   %sub_9 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%minimum, %log1p), kwargs = {})
+
+
+
+
+
+
+
+
+
+
+
+
 import triton
 import triton.language as tl
 from triton.compiler.compiler import AttrsDescriptor
@@ -165,7 +165,7 @@ def call(args):
     buf3 = empty_strided_cpu((1, ), (1, ), torch.int64)
     cpp_fused_full_0(buf3, s0, s1, s2)
     buf1 = empty_strided_cpu((2, ), (1, ), torch.int64)
-    # Topologically Sorted Source Nodes: [], Original ATen: []
+
     aten.randint.low_out(-9223372036854775808, 9223372036854775807, [2], out=buf1)
     buf4 = empty_strided_cpu((1, ), (1, ), torch.int64)
     buf2 = empty_strided_cpu((1, (s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4), ((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4, 1), torch.int64)
@@ -177,7 +177,7 @@ def call(args):
         ps1 = 2*(s1 // 2)
         ps2 = 4*(s1 // 2)*(s2 // 2)
         buf0 = empty_strided_cuda((1, (s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4, 2*(s1 // 2), 2*(s2 // 2)), (2*(s1 // 2)*(s2 // 2)*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4)*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // (2*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4))), 2*(s1 // 2)*(s2 // 2)*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // (2*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4))), (s2 // 2)*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // (2*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4))), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.log_sigmoid_forward]
+
         triton_poi_fused_log_sigmoid_forward_2_xnumel = 4*(s1 // 2)*(s2 // 2)*((s0*(s1 // (s1 // 2))*(s2 // (s2 // 2))) // 4)
         stream0 = get_raw_stream(0)
         triton_poi_fused_log_sigmoid_forward_2[grid(triton_poi_fused_log_sigmoid_forward_2_xnumel)](arg3_1, buf0, 64, 64, 4096, 3, 64, 64, 12288, XBLOCK=256, num_warps=4, num_stages=1)

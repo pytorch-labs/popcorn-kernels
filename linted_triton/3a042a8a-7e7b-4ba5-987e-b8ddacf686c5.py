@@ -1,4 +1,4 @@
-# AOT ID: ['40_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,17 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/lv/clvmhv3uljudaztf5ufo4hnmcyotr3q2ixfyfsecjptcwk7sv3ot.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.sub, aten.add, aten.norm]
-# Source node to ATen node mapping:
-#   x => add_13, pow_1, pow_2, sub_7, sum_1
-# Graph fragment:
-#   %sub_7 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%getitem, %getitem_1), kwargs = {})
-#   %add_13 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%sub_7, 1e-06), kwargs = {})
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_13, 2.0), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%pow_1, [3]), kwargs = {})
-#   %pow_2 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sum_1, 0.5), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice
@@ -72,8 +61,8 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, (1 + s0) // 2, s1), (s1*((1 + s0) // 2), s1, 1), torch.float32)
-        buf1 = buf0; del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.sub, aten.add, aten.norm]
+        buf1 = buf0; del buf0
+
         triton_red_fused_add_norm_sub_0_xnumel = s1*((1 + s0) // 2)
         get_raw_stream(0)
         triton_red_fused_add_norm_sub_0[grid(triton_red_fused_add_norm_sub_0_xnumel)](buf1, arg3_1, 32, 64, 32, 1024, 32, XBLOCK=16, R0_BLOCK=32, num_warps=4, num_stages=1)

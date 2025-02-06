@@ -1,4 +1,4 @@
-# AOT ID: ['163_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,17 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/jg/cjgaqmyrv2mb2gsltgbk7nooi5wj2v7wiqgdnfqdicl73v2jwrj2.py
-# Topologically Sorted Source Nodes: [x_1, mean, var], Original ATen: [aten.constant_pad_nd, aten.mean, aten.var]
-# Source node to ATen node mapping:
-#   mean => mean
-#   var => var
-#   x_1 => constant_pad_nd
-# Graph fragment:
-#   %constant_pad_nd : [num_users=2] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%view, [2, 2, 2, 2], 0.0), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%constant_pad_nd, [2, 3], True), kwargs = {})
-#   %var : [num_users=1] = call_function[target=torch.ops.aten.var.correction](args = (%constant_pad_nd, [2, 3]), kwargs = {correction: 1, keepdim: True})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -78,13 +67,6 @@ def triton_per_fused_constant_pad_nd_mean_var_0(in_out_ptr0, in_out_ptr1, in_ptr
     tl.store(in_out_ptr1 + (tl.full([1], 0, tl.int32)), tmp30, None)
 
 
-# kernel path: /tmp/torchinductor_sahanp/hr/chrjenlv5e4j3e4gw2e57yy4phf5fuotiw3gifjjln6mtdk7bqhe.py
-# Topologically Sorted Source Nodes: [target], Original ATen: [aten.randn_like]
-# Source node to ATen node mapping:
-#   target => inductor_lookup_seed_default, inductor_random_default
-# Graph fragment:
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_random_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, 1], %inductor_lookup_seed_default, randn), kwargs = {})
 import triton
 
 from torch._inductor.runtime import triton_helpers
@@ -109,17 +91,17 @@ def call(args):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 1, 1, 1), (1, 1, 1, 1), torch.float32)
         buf5 = empty_strided_cuda((1, 1, 1, 1), (1, 1, 1, 1), torch.float32)
-        buf1 = buf0; del buf0  # reuse
-        buf7 = buf5; del buf5  # reuse
-        # Topologically Sorted Source Nodes: [x_1, mean, var], Original ATen: [aten.constant_pad_nd, aten.mean, aten.var]
+        buf1 = buf0; del buf0
+        buf7 = buf5; del buf5
+
         get_raw_stream(0)
         triton_per_fused_constant_pad_nd_mean_var_0[grid(1)](buf1, buf7, arg0_1, 1, 1024, num_warps=8, num_stages=1)
         del arg0_1
         buf2 = empty_strided_cuda((1, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [1], out=buf2)
         buf3 = empty_strided_cuda((1, 1), (1, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [target], Original ATen: [aten.randn_like]
+
         get_raw_stream(0)
         triton_poi_fused_randn_like_1[grid(1)](buf2, buf3, 0, 1, XBLOCK=1, num_warps=1, num_stages=1)
         del buf2

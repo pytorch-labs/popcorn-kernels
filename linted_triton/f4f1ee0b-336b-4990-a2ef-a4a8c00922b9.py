@@ -1,4 +1,4 @@
-# AOT ID: ['38_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/5o/c5oelmeqqqdue6e6gg7fqbn3qc5fvgqin3q6ofo2tw3efvgeznpq.py
-# Topologically Sorted Source Nodes: [x_4], Original ATen: [aten.max_pool2d_with_indices]
-# Source node to ATen node mapping:
-#   x_4 => _low_memory_max_pool2d_with_offsets
-# Graph fragment:
-#   %_low_memory_max_pool2d_with_offsets : [num_users=1] = call_function[target=torch.ops.prims._low_memory_max_pool2d_with_offsets.default](args = (%unsqueeze_1, [1, 2], [1, 2], [0, 0], [1, 1], False), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
@@ -88,12 +81,6 @@ def triton_poi_fused_max_pool2d_with_indices_0(in_ptr0, out_ptr0, xnumel, XBLOCK
     tl.store(out_ptr0 + (x0), tmp46, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/7j/c7jrqpijlfh6b26omq4ogmthqh4ysftjukro55ujp4shxv2czpev.py
-# Topologically Sorted Source Nodes: [x_8], Original ATen: [aten.max_pool2d_with_indices]
-# Source node to ATen node mapping:
-#   x_8 => _low_memory_max_pool2d_with_offsets_1
-# Graph fragment:
-#   %_low_memory_max_pool2d_with_offsets_1 : [num_users=1] = call_function[target=torch.ops.prims._low_memory_max_pool2d_with_offsets.default](args = (%unsqueeze_2, [1, 2], [1, 2], [0, 0], [1, 1], False), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -164,12 +151,12 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 1, 1, 32), (32, 32, 32, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_4], Original ATen: [aten.max_pool2d_with_indices]
+
         get_raw_stream(0)
         triton_poi_fused_max_pool2d_with_indices_0[grid(32)](arg0_1, buf0, 32, XBLOCK=32, num_warps=1, num_stages=1)
         del arg0_1
         buf1 = empty_strided_cuda((1, 1, 1, 16), (16, 16, 16, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_8], Original ATen: [aten.max_pool2d_with_indices]
+
         get_raw_stream(0)
         triton_poi_fused_max_pool2d_with_indices_1[grid(16)](buf0, buf1, 16, XBLOCK=16, num_warps=1, num_stages=1)
         del buf0

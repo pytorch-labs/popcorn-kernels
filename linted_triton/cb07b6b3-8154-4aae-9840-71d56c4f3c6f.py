@@ -1,4 +1,4 @@
-# AOT ID: ['129_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -20,14 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/5r/c5rbjah6y5ob2jexek2eua5vfetiyuaxw6zwnumtvbmm7cku2ceb.py
-# Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.bernoulli]
-# Source node to ATen node mapping:
-#   x_2 => inductor_lookup_seed_default, inductor_random_default
-# Graph fragment:
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_random_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %arg0_1, 1, 1, 1], %inductor_lookup_seed_default, rand), kwargs = {})
-
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
 triton_helpers.set_driver_to_gpu()
@@ -44,44 +36,6 @@ def triton_poi_fused_bernoulli_0(in_ptr0, out_ptr0, load_seed_offset, xnumel, XB
     tl.store(out_ptr0 + (x0), tmp2, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/qf/cqfe3hgwfhmqwm6s6gprrmitp3qon44y7glfmcgi33bkxk6kb3ik.py
-# Topologically Sorted Source Nodes: [pow_1, out, sign, abs_1, relu, mul, mul_1, x, x_1, x_2, pow_3], Original ATen: [aten.pow, aten.avg_pool3d, aten.sign, aten.abs, aten.relu, aten.mul, aten.mish, aten.bernoulli, aten._to_copy, aten.add]
-# Source node to ATen node mapping:
-#   abs_1 => abs_1
-#   mul => mul_25
-#   mul_1 => mul_31
-#   out => avg_pool3d
-#   pow_1 => pow_1
-#   pow_3 => pow_3
-#   relu => relu
-#   sign => sign
-#   x => pow_2
-#   x_1 => exp, gt, log1p, mul_42, tanh, where
-#   x_2 => add_112, add_60, add_81, convert_element_type, lt_2, mul_61, mul_70, mul_73
-# Graph fragment:
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%arg4_1, 2.0), kwargs = {})
-#   %avg_pool3d : [num_users=2] = call_function[target=torch.ops.aten.avg_pool3d.default](args = (%pow_1, [2, 2, 2], [2, 2, 2]), kwargs = {})
-#   %sign : [num_users=1] = call_function[target=torch.ops.aten.sign.default](args = (%avg_pool3d,), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%avg_pool3d,), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%abs_1,), kwargs = {})
-#   %mul_25 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sign, %relu), kwargs = {})
-#   %mul_31 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_25, 8), kwargs = {})
-#   %pow_2 : [num_users=4] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%mul_31, 0.5), kwargs = {})
-#   %gt : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%pow_2, 20), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%pow_2,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp,), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt, %pow_2, %log1p), kwargs = {})
-#   %tanh : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%where,), kwargs = {})
-#   %mul_42 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%pow_2, %tanh), kwargs = {})
-#   %lt_2 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default, 0.5), kwargs = {})
-#   %convert_element_type : [num_users=2] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_2, torch.float32), kwargs = {})
-#   %mul_70 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%convert_element_type, 0.8864048946659319), kwargs = {})
-#   %mul_73 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_42, %mul_70), kwargs = {})
-#   %add_60 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%convert_element_type, -1), kwargs = {})
-#   %mul_61 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%add_60, 1.558387861036063), kwargs = {})
-#   %add_81 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%mul_61, 0.7791939305180315), kwargs = {})
-#   %add_112 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_73, %add_81), kwargs = {})
-#   %pow_3 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_112, 2.0), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -161,42 +115,6 @@ def triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sig
     tl.store(in_out_ptr0 + (x5), tmp59, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/bq/cbq3zdgagfwhazligif4crcfnki33itsit7mvo5x27k7v5yoexhz.py
-# Topologically Sorted Source Nodes: [sign, abs_1, relu, mul, mul_1, x, x_1, x_2, pow_3, out_1], Original ATen: [aten.sign, aten.abs, aten.relu, aten.mul, aten.pow, aten.mish, aten.bernoulli, aten._to_copy, aten.add, aten.avg_pool3d]
-# Source node to ATen node mapping:
-#   abs_1 => abs_1
-#   mul => mul_25
-#   mul_1 => mul_31
-#   out_1 => avg_pool3d_1
-#   pow_3 => pow_3
-#   relu => relu
-#   sign => sign
-#   x => pow_2
-#   x_1 => exp, gt, log1p, mul_42, tanh, where
-#   x_2 => add_112, add_60, add_81, convert_element_type, lt_2, mul_61, mul_70, mul_73
-# Graph fragment:
-#   %sign : [num_users=1] = call_function[target=torch.ops.aten.sign.default](args = (%avg_pool3d,), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%avg_pool3d,), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%abs_1,), kwargs = {})
-#   %mul_25 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sign, %relu), kwargs = {})
-#   %mul_31 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_25, 8), kwargs = {})
-#   %pow_2 : [num_users=4] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%mul_31, 0.5), kwargs = {})
-#   %gt : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%pow_2, 20), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%pow_2,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp,), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt, %pow_2, %log1p), kwargs = {})
-#   %tanh : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%where,), kwargs = {})
-#   %mul_42 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%pow_2, %tanh), kwargs = {})
-#   %lt_2 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default, 0.5), kwargs = {})
-#   %convert_element_type : [num_users=2] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_2, torch.float32), kwargs = {})
-#   %mul_70 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%convert_element_type, 0.8864048946659319), kwargs = {})
-#   %mul_73 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_42, %mul_70), kwargs = {})
-#   %add_60 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%convert_element_type, -1), kwargs = {})
-#   %mul_61 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%add_60, 1.558387861036063), kwargs = {})
-#   %add_81 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%mul_61, 0.7791939305180315), kwargs = {})
-#   %add_112 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_73, %add_81), kwargs = {})
-#   %pow_3 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_112, 2.0), kwargs = {})
-#   %avg_pool3d_1 : [num_users=2] = call_function[target=torch.ops.aten.avg_pool3d.default](args = (%pow_3, [2, 2, 2], [2, 2, 2]), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -233,35 +151,6 @@ def triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sig
     tl.store(out_ptr0 + (x4), tmp16, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/sm/csm57og6375c5k52haqkbcecbn6lkpxb2sptytagkh7rsuzlbjzx.py
-# Topologically Sorted Source Nodes: [multi_margin_loss, target, soft_margin_loss, float_1, add, truediv], Original ATen: [aten.arange, aten.randint, aten.ne, aten.gather, aten.rsub, aten.add, aten.clamp_min, aten.scalar_tensor, aten.where, aten.mean, aten.soft_margin_loss, aten._to_copy, aten.div]
-# Source node to ATen node mapping:
-#   add => add_177
-#   float_1 => convert_element_type_1
-#   multi_margin_loss => add_165, clamp_min, full_default, gather, iota, mean, ne_3, sub_96, where_2
-#   soft_margin_loss => exp_2, log1p_2, mean_1, mul_149, neg
-#   target => inductor_lookup_seed_default_1, inductor_randint_default
-#   truediv => div
-# Graph fragment:
-#   %iota : [num_users=1] = call_function[target=torch.ops.prims.iota.default](args = (%floordiv,), kwargs = {start: 0, step: 1, dtype: torch.int64, device: cuda:0, requires_grad: False})
-#   %inductor_lookup_seed_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 1), kwargs = {})
-#   %inductor_randint_default : [num_users=2] = call_function[target=torch.ops.prims.inductor_randint.default](args = (0, 10, [1], %inductor_lookup_seed_default_1), kwargs = {})
-#   %ne_3 : [num_users=1] = call_function[target=torch.ops.aten.ne.Tensor](args = (%iota, %unsqueeze), kwargs = {})
-#   %gather : [num_users=1] = call_function[target=torch.ops.aten.gather.default](args = (%view, 1, %unsqueeze), kwargs = {})
-#   %sub_96 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (1.0, %gather), kwargs = {})
-#   %add_165 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%sub_96, %view), kwargs = {})
-#   %clamp_min : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_165, 0), kwargs = {})
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where_2 : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%ne_3, %clamp_min, %full_default), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%where_2,), kwargs = {})
-#   %neg : [num_users=1] = call_function[target=torch.ops.aten.neg.default](args = (%view,), kwargs = {})
-#   %convert_element_type_1 : [num_users=1] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%inductor_randint_default, torch.float32), kwargs = {})
-#   %mul_149 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%neg, %convert_element_type_1), kwargs = {})
-#   %exp_2 : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%mul_149,), kwargs = {})
-#   %log1p_2 : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp_2,), kwargs = {})
-#   %mean_1 : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%log1p_2,), kwargs = {})
-#   %add_177 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mean, %mean_1), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%add_177, 2), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -371,10 +260,10 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf1 = empty_strided_cuda((2, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [2], out=buf1)
         buf2 = empty_strided_cuda((1, s0, 1, 1, 1), (s0, 1, s0, s0, s0), torch.float32)
-        # Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.bernoulli]
+
         get_raw_stream(0)
         triton_poi_fused_bernoulli_0[grid(s0)](buf1, buf2, 0, 3, XBLOCK=4, num_warps=1, num_stages=1)
         s3 // 2
@@ -383,8 +272,8 @@ def call(args):
         s1 // 2
         (s1 // 2)*(s2 // 2)*(s3 // 2)
         buf0 = empty_strided_cuda((1, s0, s1 // 2, s2 // 2, s3 // 2), (s0*(s1 // 2)*(s2 // 2)*(s3 // 2), (s1 // 2)*(s2 // 2)*(s3 // 2), (s2 // 2)*(s3 // 2), s3 // 2, 1), torch.float32)
-        buf3 = buf0; del buf0  # reuse
-        # Topologically Sorted Source Nodes: [pow_1, out, sign, abs_1, relu, mul, mul_1, x, x_1, x_2, pow_3], Original ATen: [aten.pow, aten.avg_pool3d, aten.sign, aten.abs, aten.relu, aten.mul, aten.mish, aten.bernoulli, aten._to_copy, aten.add]
+        buf3 = buf0; del buf0
+
         triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sign_1_xnumel = s0*(s1 // 2)*(s2 // 2)*(s3 // 2)
         get_raw_stream(0)
         triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sign_1[grid(triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sign_1_xnumel)](buf3, arg4_1, buf2, 16, 16, 256, 16, 4096, 32, 32, 32, 12288, XBLOCK=128, num_warps=4, num_stages=1)
@@ -396,14 +285,14 @@ def call(args):
         s1 // 4
         (s1 // 4)*(s2 // 4)*(s3 // 4)
         buf4 = empty_strided_cuda((1, s0, s1 // 4, s2 // 4, s3 // 4), (s0*(s1 // 4)*(s2 // 4)*(s3 // 4), (s1 // 4)*(s2 // 4)*(s3 // 4), (s2 // 4)*(s3 // 4), s3 // 4, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [sign, abs_1, relu, mul, mul_1, x, x_1, x_2, pow_3, out_1], Original ATen: [aten.sign, aten.abs, aten.relu, aten.mul, aten.pow, aten.mish, aten.bernoulli, aten._to_copy, aten.add, aten.avg_pool3d]
+
         triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sign_2_xnumel = s0*(s1 // 4)*(s2 // 4)*(s3 // 4)
         get_raw_stream(0)
         triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sign_2[grid(triton_poi_fused__to_copy_abs_add_avg_pool3d_bernoulli_mish_mul_pow_relu_sign_2_xnumel)](buf3, buf4, 8, 8, 64, 8, 512, 16, 16, 16, 256, 1536, XBLOCK=128, num_warps=4, num_stages=1)
         del buf3
         buf6 = empty_strided_cuda((), (), torch.float32)
-        buf8 = buf6; del buf6  # reuse
-        # Topologically Sorted Source Nodes: [multi_margin_loss, target, soft_margin_loss, float_1, add, truediv], Original ATen: [aten.arange, aten.randint, aten.ne, aten.gather, aten.rsub, aten.add, aten.clamp_min, aten.scalar_tensor, aten.where, aten.mean, aten.soft_margin_loss, aten._to_copy, aten.div]
+        buf8 = buf6; del buf6
+
         s0*(s1 // 4)*(s2 // 4)*(s3 // 4)
         get_raw_stream(0)
         triton_red_fused__to_copy_add_arange_clamp_min_div_gather_mean_ne_randint_rsub_scalar_tensor_soft_margin_loss_where_3[grid(1)](buf8, buf1, buf4, 1, 8, 8, 8, 3, 32, 32, 32, 1, 1536, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)

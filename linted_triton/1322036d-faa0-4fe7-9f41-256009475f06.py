@@ -1,4 +1,4 @@
-# AOT ID: ['57_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -20,17 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/gl/cglinve47z7tvhxxzya5iqhlgy7pajvsymp7xykpwnshbiai3hvh.py
-# Topologically Sorted Source Nodes: [x, x_1], Original ATen: [aten.rrelu_with_noise_functional, aten.pow]
-# Source node to ATen node mapping:
-#   x => le, mul_3, where
-#   x_1 => pow_1
-# Graph fragment:
-#   %le : [num_users=1] = call_function[target=torch.ops.aten.le.Scalar](args = (%arg2_1, 0), kwargs = {})
-#   %mul_3 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%arg2_1, %uniform), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%le, %mul_3, %arg2_1), kwargs = {})
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%where, 2.0), kwargs = {})
-
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
 triton_helpers.set_driver_to_gpu()
@@ -51,17 +40,6 @@ def triton_poi_fused_pow_rrelu_with_noise_functional_0(in_out_ptr0, in_ptr0, xnu
     tl.store(in_out_ptr0 + (x0), tmp6, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/6t/c6tk44hque2ggmhk7o3btuxhwc5pa4zjlfegkageqllvaf6zz4bu.py
-# Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.sign, aten.abs, aten.relu, aten.mul, aten.pow]
-# Source node to ATen node mapping:
-#   x_1 => abs_1, mul_31, mul_35, pow_2, relu, sign
-# Graph fragment:
-#   %sign : [num_users=1] = call_function[target=torch.ops.aten.sign.default](args = (%squeeze,), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%squeeze,), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%abs_1,), kwargs = {})
-#   %mul_31 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sign, %relu), kwargs = {})
-#   %mul_35 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_31, 3), kwargs = {})
-#   %pow_2 : [num_users=4] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%mul_35, 0.5), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -99,20 +77,6 @@ def triton_poi_fused_abs_mul_pow_relu_sign_1(in_ptr0, out_ptr0, ks0, ks1, xnumel
     tl.store(out_ptr0 + (x2), tmp19, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/xh/cxh6eibfmv677t7za3zxmt4kexox6aokz6xi325wqdnl65a6nhff.py
-# Topologically Sorted Source Nodes: [x_2, x_3], Original ATen: [aten.rrelu_with_noise_functional, aten.neg, aten._softmax]
-# Source node to ATen node mapping:
-#   x_2 => le_1, mul_45, where_2
-#   x_3 => amax, exp, neg, sub_30, sum_1
-# Graph fragment:
-#   %le_1 : [num_users=1] = call_function[target=torch.ops.aten.le.Scalar](args = (%pow_2, 0), kwargs = {})
-#   %mul_45 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%pow_2, %uniform_1), kwargs = {})
-#   %where_2 : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%le_1, %mul_45, %pow_2), kwargs = {})
-#   %neg : [num_users=2] = call_function[target=torch.ops.aten.neg.default](args = (%where_2,), kwargs = {})
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%neg, [1], True), kwargs = {})
-#   %sub_30 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%neg, %amax), kwargs = {})
-#   %exp : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub_30,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -164,19 +128,6 @@ def triton_red_fused__softmax_neg_rrelu_with_noise_functional_2(in_ptr0, in_ptr1
     tl.store(out_ptr1 + (x0), tmp20, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/lt/cltpvkmjjimtaluyuy7jksdq66plh4ytbcpbbv6p5fqimd23qudy.py
-# Topologically Sorted Source Nodes: [x_2, x_3], Original ATen: [aten.rrelu_with_noise_functional, aten.neg, aten._softmax]
-# Source node to ATen node mapping:
-#   x_2 => le_1, mul_45, where_2
-#   x_3 => div, exp, neg, sub_30
-# Graph fragment:
-#   %le_1 : [num_users=1] = call_function[target=torch.ops.aten.le.Scalar](args = (%pow_2, 0), kwargs = {})
-#   %mul_45 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%pow_2, %uniform_1), kwargs = {})
-#   %where_2 : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%le_1, %mul_45, %pow_2), kwargs = {})
-#   %neg : [num_users=2] = call_function[target=torch.ops.aten.neg.default](args = (%where_2,), kwargs = {})
-#   %sub_30 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%neg, %amax), kwargs = {})
-#   %exp : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub_30,), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%exp, %sum_1), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -214,35 +165,35 @@ def call(args):
     assert_size_stride(arg2_1, (1, s0, s1), (s0*s1, s1, 1))
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.rrelu_with_noise_functional]
+
         buf0 = torch.ops.aten.uniform.default(arg2_1, 0.125, 0.3333333333333333)
         buf1 = buf0
         del buf0
-        buf2 = buf1; del buf1  # reuse
-        # Topologically Sorted Source Nodes: [x, x_1], Original ATen: [aten.rrelu_with_noise_functional, aten.pow]
+        buf2 = buf1; del buf1
+
         triton_poi_fused_pow_rrelu_with_noise_functional_0_xnumel = s0*s1
         get_raw_stream(0)
         triton_poi_fused_pow_rrelu_with_noise_functional_0[grid(triton_poi_fused_pow_rrelu_with_noise_functional_0_xnumel)](buf2, arg2_1, 1000, XBLOCK=256, num_warps=4, num_stages=1)
         del arg2_1
         ((-1) + s1) // 2
         buf3 = empty_strided_cuda((1, s0, ((-1) + s1) // 2), (s0*(((-1) + s1) // 2), ((-1) + s1) // 2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.sign, aten.abs, aten.relu, aten.mul, aten.pow]
+
         triton_poi_fused_abs_mul_pow_relu_sign_1_xnumel = s0*(((-1) + s1) // 2)
         get_raw_stream(0)
         triton_poi_fused_abs_mul_pow_relu_sign_1[grid(triton_poi_fused_abs_mul_pow_relu_sign_1_xnumel)](buf2, buf3, 49, 100, 490, XBLOCK=128, num_warps=4, num_stages=1)
         del buf2
-        # Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.rrelu_with_noise_functional]
+
         buf4 = torch.ops.aten.uniform.default(buf3, 0.125, 0.3333333333333333)
         buf5 = buf4
         del buf4
         buf6 = empty_strided_cuda((1, 1, ((-1) + s1) // 2), (((-1) + s1) // 2, ((-1) + s1) // 2, 1), torch.float32)
         buf7 = empty_strided_cuda((1, 1, ((-1) + s1) // 2), (((-1) + s1) // 2, ((-1) + s1) // 2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_2, x_3], Original ATen: [aten.rrelu_with_noise_functional, aten.neg, aten._softmax]
+
         triton_red_fused__softmax_neg_rrelu_with_noise_functional_2_xnumel = ((-1) + s1) // 2
         get_raw_stream(0)
         triton_red_fused__softmax_neg_rrelu_with_noise_functional_2[grid(triton_red_fused__softmax_neg_rrelu_with_noise_functional_2_xnumel)](buf3, buf5, buf6, buf7, 49, 49, 10, XBLOCK=1, R0_BLOCK=16, num_warps=2, num_stages=1)
         buf8 = empty_strided_cuda((1, s0, ((-1) + s1) // 2), (s0 + s0*(((-3) + s1) // 2), 1 + (((-3) + s1) // 2), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_2, x_3], Original ATen: [aten.rrelu_with_noise_functional, aten.neg, aten._softmax]
+
         triton_poi_fused__softmax_neg_rrelu_with_noise_functional_3_xnumel = s0*(((-1) + s1) // 2)
         get_raw_stream(0)
         triton_poi_fused__softmax_neg_rrelu_with_noise_functional_3[grid(triton_poi_fused__softmax_neg_rrelu_with_noise_functional_3_xnumel)](buf3, buf5, buf6, buf7, buf8, 49, 100, 490, XBLOCK=128, num_warps=4, num_stages=1)

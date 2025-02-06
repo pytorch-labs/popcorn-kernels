@@ -1,4 +1,4 @@
-# AOT ID: ['112_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,17 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/75/c75vahgbnx4kcrvz3bvvlhcnq7rdjxeisuuiwadneigcnjiu2l3j.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
-# Source node to ATen node mapping:
-#   x => add, mul, rsqrt, sub, var_mean
-# Graph fragment:
-#   %var_mean : [num_users=2] = call_function[target=torch.ops.aten.var_mean.correction](args = (%arg0_1, [0, 2]), kwargs = {correction: 0, keepdim: True})
-#   %sub : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%arg0_1, %getitem_1), kwargs = {})
-#   %add : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem, 1e-05), kwargs = {})
-#   %rsqrt : [num_users=1] = call_function[target=torch.ops.aten.rsqrt.default](args = (%add,), kwargs = {})
-#   %mul : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub, %rsqrt), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice
@@ -70,36 +59,6 @@ def triton_per_fused__native_batch_norm_legit_0(in_ptr0, out_ptr2, xnumel, r0_nu
     tl.store(out_ptr2 + (r0_1 + 128*x0), tmp23, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/3v/c3vqua6wy6cjrfb5hssloaoaoh2ni6otx2lebw3ria5vwie5aw5u.py
-# Topologically Sorted Source Nodes: [x_3], Original ATen: [aten._to_copy, aten.arange, aten.mul, aten.clamp, aten._unsafe_index, aten.sub, aten.add]
-# Source node to ATen node mapping:
-#   x_3 => _unsafe_index, _unsafe_index_1, _unsafe_index_2, _unsafe_index_3, add_3, add_4, add_5, clamp_max_2, clamp_max_3, clamp_min_1, clamp_min_2, clamp_min_3, convert_element_type_1, convert_element_type_2, convert_element_type_3, iota_1, mul_2, mul_3, mul_4, mul_5, sub_1, sub_2, sub_3, sub_4, sub_5
-# Graph fragment:
-#   %convert_element_type_1 : [num_users=4] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%view_2, torch.int64), kwargs = {})
-#   %iota_1 : [num_users=1] = call_function[target=torch.ops.prims.iota.default](args = (2,), kwargs = {start: 0, step: 1, dtype: torch.int64, device: cuda:0, requires_grad: False})
-#   %convert_element_type_2 : [num_users=1] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%iota_1, torch.float32), kwargs = {})
-#   %mul_2 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%convert_element_type_2, 0.0), kwargs = {})
-#   %clamp_min_1 : [num_users=2] = call_function[target=torch.ops.aten.clamp_min.default](args = (%mul_2, 0.0), kwargs = {})
-#   %convert_element_type_3 : [num_users=4] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%clamp_min_1, torch.int64), kwargs = {})
-#   %_unsafe_index_3 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%unsqueeze_1, [None, None, %clamp_max, %clamp_max_1]), kwargs = {})
-#   %_unsafe_index_2 : [num_users=2] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%unsqueeze_1, [None, None, %clamp_max, %convert_element_type_3]), kwargs = {})
-#   %sub_3 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%_unsafe_index_3, %_unsafe_index_2), kwargs = {})
-#   %sub_1 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%clamp_min_1, %convert_element_type_3), kwargs = {})
-#   %clamp_min_2 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%sub_1, 0.0), kwargs = {})
-#   %clamp_max_2 : [num_users=2] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_2, 1.0), kwargs = {})
-#   %mul_4 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_3, %clamp_max_2), kwargs = {})
-#   %add_4 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%_unsafe_index_2, %mul_4), kwargs = {})
-#   %_unsafe_index_1 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%unsqueeze_1, [None, None, %convert_element_type_1, %clamp_max_1]), kwargs = {})
-#   %_unsafe_index : [num_users=2] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%unsqueeze_1, [None, None, %convert_element_type_1, %convert_element_type_3]), kwargs = {})
-#   %sub_2 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%_unsafe_index_1, %_unsafe_index), kwargs = {})
-#   %mul_3 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_2, %clamp_max_2), kwargs = {})
-#   %add_3 : [num_users=2] = call_function[target=torch.ops.aten.add.Tensor](args = (%_unsafe_index, %mul_3), kwargs = {})
-#   %sub_5 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%add_4, %add_3), kwargs = {})
-#   %sub_4 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view_2, %convert_element_type_1), kwargs = {})
-#   %clamp_min_3 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%sub_4, 0.0), kwargs = {})
-#   %clamp_max_3 : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_3, 1.0), kwargs = {})
-#   %mul_5 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_5, %clamp_max_3), kwargs = {})
-#   %add_5 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%add_3, %mul_5), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -155,13 +114,13 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf3 = empty_strided_cuda((1, 64, 128), (8192, 128, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
+
         get_raw_stream(0)
         triton_per_fused__native_batch_norm_legit_0[grid(64)](arg0_1, buf3, 64, 128, XBLOCK=8, num_warps=8, num_stages=1)
         del arg0_1
         buf4 = empty_strided_cuda((1, 64, 128, 2), (16384, 256, 2, 1), torch.float32)
-        buf5 = buf4; del buf4  # reuse
-        # Topologically Sorted Source Nodes: [x_3], Original ATen: [aten._to_copy, aten.arange, aten.mul, aten.clamp, aten._unsafe_index, aten.sub, aten.add]
+        buf5 = buf4; del buf4
+
         get_raw_stream(0)
         triton_poi_fused__to_copy__unsafe_index_add_arange_clamp_mul_sub_1[grid(16384)](buf5, buf3, 16384, XBLOCK=256, num_warps=4, num_stages=1)
         del buf3

@@ -1,4 +1,4 @@
-# AOT ID: ['45_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,22 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/mb/cmbqoumm7qgs44kcowdrw52yyduuezduu5gc4sjlj7yao4uzgj6c.py
-# Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.constant_pad_nd, aten.abs, aten.add, aten.div, aten.le, aten.scalar_tensor, aten.where]
-# Source node to ATen node mapping:
-#   x => constant_pad_nd
-#   x_1 => abs_1, add_8, div
-#   x_2 => abs_2, full_default, le, where
-# Graph fragment:
-#   %constant_pad_nd : [num_users=2] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%arg3_1, [2, 2, 2, 2], 3.0), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%constant_pad_nd,), kwargs = {})
-#   %add_8 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%abs_1, 1), kwargs = {})
-#   %div : [num_users=2] = call_function[target=torch.ops.aten.div.Tensor](args = (%constant_pad_nd, %add_8), kwargs = {})
-#   %abs_2 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%div,), kwargs = {})
-#   %le : [num_users=1] = call_function[target=torch.ops.aten.le.Scalar](args = (%abs_2, 0.5), kwargs = {})
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%le, %full_default, %div), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -74,12 +58,6 @@ def triton_poi_fused_abs_add_constant_pad_nd_div_le_scalar_tensor_where_0(in_ptr
     tl.store(out_ptr0 + (x4), tmp21, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/vj/cvjexqvdsmeuwa2mf6hadqyxoap6etbm53dgr47e75qhzp55kcm6.py
-# Topologically Sorted Source Nodes: [x_4], Original ATen: [aten._adaptive_avg_pool2d]
-# Source node to ATen node mapping:
-#   x_4 => _adaptive_avg_pool2d
-# Graph fragment:
-#   %_adaptive_avg_pool2d : [num_users=1] = call_function[target=torch.ops.aten._adaptive_avg_pool2d.default](args = (%unsqueeze, [1, 10]), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -111,19 +89,19 @@ def call(args):
         4 + s1
         16 + 4*s1 + 4*s2 + s1*s2
         buf0 = empty_strided_cuda((1, s0, 4 + s1, 4 + s2), (16*s0 + 4*s0*s1 + 4*s0*s2 + s0*s1*s2, 16 + 4*s1 + 4*s2 + s1*s2, 4 + s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.constant_pad_nd, aten.abs, aten.add, aten.div, aten.le, aten.scalar_tensor, aten.where]
+
         triton_poi_fused_abs_add_constant_pad_nd_div_le_scalar_tensor_where_0_xnumel = 16*s0 + 4*s0*s1 + 4*s0*s2 + s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_abs_add_constant_pad_nd_div_le_scalar_tensor_where_0[grid(triton_poi_fused_abs_add_constant_pad_nd_div_le_scalar_tensor_where_0_xnumel)](arg3_1, buf0, 32, 32, 28, 28, 1024, 3072, XBLOCK=256, num_warps=4, num_stages=1)
         del arg3_1
         16 + 4*s1 + 4*s2 + s1*s2
         buf1 = empty_strided_cuda((1, s0, 1, 16 + 4*s1 + 4*s2 + s1*s2), (16*s0 + 4*s0*s1 + 4*s0*s2 + s0*s1*s2, 16 + 4*s1 + 4*s2 + s1*s2, 16*s0 + 4*s0*s1 + 4*s0*s2 + s0*s1*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_4], Original ATen: [aten._adaptive_avg_pool2d]
+
         triton_poi_fused__adaptive_avg_pool2d_1_xnumel = 16*s0 + 4*s0*s1 + 4*s0*s2 + s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused__adaptive_avg_pool2d_1[grid(triton_poi_fused__adaptive_avg_pool2d_1_xnumel)](buf0, buf1, 1024, 32, 28, 28, 3072, XBLOCK=128, num_warps=4, num_stages=1)
         del buf0
-        # Topologically Sorted Source Nodes: [x_4], Original ATen: [aten._adaptive_avg_pool2d]
+
         buf2 = torch.ops.aten._adaptive_avg_pool2d.default(buf1, [1, 10])
         del buf1
         buf3 = buf2

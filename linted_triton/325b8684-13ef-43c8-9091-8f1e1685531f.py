@@ -1,4 +1,4 @@
-# AOT ID: ['22_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,30 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/b3/cb3qbamy6gwqhp5k6n55ec5z2o7fqq2hcbvabyo6k63flhv44exd.py
-# Topologically Sorted Source Nodes: [triplet_loss, target, bce_loss], Original ATen: [aten.sub, aten.rand_like, aten.binary_cross_entropy]
-# Source node to ATen node mapping:
-#   bce_loss => full_default, full_default_1, log, log1p, maximum, maximum_1, mean_1, mul_59, mul_60, neg, sub_27, sub_28
-#   target => inductor_lookup_seed_default, inductor_random_default
-#   triplet_loss => sub_22, sub_23
-# Graph fragment:
-#   %sub_22 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%unsqueeze_6, %unsqueeze_7), kwargs = {})
-#   %sub_23 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%unsqueeze_6, %unsqueeze_8), kwargs = {})
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_random_default : [num_users=2] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, 1, 3, 3], %inductor_lookup_seed_default, rand), kwargs = {})
-#   %sub_27 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%inductor_random_default, 1), kwargs = {})
-#   %neg : [num_users=1] = call_function[target=torch.ops.aten.neg.default](args = (%unsqueeze_10,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%neg,), kwargs = {})
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], -100), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %maximum : [num_users=1] = call_function[target=torch.ops.aten.maximum.default](args = (%log1p, %full_default), kwargs = {})
-#   %mul_59 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_27, %maximum), kwargs = {})
-#   %log : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%unsqueeze_10,), kwargs = {})
-#   %full_default_1 : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], -100), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %maximum_1 : [num_users=1] = call_function[target=torch.ops.aten.maximum.default](args = (%log, %full_default_1), kwargs = {})
-#   %mul_60 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%inductor_random_default, %maximum_1), kwargs = {})
-#   %sub_28 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%mul_59, %mul_60), kwargs = {})
-#   %mean_1 : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%sub_28,), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
@@ -118,38 +94,6 @@ def triton_per_fused_binary_cross_entropy_rand_like_sub_0(in_ptr0, in_ptr1, out_
     tl.store(out_ptr3 + (tl.full([XBLOCK, 1], 0, tl.int32)), tmp53, None)
 
 
-# kernel path: /tmp/torchinductor_sahanp/7t/c7t53nezgovytc65iu4olioscaq6huuiq27wnntc2woy2m74lkry.py
-# Topologically Sorted Source Nodes: [triplet_loss, bce_loss, add], Original ATen: [aten.add, aten.norm, aten.sub, aten.clamp_min, aten.mean, aten.binary_cross_entropy]
-# Source node to ATen node mapping:
-#   add => add_50
-#   bce_loss => full_default, full_default_1, log, log1p, maximum, maximum_1, mean_1, mul_59, mul_60, neg, sub_27, sub_28
-#   triplet_loss => add_39, add_40, add_41, clamp_min_1, mean, pow_1, pow_2, pow_3, pow_4, sub_24, sum_1, sum_2
-# Graph fragment:
-#   %add_39 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%sub_22, 1e-06), kwargs = {})
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_39, 2.0), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%pow_1, [3]), kwargs = {})
-#   %pow_2 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sum_1, 0.5), kwargs = {})
-#   %add_41 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%pow_2, 1.0), kwargs = {})
-#   %add_40 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%sub_23, 1e-06), kwargs = {})
-#   %pow_3 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_40, 2.0), kwargs = {})
-#   %sum_2 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%pow_3, [3]), kwargs = {})
-#   %pow_4 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sum_2, 0.5), kwargs = {})
-#   %sub_24 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%add_41, %pow_4), kwargs = {})
-#   %clamp_min_1 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%sub_24, 0), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%clamp_min_1,), kwargs = {})
-#   %sub_27 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%inductor_random_default, 1), kwargs = {})
-#   %neg : [num_users=1] = call_function[target=torch.ops.aten.neg.default](args = (%unsqueeze_10,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%neg,), kwargs = {})
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], -100), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %maximum : [num_users=1] = call_function[target=torch.ops.aten.maximum.default](args = (%log1p, %full_default), kwargs = {})
-#   %mul_59 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_27, %maximum), kwargs = {})
-#   %log : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%unsqueeze_10,), kwargs = {})
-#   %full_default_1 : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], -100), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %maximum_1 : [num_users=1] = call_function[target=torch.ops.aten.maximum.default](args = (%log, %full_default_1), kwargs = {})
-#   %mul_60 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%inductor_random_default, %maximum_1), kwargs = {})
-#   %sub_28 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%mul_59, %mul_60), kwargs = {})
-#   %mean_1 : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%sub_28,), kwargs = {})
-#   %add_50 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mean, %mean_1), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -285,18 +229,18 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf2 = empty_strided_cuda((1, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [1], out=buf2)
         buf0 = empty_strided_cuda((1, 1, 3, 3), (9, 9, 3, 1), torch.float32)
         buf1 = empty_strided_cuda((1, 1, 3, 3), (9, 9, 3, 1), torch.float32)
         buf4 = empty_strided_cuda((), (), torch.float32)
-        # Topologically Sorted Source Nodes: [triplet_loss, target, bce_loss], Original ATen: [aten.sub, aten.rand_like, aten.binary_cross_entropy]
+
         get_raw_stream(0)
         triton_per_fused_binary_cross_entropy_rand_like_sub_0[grid(1)](arg3_1, buf2, buf0, buf1, buf4, 64, 64, 3, 0, 1, 9, XBLOCK=1, num_warps=2, num_stages=1)
         del arg3_1
         del buf2
-        buf5 = buf4; del buf4  # reuse
-        # Topologically Sorted Source Nodes: [triplet_loss, bce_loss, add], Original ATen: [aten.add, aten.norm, aten.sub, aten.clamp_min, aten.mean, aten.binary_cross_entropy]
+        buf5 = buf4; del buf4
+
         get_raw_stream(0)
         triton_poi_fused_add_binary_cross_entropy_clamp_min_mean_norm_sub_1[grid(1)](buf5, buf0, buf1, 1, XBLOCK=1, num_warps=1, num_stages=1)
         del buf0

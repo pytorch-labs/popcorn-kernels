@@ -1,4 +1,4 @@
-# AOT ID: ['212_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,22 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/3h/c3hdfkh3fjz732i5pzpzn256rfbmrrloqo6yuuzv2tjgckwadj3g.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.bernoulli, aten._to_copy, aten.mul, aten.add]
-# Source node to ATen node mapping:
-#   x => add_12, add_29, add_54, convert_element_type, inductor_lookup_seed_default, inductor_random_default, lt_3, mul_24, mul_41, mul_46
-# Graph fragment:
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_random_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %arg0_1, %arg1_1, %arg2_1], %inductor_lookup_seed_default, rand), kwargs = {})
-#   %lt_3 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default, 0.5), kwargs = {})
-#   %convert_element_type : [num_users=2] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_3, torch.float32), kwargs = {})
-#   %mul_41 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%convert_element_type, 0.8864048946659319), kwargs = {})
-#   %mul_46 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%arg3_1, %mul_41), kwargs = {})
-#   %add_12 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%convert_element_type, -1), kwargs = {})
-#   %mul_24 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%add_12, 1.558387861036063), kwargs = {})
-#   %add_29 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%mul_24, 0.7791939305180315), kwargs = {})
-#   %add_54 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_46, %add_29), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -73,17 +57,17 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [1], out=buf0)
         buf1 = empty_strided_cuda((1, s0, 64, 64), (4096*s0, 4096, 64, 1), torch.float32)
-        buf2 = buf1; del buf1  # reuse
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.bernoulli, aten._to_copy, aten.mul, aten.add]
+        buf2 = buf1; del buf1
+
         triton_poi_fused__to_copy_add_bernoulli_mul_0_xnumel = 4096*s0
         get_raw_stream(0)
         triton_poi_fused__to_copy_add_bernoulli_mul_0[grid(triton_poi_fused__to_copy_add_bernoulli_mul_0_xnumel)](buf2, buf0, arg3_1, 0, 12288, XBLOCK=256, num_warps=4, num_stages=1)
         del arg3_1
         del buf0
-        # Topologically Sorted Source Nodes: [x, x_1], Original ATen: [aten.bernoulli, aten._to_copy, aten.mul, aten.add, aten.adaptive_max_pool2d]
+
         buf3 = torch.ops.aten.adaptive_max_pool2d.default(buf2, [5, 5])
         del buf2
         buf4 = buf3[0]

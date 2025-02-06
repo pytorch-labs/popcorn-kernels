@@ -1,4 +1,4 @@
-# AOT ID: ['82_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,18 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/n7/cn7nzgnh7sgxvionfgifn6vb27ginhlg2rzybnllw26qbla3ort5.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.elu]
-# Source node to ATen node mapping:
-#   x => expm1, gt, mul, mul_1, mul_2, where
-# Graph fragment:
-#   %gt : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%arg2_1, 0), kwargs = {})
-#   %mul : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%arg2_1, 1.0), kwargs = {})
-#   %mul_1 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%arg2_1, 1.0), kwargs = {})
-#   %expm1 : [num_users=1] = call_function[target=torch.ops.aten.expm1.default](args = (%mul_1,), kwargs = {})
-#   %mul_2 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%expm1, 1.0), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt, %mul, %mul_2), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice
@@ -62,7 +50,7 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, s0, s1, 64), (64*s0*s1, 64*s1, 64, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.elu]
+
         triton_poi_fused_elu_0_xnumel = 64*s0*s1
         get_raw_stream(0)
         triton_poi_fused_elu_0[grid(triton_poi_fused_elu_0_xnumel)](arg2_1, buf0, 12288, XBLOCK=256, num_warps=4, num_stages=1)

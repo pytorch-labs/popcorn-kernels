@@ -1,4 +1,4 @@
-# AOT ID: ['195_inference']
+
 from ctypes import c_void_p, c_long, c_int
 import torch
 import math
@@ -40,7 +40,7 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-#include "/tmp/torchinductor_sahanp/3b/c3bi5gk6mslf6u4iaqafhxm64z6u65e3eain4xlary5blqnvv6xx.h"
+
 extern "C"  void kernel(int64_t* out_ptr0,
                        int64_t* out_ptr1,
                        const int64_t ks0,
@@ -286,7 +286,7 @@ def call(args):
     s2 = arg2_1
     assert_size_stride(arg3_1, (1, s0, s1, s2), (s0*s1*s2, s1*s2, s2, 1))
     buf1 = empty_strided_cpu((1, ), (1, ), torch.int64)
-    # Topologically Sorted Source Nodes: [], Original ATen: []
+
     aten.randint.low_out(-9223372036854775808, 9223372036854775807, [1], out=buf1)
     buf5 = empty_strided_cpu((1, ), (1, ), torch.int64)
     buf6 = empty_strided_cpu((1, ), (1, ), torch.int64)
@@ -297,19 +297,19 @@ def call(args):
         ps1 = 4*s1
         ps2 = 16*s1*s2
         buf0 = empty_strided_cuda((1, s0, 4*s1, 4*s2), (16*s0*s1*s2, 16*s1*s2, 4*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x, l1_loss_value], Original ATen: [aten._unsafe_index, aten.sub]
+
         triton_poi_fused__unsafe_index_sub_1_xnumel = 16*s0*s1*s2
         stream0 = get_raw_stream(0)
         triton_poi_fused__unsafe_index_sub_1[grid(triton_poi_fused__unsafe_index_sub_1_xnumel)](arg3_1, buf0, 32, 128, 128, 32, 16384, 49152, XBLOCK=512, num_warps=4, num_stages=1)
         del arg3_1
         buf3 = empty_strided_cuda((6, ), (1, ), torch.float32)
-        # Topologically Sorted Source Nodes: [l1_loss_value], Original ATen: [aten.abs, aten.mean]
+
         triton_red_fused_abs_mean_2_r0_numel = (5 + 16*s0*s1*s2) // 6
         stream0 = get_raw_stream(0)
         triton_red_fused_abs_mean_2[grid(6)](buf0, buf3, 3, 32, 32, 6, 8192, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)
         buf4 = empty_strided_cuda((), (), torch.float32)
-        buf7 = buf4; del buf4  # reuse
-        # Topologically Sorted Source Nodes: [l1_loss_value], Original ATen: [aten.abs, aten.mean]
+        buf7 = buf4; del buf4
+
         stream0 = get_raw_stream(0)
         triton_per_fused_abs_mean_3[grid(1)](buf7, buf3, 3, 32, 32, 1, 6, XBLOCK=1, num_warps=2, num_stages=1)
         del buf3

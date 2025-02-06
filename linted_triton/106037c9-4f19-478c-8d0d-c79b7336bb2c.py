@@ -1,4 +1,4 @@
-# AOT ID: ['49_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,14 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/56/c56lts72xgehtovwppaismdeuga7x7geyyuedbaaclqwvxuhz74l.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.hardtanh]
-# Source node to ATen node mapping:
-#   x => clamp_max, clamp_min
-# Graph fragment:
-#   %clamp_min : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%arg3_1, 0.0), kwargs = {})
-#   %clamp_max : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min, 6.0), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -55,7 +47,7 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, s0, s1, s2), (s0*s1*s2, s1*s2, s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.hardtanh]
+
         triton_poi_fused_hardtanh_0_xnumel = s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_hardtanh_0[grid(triton_poi_fused_hardtanh_0_xnumel)](arg3_1, buf0, 2352, XBLOCK=256, num_warps=4, num_stages=1)

@@ -1,4 +1,4 @@
-# AOT ID: ['33_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -20,21 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/ov/covz2vybkm5qazpt6tihs2eksacklrchp73nhvf54ujxfhnybjf3.py
-# Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.reflection_pad3d, aten.relu]
-# Source node to ATen node mapping:
-#   x => _unsafe_index, _unsafe_index_1, _unsafe_index_2
-#   x_1 => relu
-#   x_2 => _unsafe_index_3, _unsafe_index_4, _unsafe_index_5
-# Graph fragment:
-#   %_unsafe_index : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%arg3_1, [None, None, %sub_5, None, None]), kwargs = {})
-#   %_unsafe_index_1 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index, [None, None, None, %sub_11, None]), kwargs = {})
-#   %_unsafe_index_2 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_1, [None, None, None, None, %sub_17]), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%_unsafe_index_2,), kwargs = {})
-#   %_unsafe_index_3 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%relu, [None, None, %sub_29, None, None]), kwargs = {})
-#   %_unsafe_index_4 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_3, [None, None, None, %sub_35, None]), kwargs = {})
-#   %_unsafe_index_5 : [num_users=3] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_4, [None, None, None, None, %sub_41]), kwargs = {})
-
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
 triton_helpers.set_driver_to_gpu()
@@ -54,23 +39,6 @@ def triton_poi_fused_reflection_pad3d_relu_0(in_ptr0, out_ptr0, ks0, ks1, ks2, k
     tl.store(out_ptr0 + (x3), tmp2, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/fl/cflkbk4japk5oyvthytjyjcjiicup6pga3ewsghxstekgndb4nba.py
-# Topologically Sorted Source Nodes: [x_3, x_4, x_5], Original ATen: [aten.elu, aten.reflection_pad3d, aten.relu]
-# Source node to ATen node mapping:
-#   x_3 => expm1, gt_4, mul_15, mul_16, mul_17, where
-#   x_4 => _unsafe_index_6, _unsafe_index_7, _unsafe_index_8
-#   x_5 => relu_1
-# Graph fragment:
-#   %gt_4 : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%_unsafe_index_5, 0), kwargs = {})
-#   %mul_15 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%_unsafe_index_5, 1.0507009873554805), kwargs = {})
-#   %mul_16 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%_unsafe_index_5, 1.0), kwargs = {})
-#   %expm1 : [num_users=1] = call_function[target=torch.ops.aten.expm1.default](args = (%mul_16,), kwargs = {})
-#   %mul_17 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%expm1, 1.7580993408473766), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt_4, %mul_15, %mul_17), kwargs = {})
-#   %_unsafe_index_6 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%where, [None, None, %sub_53, None, None]), kwargs = {})
-#   %_unsafe_index_7 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_6, [None, None, None, %sub_59, None]), kwargs = {})
-#   %_unsafe_index_8 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_7, [None, None, None, None, %sub_65]), kwargs = {})
-#   %relu_1 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%_unsafe_index_8,), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -102,12 +70,6 @@ def triton_poi_fused_elu_reflection_pad3d_relu_1(in_ptr0, out_ptr0, ks0, ks1, ks
     tl.store(out_ptr0 + (x3), tmp12, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/dh/cdhgbtva7cza5b3dvbsw7qcv4b67ub7viic7rhpq34fq5ectmwjg.py
-# Topologically Sorted Source Nodes: [x_7], Original ATen: [aten.view]
-# Source node to ATen node mapping:
-#   x_7 => view_1
-# Graph fragment:
-#   %view_1 : [num_users=1] = call_function[target=torch.ops.aten.reshape.default](args = (%view, [1, 1, -1]), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -137,7 +99,7 @@ def call(args):
         6 + s1
         36 + 6*s1 + 6*s2 + s1*s2
         buf0 = empty_strided_cuda((1, 1, 6 + s0, 6 + s1, 6 + s2), (216 + 36*s0 + 36*s1 + 36*s2 + 6*s0*s1 + 6*s0*s2 + 6*s1*s2 + s0*s1*s2, 216 + 36*s0 + 36*s1 + 36*s2 + 6*s0*s1 + 6*s0*s2 + 6*s1*s2 + s0*s1*s2, 36 + 6*s1 + 6*s2 + s1*s2, 6 + s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.reflection_pad3d, aten.relu]
+
         triton_poi_fused_reflection_pad3d_relu_0_xnumel = 216 + 36*s0 + 36*s1 + 36*s2 + 6*s0*s1 + 6*s0*s2 + 6*s1*s2 + s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_reflection_pad3d_relu_0[grid(triton_poi_fused_reflection_pad3d_relu_0_xnumel)](arg3_1, buf0, 70, 70, 4900, 64, 64, 64, 343000, XBLOCK=512, num_warps=8, num_stages=1)
@@ -146,13 +108,13 @@ def call(args):
         12 + s1
         144 + 12*s1 + 12*s2 + s1*s2
         buf1 = empty_strided_cuda((1, 1, 12 + s0, 12 + s1, 12 + s2), (1728 + 144*s0 + 144*s1 + 144*s2 + 12*s0*s1 + 12*s0*s2 + 12*s1*s2 + s0*s1*s2, 1, 144 + 12*s1 + 12*s2 + s1*s2, 12 + s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3, x_4, x_5], Original ATen: [aten.elu, aten.reflection_pad3d, aten.relu]
+
         triton_poi_fused_elu_reflection_pad3d_relu_1_xnumel = 1728 + 144*s0 + 144*s1 + 144*s2 + 12*s0*s1 + 12*s0*s2 + 12*s1*s2 + s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_elu_reflection_pad3d_relu_1[grid(triton_poi_fused_elu_reflection_pad3d_relu_1_xnumel)](buf0, buf1, 76, 76, 5776, 64, 64, 64, 438976, XBLOCK=512, num_warps=8, num_stages=1)
         del buf0
         buf2 = empty_strided_cuda((1, 1, 1728 + 144*s0 + 144*s1 + 144*s2 + 12*s0*s1 + 12*s0*s2 + 12*s1*s2 + s0*s1*s2), (1728 + 144*s0 + 144*s1 + 144*s2 + 12*s0*s1 + 12*s0*s2 + 12*s1*s2 + s0*s1*s2, 1728 + 144*s0 + 144*s1 + 144*s2 + 12*s0*s1 + 12*s0*s2 + 12*s1*s2 + s0*s1*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_7], Original ATen: [aten.view]
+
         triton_poi_fused_view_2_xnumel = 1728 + 144*s0 + 144*s1 + 144*s2 + 12*s0*s1 + 12*s0*s2 + 12*s1*s2 + s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_view_2[grid(triton_poi_fused_view_2_xnumel)](buf1, buf2, 76, 76, 64, 64, 438976, XBLOCK=512, num_warps=8, num_stages=1)

@@ -1,4 +1,4 @@
-# AOT ID: ['100_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/mb/cmbtfbiy6gbc43hobdmuuxxfvwn4e74xpbkthxdcde3cb6embbmg.py
-# Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.avg_pool3d]
-# Source node to ATen node mapping:
-#   x_3 => avg_pool3d
-# Graph fragment:
-#   %avg_pool3d : [num_users=1] = call_function[target=torch.ops.aten.avg_pool3d.default](args = (%unsqueeze, [2, 2, 2], [2, 2, 2]), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -71,7 +64,7 @@ def call(args):
         2*s0
         4*s0 + 2*s0*(s2 // 4)
         buf0 = empty_strided_cuda((1, 1, 2*s0, 2 + (s1 // 4), 2 + (s2 // 4)), (8*s0 + 4*s0*(s1 // 4) + 4*s0*(s2 // 4) + 2*s0*(s1 // 4)*(s2 // 4), 8*s0 + 4*s0*(s1 // 4) + 4*s0*(s2 // 4) + 2*s0*(s1 // 4)*(s2 // 4), 4 + 2*(s1 // 4) + 2*(s2 // 4) + (s1 // 4)*(s2 // 4), 2 + (s2 // 4), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.avg_pool3d]
+
         triton_poi_fused_avg_pool3d_0_xnumel = 8*s0 + 4*s0*(s1 // 4) + 4*s0*(s2 // 4) + 2*s0*(s1 // 4)*(s2 // 4)
         get_raw_stream(0)
         triton_poi_fused_avg_pool3d_0[grid(triton_poi_fused_avg_pool3d_0_xnumel)](arg3_1, buf0, 18, 6, 108, 64, 64, 3, 1944, XBLOCK=128, num_warps=4, num_stages=1)

@@ -1,4 +1,4 @@
-# AOT ID: ['42_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,26 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/bd/cbdlifn3nsx5x3pkpee3bgjsqjfqbqppz4to2jckyivowea5jbil.py
-# Topologically Sorted Source Nodes: [x_1, x_2, x_3, x_4, x_5, loss], Original ATen: [aten._adaptive_avg_pool2d, aten.relu, aten.exp, aten.mul, aten.sub, aten.mean]
-# Source node to ATen node mapping:
-#   loss => exp, mean, mul_32, sub_14
-#   x_1 => _adaptive_avg_pool2d
-#   x_2 => relu
-#   x_3 => relu_1
-#   x_4 => relu_2
-#   x_5 => relu_3
-# Graph fragment:
-#   %_adaptive_avg_pool2d : [num_users=1] = call_function[target=torch.ops.aten._adaptive_avg_pool2d.default](args = (%unsqueeze, [1, 10]), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%squeeze,), kwargs = {})
-#   %relu_1 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%relu,), kwargs = {})
-#   %relu_2 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%relu_1,), kwargs = {})
-#   %relu_3 : [num_users=2] = call_function[target=torch.ops.aten.relu.default](args = (%relu_2,), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%relu_3,), kwargs = {})
-#   %mul_32 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%relu_3, %relu_3), kwargs = {})
-#   %sub_14 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%exp, %mul_32), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%sub_14,), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -158,8 +138,8 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf1 = empty_strided_cuda((), (), torch.float32)
-        buf2 = buf1; del buf1  # reuse
-        # Topologically Sorted Source Nodes: [x_1, x_2, x_3, x_4, x_5, loss], Original ATen: [aten._adaptive_avg_pool2d, aten.relu, aten.exp, aten.mul, aten.sub, aten.mean]
+        buf2 = buf1; del buf1
+
         10*s0
         get_raw_stream(0)
         triton_red_fused__adaptive_avg_pool2d_exp_mean_mul_relu_sub_0[grid(1)](buf2, arg2_1, 3, 1, 30, XBLOCK=1, R0_BLOCK=32, num_warps=2, num_stages=1)

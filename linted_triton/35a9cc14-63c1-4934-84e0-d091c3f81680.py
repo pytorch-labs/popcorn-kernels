@@ -1,4 +1,4 @@
-# AOT ID: ['29_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/ne/cnesa6qsndhhsynh6koguzcjqd6z6voqsddu6pcdtqhn2qvp7igm.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.pixel_shuffle]
-# Source node to ATen node mapping:
-#   x => clone
-# Graph fragment:
-#   %clone : [num_users=1] = call_function[target=torch.ops.aten.clone.default](args = (%permute,), kwargs = {memory_format: torch.contiguous_format})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -61,7 +54,7 @@ def call(args):
         2*s2
         2*s1*s2
         buf0 = empty_strided_cuda((1, s0 // 4, s1, 2, s2, 2), (4*s1*s2*(s0 // 4), 4*s1*s2, 4*s2, 2*s2, 2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.pixel_shuffle]
+
         triton_poi_fused_pixel_shuffle_0_ynumel = 2*s1*s2*(s0 // 4)
         get_raw_stream(0)
         triton_poi_fused_pixel_shuffle_0[grid(triton_poi_fused_pixel_shuffle_0_ynumel, 2)](arg3_1, buf0, 64, 128, 64, 8192, 32768, 2, XBLOCK=2, YBLOCK=256, num_warps=4, num_stages=1)

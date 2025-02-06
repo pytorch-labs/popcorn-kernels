@@ -56,7 +56,7 @@ def remove_python_comments(source: str) -> str:
         # fill it in (this preserves spaces and newlines from the original source).
         if start_line > last_lineno:
             # Add newlines for any skipped lines.
-            result.append("\n")
+            # result.append("\n")
             # After a newline, reset column to 0.
             last_col = 0
 
@@ -123,39 +123,24 @@ def extract_output_code(dir_path):
     # copy the cleaned triton code to the linted_triton folder
     # clean out the linted_triton folder first
     subprocess.run(["rm", "-rf", "linted_triton/*"])
-    for uuid, code_file in tqdm.tqdm(
-        uuid_to_clean_code.items(), desc="copying cleaned triton code"
-    ):
-        subprocess.run(
-            ["cp", f"cleaned_triton/{uuid}.py", f"linted_triton/{uuid}.py"],
-        )
     # lint the triton code
     # for uuid, code_file in tqdm.tqdm(
     #     uuid_to_clean_code.items(), desc="cleaning dataset"
     # ):
     bad_files = []
-    # subprocess.run(
-    #     [
-    #         "ruff",
-    #         "check",
-    #         "linted_triton",
-    #         "--fix",
-    #         "--unsafe-fixes",
-    #         "--fix-only",
-    #     ]
-    # )
-    # for uuid in tqdm.tqdm(uuid_to_clean_code.keys(), desc="linting code"):
-    #     try:
-    #         code_file = f"linted_triton/{uuid}.py"
-    #         if not os.path.exists(code_file):
-    #             continue
-    #         code = open(code_file, "r").read()
-    #         commentless_code = remove_python_comments(code)
-    #         with open(code_file, "w") as f:
-    #             f.write(commentless_code)
-    #     except Exception as e:
-    #         # print(f"Failed to clean triton code for {uuid}: {e}")
-    #         bad_files.append(uuid)
+    for uuid in tqdm.tqdm(uuid_to_clean_code.keys(), desc="linting code"):
+        try:
+            original_code_file = f"cleaned_triton/{uuid}.py"
+            linted_code_file = f"linted_triton/{uuid}.py"
+            if not os.path.exists(original_code_file):
+                continue
+            code = open(original_code_file, "r").read()
+            commentless_code = remove_python_comments(code)
+            with open(linted_code_file, "w") as f:
+                f.write(commentless_code)
+        except Exception as e:
+            # print(f"Failed to clean triton code for {uuid}: {e}")
+            bad_files.append(uuid)
     # apply ruff linter
     subprocess.run(
         [

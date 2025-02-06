@@ -1,4 +1,4 @@
-# AOT ID: ['141_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,18 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/pd/cpd2mowrwewlhr52fetm7pqtuw4dtsorq5rz3mw6o4tskbb72nhs.py
-# Topologically Sorted Source Nodes: [log_probs], Original ATen: [aten._log_softmax]
-# Source node to ATen node mapping:
-#   log_probs => amax, exp, log, sub_21, sub_22, sum_1
-# Graph fragment:
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%view_4, [1], True), kwargs = {})
-#   %sub_21 : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view_4, %amax), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%sub_21,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %log : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%sum_1,), kwargs = {})
-#   %sub_22 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%sub_21, %log), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -93,13 +81,13 @@ def call(args):
     assert_size_stride(arg3_1, (1, 1, s0, s1, s2), (s0*s1*s2, s0*s1*s2, s1*s2, s2, 1))
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.max_pool3d_with_indices]
+
         buf0 = torch.ops.aten.max_pool3d_with_indices.default(arg3_1, [2, 2, 2], [2, 2, 2])
         del arg3_1
         buf1 = buf0[0]
         del buf0
         buf5 = empty_strided_cuda((1, 8*(s1 // 2)*(s2 // 2)), (2*(s0 // (4*(s0 // 8)))*(s0 // (8*(s0 // 16)))*(s1 // 2)*(s2 // 2), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [log_probs], Original ATen: [aten._log_softmax]
+
         8*(s1 // 2)*(s2 // 2)
         get_raw_stream(0)
         triton_red_fused__log_softmax_0[grid(1)](buf1, buf5, 32, 32, 1, 2048, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)

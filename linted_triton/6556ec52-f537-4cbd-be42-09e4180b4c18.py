@@ -1,4 +1,4 @@
-# AOT ID: ['161_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,75 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/pa/cpa3plu5eldksbmo27n2qkxv7ooxinj7vqd7gghkzxmfjyembm7f.py
-# Topologically Sorted Source Nodes: [input_1, input_2, input_3, input_4, input_5, input_6, x_2, target, loss], Original ATen: [aten.hardswish, aten.bernoulli, aten._to_copy, aten.mul, aten.add, aten._log_softmax, aten.zeros_like, aten.mse_loss]
-# Source node to ATen node mapping:
-#   input_1 => add_4, clamp_max, clamp_min, div, mul_3
-#   input_2 => add_21, add_38, add_63, convert_element_type, inductor_lookup_seed_default, inductor_random_default_2, lt_1, mul_26, mul_39, mul_43
-#   input_3 => add_68, clamp_max_1, clamp_min_1, div_1, mul_56
-#   input_4 => add_102, add_127, add_85, convert_element_type_1, inductor_lookup_seed_default_1, inductor_random_default_1, lt_4, mul_79, mul_92, mul_96
-#   input_5 => add_132, clamp_max_2, clamp_min_2, div_2, mul_109
-#   input_6 => add_149, add_166, add_191, convert_element_type_2, inductor_lookup_seed_default_2, inductor_random_default, lt_7, mul_132, mul_145, mul_149
-#   loss => mean, pow_1, sub_51
-#   target => full
-#   x_2 => amax, exp, log, sub_47, sub_48, sum_1
-# Graph fragment:
-#   %add_4 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%_adaptive_avg_pool2d, 3), kwargs = {})
-#   %clamp_min : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_4, 0), kwargs = {})
-#   %clamp_max : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min, 6), kwargs = {})
-#   %mul_3 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%_adaptive_avg_pool2d, %clamp_max), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_3, 6), kwargs = {})
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_random_default_2 : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %arg0_1, 7, 7], %inductor_lookup_seed_default, rand), kwargs = {})
-#   %lt_1 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default_2, 0.5), kwargs = {})
-#   %convert_element_type : [num_users=2] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_1, torch.float32), kwargs = {})
-#   %mul_39 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%convert_element_type, 0.8864048946659319), kwargs = {})
-#   %mul_43 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%div, %mul_39), kwargs = {})
-#   %add_21 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%convert_element_type, -1), kwargs = {})
-#   %mul_26 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%add_21, 1.558387861036063), kwargs = {})
-#   %add_38 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%mul_26, 0.7791939305180315), kwargs = {})
-#   %add_63 : [num_users=2] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_43, %add_38), kwargs = {})
-#   %add_68 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%add_63, 3), kwargs = {})
-#   %clamp_min_1 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_68, 0), kwargs = {})
-#   %clamp_max_1 : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_1, 6), kwargs = {})
-#   %mul_56 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%add_63, %clamp_max_1), kwargs = {})
-#   %div_1 : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_56, 6), kwargs = {})
-#   %inductor_lookup_seed_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 1), kwargs = {})
-#   %inductor_random_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %arg0_1, 7, 7], %inductor_lookup_seed_default_1, rand), kwargs = {})
-#   %lt_4 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default_1, 0.5), kwargs = {})
-#   %convert_element_type_1 : [num_users=2] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_4, torch.float32), kwargs = {})
-#   %mul_92 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%convert_element_type_1, 0.8864048946659319), kwargs = {})
-#   %mul_96 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%div_1, %mul_92), kwargs = {})
-#   %add_85 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%convert_element_type_1, -1), kwargs = {})
-#   %mul_79 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%add_85, 1.558387861036063), kwargs = {})
-#   %add_102 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%mul_79, 0.7791939305180315), kwargs = {})
-#   %add_127 : [num_users=2] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_96, %add_102), kwargs = {})
-#   %add_132 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%add_127, 3), kwargs = {})
-#   %clamp_min_2 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_132, 0), kwargs = {})
-#   %clamp_max_2 : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_2, 6), kwargs = {})
-#   %mul_109 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%add_127, %clamp_max_2), kwargs = {})
-#   %div_2 : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_109, 6), kwargs = {})
-#   %inductor_lookup_seed_default_2 : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 2), kwargs = {})
-#   %inductor_random_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %arg0_1, 7, 7], %inductor_lookup_seed_default_2, rand), kwargs = {})
-#   %lt_7 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default, 0.5), kwargs = {})
-#   %convert_element_type_2 : [num_users=2] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_7, torch.float32), kwargs = {})
-#   %mul_145 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%convert_element_type_2, 0.8864048946659319), kwargs = {})
-#   %mul_149 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%div_2, %mul_145), kwargs = {})
-#   %add_149 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%convert_element_type_2, -1), kwargs = {})
-#   %mul_132 : [num_users=1] = call_function[target=torch.ops.aten.mul.Scalar](args = (%add_149, 1.558387861036063), kwargs = {})
-#   %add_166 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%mul_132, 0.7791939305180315), kwargs = {})
-#   %add_191 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_149, %add_166), kwargs = {})
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%view_1, [1], True), kwargs = {})
-#   %sub_47 : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view_1, %amax), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%sub_47,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %log : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%sum_1,), kwargs = {})
-#   %sub_48 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%sub_47, %log), kwargs = {})
-#   %full : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([1, %sym_size_int_2], 0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %sub_51 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%sub_48, %full), kwargs = {})
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sub_51, 2), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%pow_1,), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -207,20 +138,20 @@ def call(args):
     assert_size_stride(arg3_1, (1, s0, 64, 64), (4096*s0, 4096, 64, 1))
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten._adaptive_avg_pool2d]
+
         buf0 = torch.ops.aten._adaptive_avg_pool2d.default(arg3_1, [7, 7])
         del arg3_1
         buf1 = buf0
         del buf0
         buf2 = empty_strided_cuda((3, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [3], out=buf2)
-        buf5 = buf1; del buf1  # reuse
-        buf7 = buf5; del buf5  # reuse
+        buf5 = buf1; del buf1
+        buf7 = buf5; del buf5
         buf8 = empty_strided_cuda((1, 1), (1, 1), torch.float32)
-        buf10 = reinterpret_tensor(buf8, (), (), 0); del buf8  # reuse
-        buf11 = buf10; del buf10  # reuse
-        # Topologically Sorted Source Nodes: [input_1, input_2, input_3, input_4, input_5, input_6, x_2, target, loss], Original ATen: [aten.hardswish, aten.bernoulli, aten._to_copy, aten.mul, aten.add, aten._log_softmax, aten.zeros_like, aten.mse_loss]
+        buf10 = reinterpret_tensor(buf8, (), (), 0); del buf8
+        buf11 = buf10; del buf10
+
         49*s0
         get_raw_stream(0)
         triton_red_fused__log_softmax__to_copy_add_bernoulli_hardswish_mse_loss_mul_zeros_like_0[grid(1)](buf7, buf11, buf2, 0, 2, 1, 3, 1, 147, XBLOCK=1, R0_BLOCK=256, num_warps=2, num_stages=1)

@@ -1,4 +1,4 @@
-# AOT ID: ['145_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/jf/cjfwnjxutkrpomdxgmpxeo55q73fqotxldrjvxvjqiodo4wdaoos.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
-# Source node to ATen node mapping:
-#   x => var_mean
-# Graph fragment:
-#   %var_mean : [num_users=2] = call_function[target=torch.ops.aten.var_mean.correction](args = (%view, [0, 2, 3, 4]), kwargs = {correction: 0, keepdim: True})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice
@@ -77,12 +70,6 @@ def triton_red_fused__native_batch_norm_legit_0(in_ptr0, out_ptr0, out_ptr1, out
     tl.store(out_ptr2 + (x3), tmp15, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/sv/csvikv2rb64ze2kbjie5i7xfeobrzeppimclr6xa2hft6hlwhici.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
-# Source node to ATen node mapping:
-#   x => var_mean
-# Graph fragment:
-#   %var_mean : [num_users=2] = call_function[target=torch.ops.aten.var_mean.correction](args = (%view, [0, 2, 3, 4]), kwargs = {correction: 0, keepdim: True})
 import triton
 import triton.language as tl
 
@@ -117,16 +104,6 @@ def triton_per_fused__native_batch_norm_legit_1(in_ptr0, in_ptr1, in_ptr2, out_p
     tl.store(out_ptr1 + (x0), tmp14, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/kh/ckhqejmxxiicat5d5xvelgypfoqprpecrf2nf5jrfqku7hctlxzc.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
-# Source node to ATen node mapping:
-#   x => add_5, mul_16, rsqrt, sub_3, var_mean
-# Graph fragment:
-#   %var_mean : [num_users=2] = call_function[target=torch.ops.aten.var_mean.correction](args = (%view, [0, 2, 3, 4]), kwargs = {correction: 0, keepdim: True})
-#   %sub_3 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view, %getitem_1), kwargs = {})
-#   %add_5 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem, 1e-05), kwargs = {})
-#   %rsqrt : [num_users=1] = call_function[target=torch.ops.aten.rsqrt.default](args = (%add_5,), kwargs = {})
-#   %mul_16 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_3, %rsqrt), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -166,13 +143,13 @@ def call(args):
         buf0 = empty_strided_cuda((1, 32, 1, 1, 1, 32), (1024, 32, 1024, 1024, 1024, 1), torch.float32)
         buf1 = empty_strided_cuda((1, 32, 1, 1, 1, 32), (1024, 32, 1024, 1024, 1024, 1), torch.float32)
         buf2 = empty_strided_cuda((1, 32, 1, 1, 1, 32), (1024, 32, 1024, 1024, 1024, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
+
         (31 + s1*s2*s3) // 32
         get_raw_stream(0)
         triton_red_fused__native_batch_norm_legit_0[grid(1024)](arg3_1, buf0, buf1, buf2, 64, 64, 64, 1024, 8192, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)
         buf3 = empty_strided_cuda((1, 32, 1, 1, 1), (32, 1, 32, 32, 32), torch.float32)
         buf4 = empty_strided_cuda((1, 32, 1, 1, 1), (32, 1, 32, 32, 32), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
+
         get_raw_stream(0)
         triton_per_fused__native_batch_norm_legit_1[grid(32)](buf0, buf1, buf2, buf3, buf4, 32, 32, XBLOCK=1, num_warps=2, num_stages=1)
         del buf0
@@ -180,7 +157,7 @@ def call(args):
         del buf2
         s1*s2*s3
         buf6 = empty_strided_cuda((1, 32, s1, s2, s3), (32*s1*s2*s3, s1*s2*s3, s2*s3, s3, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten._native_batch_norm_legit]
+
         triton_poi_fused__native_batch_norm_legit_2_xnumel = 32*s1*s2*s3
         get_raw_stream(0)
         triton_poi_fused__native_batch_norm_legit_2[grid(triton_poi_fused__native_batch_norm_legit_2_xnumel)](arg3_1, buf3, buf4, buf6, 262144, 8388608, XBLOCK=512, num_warps=8, num_stages=1)

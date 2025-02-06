@@ -1,4 +1,4 @@
-# AOT ID: ['153_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,14 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/2n/c2nwyekeyq5wfvb3u63izra25nxuyzcdrcqyju6lpqcjyspo2uzm.py
-# Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.reflection_pad2d]
-# Source node to ATen node mapping:
-#   x_2 => _unsafe_index, _unsafe_index_1
-# Graph fragment:
-#   %_unsafe_index : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%view, [None, None, %sub_10, None]), kwargs = {})
-#   %_unsafe_index_1 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index, [None, None, None, %sub_16]), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -73,7 +65,7 @@ def call(args):
         torch.cuda.set_device(0)
         8 + 2*s1 + 2*s2 + s1*s2
         buf0 = empty_strided_cuda((1, 1, 6 + s0, 8 + 2*s1 + 2*s2 + s1*s2), (48 + 8*s0 + 12*s1 + 12*s2 + 2*s0*s1 + 2*s0*s2 + 6*s1*s2 + s0*s1*s2, 48 + 8*s0 + 12*s1 + 12*s2 + 2*s0*s1 + 2*s0*s2 + 6*s1*s2 + s0*s1*s2, 8 + 2*s1 + 2*s2 + s1*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.reflection_pad2d]
+
         triton_poi_fused_reflection_pad2d_0_xnumel = 48 + 8*s0 + 12*s1 + 12*s2 + 2*s0*s1 + 2*s0*s2 + 6*s1*s2 + s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_reflection_pad2d_0[grid(triton_poi_fused_reflection_pad2d_0_xnumel)](arg3_1, buf0, 148, 10, 10, 10, 2368, XBLOCK=256, num_warps=4, num_stages=1)

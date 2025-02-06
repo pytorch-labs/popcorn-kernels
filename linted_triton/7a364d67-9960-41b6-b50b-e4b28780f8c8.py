@@ -1,4 +1,4 @@
-# AOT ID: ['202_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,25 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/pb/cpbt4xpiaqumxes4hasbjf37yspcfpc7j6lczgzdigrmw5co4pd6.py
-# Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.sub, aten.add, aten.norm, aten.abs, aten.mul, aten.exp, aten.mean]
-# Source node to ATen node mapping:
-#   x => add_12, pow_1, pow_2, sub_6, sum_1
-#   x_1 => abs_1, add_15
-#   x_2 => div, exp, mean, sub_9
-# Graph fragment:
-#   %sub_6 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view, %view_1), kwargs = {})
-#   %add_12 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%sub_6, 1e-06), kwargs = {})
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_12, 2.0), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%pow_1, [1]), kwargs = {})
-#   %pow_2 : [num_users=2] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sum_1, 0.5), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%pow_2,), kwargs = {})
-#   %add_15 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%abs_1, 1), kwargs = {})
-#   %div : [num_users=2] = call_function[target=torch.ops.aten.div.Tensor](args = (%pow_2, %add_15), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%div,), kwargs = {})
-#   %sub_9 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%exp, %div), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%sub_9,), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
@@ -85,8 +66,8 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, ), (1, ), torch.float32)
-        buf1 = reinterpret_tensor(buf0, (), (), 0); del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.sub, aten.add, aten.norm, aten.abs, aten.mul, aten.exp, aten.mean]
+        buf1 = reinterpret_tensor(buf0, (), (), 0); del buf0
+
         s1*s2
         get_raw_stream(0)
         triton_red_fused_abs_add_exp_mean_mul_norm_sub_0[grid(1)](buf1, arg2_1, 64, 64, 1, 4096, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)

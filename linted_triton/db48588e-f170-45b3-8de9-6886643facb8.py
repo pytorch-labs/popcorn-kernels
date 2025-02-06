@@ -1,4 +1,4 @@
-# AOT ID: ['171_forward']
+
 import torch
 from torch._inductor.select_algorithm import extern_kernels
 import triton
@@ -20,18 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/no/cnodiackb7rhdcdjjki33nr4mnypyhdkcygdqs3xau4dmgj4miob.py
-# Topologically Sorted Source Nodes: [x, x_1], Original ATen: [aten.hardsigmoid, aten.view]
-# Source node to ATen node mapping:
-#   x => add, clamp_max, clamp_min, div
-#   x_1 => view
-# Graph fragment:
-#   %add : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%primals_1, 3), kwargs = {})
-#   %clamp_min : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add, 0), kwargs = {})
-#   %clamp_max : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min, 6), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%clamp_max, 6), kwargs = {})
-#   %view : [num_users=2] = call_function[target=torch.ops.aten.reshape.default](args = (%div, [1, -1]), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -55,24 +43,6 @@ def triton_poi_fused_hardsigmoid_view_0(in_ptr0, out_ptr0, xnumel, XBLOCK : tl.c
     tl.store(out_ptr0 + (x0), tmp8, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/tu/ctust6xzmbcg432327osowwltyonvv3somrl4wp7g2pumtdpg5vz.py
-# Topologically Sorted Source Nodes: [target, loss], Original ATen: [aten.randint, aten.gather, aten.rsub, aten.add, aten.clamp_min, aten.arange, aten.ne, aten.scalar_tensor, aten.where, aten.mean, aten.ge]
-# Source node to ATen node mapping:
-#   loss => add_1, clamp_min_1, full_default, gather, iota, mean, ne, sub, where
-#   target => inductor_lookup_seed_default, inductor_randint_default
-# Graph fragment:
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_randint_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_randint.default](args = (0, 16, [1], %inductor_lookup_seed_default), kwargs = {})
-#   %gather : [num_users=1] = call_function[target=torch.ops.aten.gather.default](args = (%addmm_2, 1, %unsqueeze), kwargs = {})
-#   %sub : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (1.0, %gather), kwargs = {})
-#   %add_1 : [num_users=2] = call_function[target=torch.ops.aten.add.Tensor](args = (%sub, %addmm_2), kwargs = {})
-#   %clamp_min_1 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_1, 0), kwargs = {})
-#   %iota : [num_users=1] = call_function[target=torch.ops.prims.iota.default](args = (16,), kwargs = {start: 0, step: 1, dtype: torch.int64, device: cuda:0, requires_grad: False})
-#   %ne : [num_users=2] = call_function[target=torch.ops.aten.ne.Tensor](args = (%iota, %unsqueeze), kwargs = {})
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%ne, %clamp_min_1, %full_default), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%where,), kwargs = {})
-#   %ge : [num_users=1] = call_function[target=torch.ops.aten.ge.Scalar](args = (%add_1, 0), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -134,32 +104,32 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 128), (128, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x, x_1], Original ATen: [aten.hardsigmoid, aten.view]
+
         get_raw_stream(0)
         triton_poi_fused_hardsigmoid_view_0[grid(128)](primals_1, buf0, 128, XBLOCK=128, num_warps=4, num_stages=1)
         del primals_1
         buf1 = empty_strided_cuda((1, 64), (64, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [input_1], Original ATen: [aten.addmm]
+
         extern_kernels.addmm(primals_3, buf0, reinterpret_tensor(primals_2, (128, 64), (1, 128), 0), alpha=1, beta=1, out=buf1)
         del primals_2
         del primals_3
         buf2 = empty_strided_cuda((1, 32), (32, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [input_2], Original ATen: [aten.addmm]
+
         extern_kernels.addmm(primals_5, buf1, reinterpret_tensor(primals_4, (64, 32), (1, 64), 0), alpha=1, beta=1, out=buf2)
         del primals_5
         buf3 = empty_strided_cuda((1, 16), (16, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [input_3], Original ATen: [aten.addmm]
+
         extern_kernels.addmm(primals_7, buf2, reinterpret_tensor(primals_6, (32, 16), (1, 32), 0), alpha=1, beta=1, out=buf3)
         del primals_7
         buf4 = empty_strided_cuda((1, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [1], out=buf4)
-        buf5 = buf4; del buf4  # reuse
+        buf5 = buf4; del buf4
         buf6 = empty_strided_cuda((1, 16), (16, 1), torch.bool)
         buf7 = empty_strided_cuda((), (), torch.float32)
         buf8 = empty_strided_cuda((1, 16), (16, 1), torch.bool)
-        buf9 = buf7; del buf7  # reuse
-        # Topologically Sorted Source Nodes: [target, loss], Original ATen: [aten.randint, aten.gather, aten.rsub, aten.add, aten.clamp_min, aten.arange, aten.ne, aten.scalar_tensor, aten.where, aten.mean, aten.ge]
+        buf9 = buf7; del buf7
+
         get_raw_stream(0)
         triton_per_fused_add_arange_clamp_min_gather_ge_mean_ne_randint_rsub_scalar_tensor_where_1[grid(1)](buf5, buf9, buf3, buf6, buf8, 0, 1, 16, XBLOCK=1, num_warps=2, num_stages=1)
     return (buf3, buf9, buf0, buf1, buf2, reinterpret_tensor(buf5, (1, 1), (1, 1), 0), buf6, buf8, primals_6, primals_4, )

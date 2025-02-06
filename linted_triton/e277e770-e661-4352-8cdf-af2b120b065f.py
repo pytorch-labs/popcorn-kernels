@@ -1,4 +1,4 @@
-# AOT ID: ['186_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/75/c75uhi3u7elcuuabyap7qu227jqcphe7ehzzfm5id6zpag4y7od5.py
-# Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.constant_pad_nd]
-# Source node to ATen node mapping:
-#   x_1 => constant_pad_nd
-# Graph fragment:
-#   %constant_pad_nd : [num_users=1] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%unsqueeze_1, [0, 0, 2, 2], 0.0), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice
@@ -57,15 +50,6 @@ def triton_poi_fused_constant_pad_nd_0(in_ptr0, out_ptr0, ks0, ks1, ks2, ks3, ks
     tl.store(out_ptr0 + (x3), tmp13, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/wu/cwukxm2odxubyz7ecofd6oogqkdporv35ip5kyzpptsxqbmab2mp.py
-# Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.mul, aten.add, aten.pow, aten.div]
-# Source node to ATen node mapping:
-#   x_1 => add_41, div, mul_34, pow_1
-# Graph fragment:
-#   %mul_34 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%squeeze_1, 0.0001), kwargs = {})
-#   %add_41 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_34, 1.0), kwargs = {})
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_41, 0.75), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%squeeze, %pow_1), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -108,19 +92,6 @@ def triton_poi_fused_add_div_mul_pow_1(in_ptr0, in_ptr1, out_ptr0, ks0, ks1, ks2
     tl.store(out_ptr0 + (x5), tmp22, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/ex/cexnz42zi4jczi3sbjkpvgp6ip4cwab33tm2ux55qog7anckqbpz.py
-# Topologically Sorted Source Nodes: [loss], Original ATen: [aten.sub, aten.add, aten.norm]
-# Source node to ATen node mapping:
-#   loss => add_74, add_83, pow_2, pow_4, sub_47, sub_53, sum_1, sum_2
-# Graph fragment:
-#   %sub_47 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view, %view), kwargs = {})
-#   %add_74 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%sub_47, 1e-06), kwargs = {})
-#   %pow_2 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_74, 2.0), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%pow_2, [1]), kwargs = {})
-#   %sub_53 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view, %view), kwargs = {})
-#   %add_83 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%sub_53, 1e-06), kwargs = {})
-#   %pow_4 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_83, 2.0), kwargs = {})
-#   %sum_2 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%pow_4, [1]), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -156,17 +127,6 @@ def triton_red_fused_add_norm_sub_2(in_ptr0, out_ptr0, out_ptr1, ks0, ks1, ks2, 
     tl.store(out_ptr1 + (x0), tmp10, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/gq/cgqvdkizzsebdty6l53evx73hcpprubodtyttqcia3zh43eqhn5h.py
-# Topologically Sorted Source Nodes: [loss], Original ATen: [aten.norm, aten.add, aten.sub, aten.clamp_min, aten.mean]
-# Source node to ATen node mapping:
-#   loss => add_89, clamp_min, mean, pow_3, pow_5, sub_60
-# Graph fragment:
-#   %pow_3 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sum_1, 0.5), kwargs = {})
-#   %add_89 : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%pow_3, 1.0), kwargs = {})
-#   %pow_5 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%sum_2, 0.5), kwargs = {})
-#   %sub_60 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%add_89, %pow_5), kwargs = {})
-#   %clamp_min : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%sub_60, 0), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%clamp_min,), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -217,13 +177,13 @@ def call(args):
         4 + s1
         4*(s2 // 2) + s1*(s2 // 2)
         buf0 = empty_strided_cuda((s0, 1, 4 + s1, s2 // 2), (4*(s2 // 2) + s1*(s2 // 2), 4*s0*(s2 // 2) + s0*s1*(s2 // 2), s2 // 2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.constant_pad_nd]
+
         triton_poi_fused_constant_pad_nd_0_xnumel = 4*s0*(s2 // 2) + s0*s1*(s2 // 2)
         get_raw_stream(0)
         triton_poi_fused_constant_pad_nd_0[grid(triton_poi_fused_constant_pad_nd_0_xnumel)](arg3_1, buf0, 32, 7, 3, 224, 64, 2240, XBLOCK=128, num_warps=4, num_stages=1)
         s1*(s2 // 2)
         buf1 = empty_strided_cuda((s0, s1, s2 // 2), (s1*(s2 // 2), s2 // 2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.mul, aten.add, aten.pow, aten.div]
+
         triton_poi_fused_add_div_mul_pow_1_xnumel = s0*s1*(s2 // 2)
         get_raw_stream(0)
         triton_poi_fused_add_div_mul_pow_1[grid(triton_poi_fused_add_div_mul_pow_1_xnumel)](arg3_1, buf0, buf1, 32, 64, 96, 3, 960, XBLOCK=256, num_warps=4, num_stages=1)
@@ -231,14 +191,14 @@ def call(args):
         del buf0
         buf2 = empty_strided_cuda((s0, ), (1, ), torch.float32)
         buf3 = empty_strided_cuda((s0, ), (1, ), torch.float32)
-        # Topologically Sorted Source Nodes: [loss], Original ATen: [aten.sub, aten.add, aten.norm]
+
         s1*(s2 // 4)
         get_raw_stream(0)
         triton_red_fused_add_norm_sub_2[grid(s0)](buf1, buf2, buf3, 32, 3, 64, 10, 48, XBLOCK=16, R0_BLOCK=8, num_warps=2, num_stages=1)
         del buf1
         buf4 = empty_strided_cuda((), (), torch.float32)
-        buf5 = buf4; del buf4  # reuse
-        # Topologically Sorted Source Nodes: [loss], Original ATen: [aten.norm, aten.add, aten.sub, aten.clamp_min, aten.mean]
+        buf5 = buf4; del buf4
+
         get_raw_stream(0)
         triton_red_fused_add_clamp_min_mean_norm_sub_3[grid(1)](buf5, buf2, buf3, 10, 1, 10, XBLOCK=1, R0_BLOCK=16, num_warps=2, num_stages=1)
         del buf2

@@ -1,4 +1,4 @@
-# AOT ID: ['86_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,31 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/73/c73he5bw5ynh5pzgtog7qwntvlzvymxnu6tnilmcniicbs4bkewk.py
-# Topologically Sorted Source Nodes: [x, x_1, loss], Original ATen: [aten.replication_pad3d, aten.hardswish, aten.huber_loss]
-# Source node to ATen node mapping:
-#   loss => abs_1, lt_8, mean, mul_24, mul_25, mul_26, sigmoid, sub_26, where
-#   x => _unsafe_index, _unsafe_index_1, _unsafe_index_2
-#   x_1 => add_11, clamp_max_3, clamp_min_3, div, mul_6
-# Graph fragment:
-#   %_unsafe_index : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%arg4_1, [None, None, %clamp_max, None, None]), kwargs = {})
-#   %_unsafe_index_1 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index, [None, None, None, %clamp_max_1, None]), kwargs = {})
-#   %_unsafe_index_2 : [num_users=2] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_1, [None, None, None, None, %clamp_max_2]), kwargs = {})
-#   %add_11 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%_unsafe_index_2, 3), kwargs = {})
-#   %clamp_min_3 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_11, 0), kwargs = {})
-#   %clamp_max_3 : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_3, 6), kwargs = {})
-#   %mul_6 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%_unsafe_index_2, %clamp_max_3), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_6, 6), kwargs = {})
-#   %sigmoid : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%div,), kwargs = {})
-#   %abs_1 : [num_users=4] = call_function[target=torch.ops.aten.abs.default](args = (%sigmoid,), kwargs = {})
-#   %lt_8 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%abs_1, 1.0), kwargs = {})
-#   %mul_24 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%abs_1, 0.5), kwargs = {})
-#   %mul_25 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_24, %abs_1), kwargs = {})
-#   %sub_26 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%abs_1, 0.5), kwargs = {})
-#   %mul_26 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_26, 1.0), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%lt_8, %mul_25, %mul_26), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%where,), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -94,30 +69,6 @@ def triton_red_fused_hardswish_huber_loss_replication_pad3d_0(in_ptr0, out_ptr0,
     tl.store(out_ptr0 + (x0), tmp26, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/hq/chqtpbjt4qdporqhehikm3hq5pbx4kaflhxukckkqoga6ya2osgp.py
-# Topologically Sorted Source Nodes: [x, x_1, loss], Original ATen: [aten.replication_pad3d, aten.hardswish, aten.huber_loss]
-# Source node to ATen node mapping:
-#   loss => abs_1, lt_8, mean, mul_24, mul_25, mul_26, sigmoid, sub_26, where
-#   x => _unsafe_index, _unsafe_index_1, _unsafe_index_2
-#   x_1 => add_11, clamp_max_3, clamp_min_3, div, mul_6
-# Graph fragment:
-#   %_unsafe_index : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%arg4_1, [None, None, %clamp_max, None, None]), kwargs = {})
-#   %_unsafe_index_1 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index, [None, None, None, %clamp_max_1, None]), kwargs = {})
-#   %_unsafe_index_2 : [num_users=2] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_1, [None, None, None, None, %clamp_max_2]), kwargs = {})
-#   %add_11 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%_unsafe_index_2, 3), kwargs = {})
-#   %clamp_min_3 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_11, 0), kwargs = {})
-#   %clamp_max_3 : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_3, 6), kwargs = {})
-#   %mul_6 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%_unsafe_index_2, %clamp_max_3), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_6, 6), kwargs = {})
-#   %sigmoid : [num_users=1] = call_function[target=torch.ops.aten.sigmoid.default](args = (%div,), kwargs = {})
-#   %abs_1 : [num_users=4] = call_function[target=torch.ops.aten.abs.default](args = (%sigmoid,), kwargs = {})
-#   %lt_8 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%abs_1, 1.0), kwargs = {})
-#   %mul_24 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%abs_1, 0.5), kwargs = {})
-#   %mul_25 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_24, %abs_1), kwargs = {})
-#   %sub_26 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%abs_1, 0.5), kwargs = {})
-#   %mul_26 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_26, 1.0), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%lt_8, %mul_25, %mul_26), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%where,), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -156,14 +107,14 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((15, ), (1, ), torch.float32)
-        # Topologically Sorted Source Nodes: [x, x_1, loss], Original ATen: [aten.replication_pad3d, aten.hardswish, aten.huber_loss]
+
         (14 + 8*s0 + 4*s0*s1 + 4*s0*s2 + 4*s0*s3 + 2*s0*s1*s2 + 2*s0*s1*s3 + 2*s0*s2*s3 + s0*s1*s2*s3) // 15
         get_raw_stream(0)
         triton_red_fused_hardswish_huber_loss_replication_pad3d_0[grid(15)](arg4_1, buf0, 3, 32, 32, 32, 15, 7861, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)
         del arg4_1
         buf1 = empty_strided_cuda((), (), torch.float32)
-        buf2 = buf1; del buf1  # reuse
-        # Topologically Sorted Source Nodes: [x, x_1, loss], Original ATen: [aten.replication_pad3d, aten.hardswish, aten.huber_loss]
+        buf2 = buf1; del buf1
+
         get_raw_stream(0)
         triton_per_fused_hardswish_huber_loss_replication_pad3d_1[grid(1)](buf2, buf0, 3, 32, 32, 32, 1, 15, XBLOCK=1, num_warps=2, num_stages=1)
         del buf0

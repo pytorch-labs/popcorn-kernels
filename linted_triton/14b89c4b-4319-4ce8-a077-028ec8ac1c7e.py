@@ -1,4 +1,4 @@
-# AOT ID: ['60_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/xw/cxwtelath2w532uefwnwmmweldi6wduytsquaydg5oboc6gmq2qu.py
-# Topologically Sorted Source Nodes: [hx], Original ATen: [aten._to_copy]
-# Source node to ATen node mapping:
-#   hx => full_default
-# Graph fragment:
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([%mul_2, 256], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -50,7 +43,7 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((s0*s1, 256), (256, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [hx], Original ATen: [aten._to_copy]
+
         triton_poi_fused__to_copy_0_xnumel = 256*s0*s1
         get_raw_stream(0)
         triton_poi_fused__to_copy_0[grid(triton_poi_fused__to_copy_0_xnumel)](buf0, 5120, XBLOCK=256, num_warps=4, num_stages=1)

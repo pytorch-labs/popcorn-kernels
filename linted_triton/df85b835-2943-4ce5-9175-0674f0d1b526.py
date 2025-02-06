@@ -1,4 +1,4 @@
-# AOT ID: ['181_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,17 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/yf/cyf5apwcjugkzd4z6tnthoho7cn4a2lywwe2w2t63dq22kdcamik.py
-# Topologically Sorted Source Nodes: [pad, x_2], Original ATen: [aten.replication_pad3d, aten._unsafe_index]
-# Source node to ATen node mapping:
-#   pad => _unsafe_index_1, _unsafe_index_2, _unsafe_index_3
-#   x_2 => _unsafe_index_4
-# Graph fragment:
-#   %_unsafe_index_1 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%unsqueeze_1, [None, None, %clamp_max, None, None]), kwargs = {})
-#   %_unsafe_index_2 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_1, [None, None, None, %clamp_max_1, None]), kwargs = {})
-#   %_unsafe_index_3 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%_unsafe_index_2, [None, None, None, None, %clamp_max_2]), kwargs = {})
-#   %_unsafe_index_4 : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%squeeze, [None, None, %unsqueeze_3, %unsqueeze_4, %convert_element_type_9]), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -123,7 +112,7 @@ def call(args):
         4 + 4*s1
         96 + 96*s1 + 96*s2 + 96*s1*s2
         buf0 = empty_strided_cuda((1, s0, 6, 4 + 4*s1, 4 + 4*s2), (96*s0 + 96*s0*s1 + 96*s0*s2 + 96*s0*s1*s2, 96 + 96*s1 + 96*s2 + 96*s1*s2, 16 + 16*s1 + 16*s2 + 16*s1*s2, 4 + 4*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [pad, x_2], Original ATen: [aten.replication_pad3d, aten._unsafe_index]
+
         triton_poi_fused__unsafe_index_replication_pad3d_0_xnumel = 96*s0 + 96*s0*s1 + 96*s0*s2 + 96*s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused__unsafe_index_replication_pad3d_0[grid(triton_poi_fused__unsafe_index_replication_pad3d_0_xnumel)](arg3_1, buf0, 17424, 32, 132, 132, 32, 104544, 313632, XBLOCK=1024, num_warps=4, num_stages=1)

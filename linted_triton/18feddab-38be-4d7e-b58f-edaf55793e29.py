@@ -1,4 +1,4 @@
-# AOT ID: ['76_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,15 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/sn/csnjckxcdd3ui2b5ceyrtaogupvad3f3g5cl3wd7lyfm5vs6ryp5.py
-# Topologically Sorted Source Nodes: [result], Original ATen: [aten.threshold]
-# Source node to ATen node mapping:
-#   result => full_default, where
-# Graph fragment:
-#   %le_tensor : [num_users=1] = call_function[target=torch.ops.aten.le.Tensor](args = (%view, %arg4_1), kwargs = {})
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%le_tensor, %full_default, %view), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -69,7 +60,7 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, s0*s1*s2), (s0*s1*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [result], Original ATen: [aten.threshold]
+
         triton_poi_fused_threshold_0_xnumel = s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_threshold_0[grid(triton_poi_fused_threshold_0_xnumel)](arg3_1, arg4_1.item(), buf0, 12288, XBLOCK=256, num_warps=4, num_stages=1)

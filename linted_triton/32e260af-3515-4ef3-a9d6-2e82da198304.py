@@ -1,4 +1,4 @@
-# AOT ID: ['23_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/d2/cd2dhmnsstyqyk2gdysqgjlovmafof2cuxle54vb67xaabo5ypwz.py
-# Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.avg_pool2d]
-# Source node to ATen node mapping:
-#   x_3 => avg_pool2d
-# Graph fragment:
-#   %avg_pool2d : [num_users=1] = call_function[target=torch.ops.aten.avg_pool2d.default](args = (%unsqueeze, [1, 3], [1, 2]), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
@@ -52,23 +45,6 @@ def triton_poi_fused_avg_pool2d_0(in_ptr0, out_ptr0, ks0, ks1, ks2, ks3, xnumel,
     tl.store(out_ptr0 + (x2), tmp9, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/px/cpxcv32selqremskdwpxw4mcgyb6hqtoxs2rkjl7fu4pezey3q7e.py
-# Topologically Sorted Source Nodes: [x_5, x_6], Original ATen: [aten.softplus, aten.neg, aten._softmax]
-# Source node to ATen node mapping:
-#   x_5 => div, exp, gt_4, log1p, mul_64, where
-#   x_6 => amax, exp_1, neg, sub_49, sum_1
-# Graph fragment:
-#   %mul_64 : [num_users=2] = call_function[target=torch.ops.aten.mul.Tensor](args = (%view_3, 1.0), kwargs = {})
-#   %gt_4 : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%mul_64, 20.0), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%mul_64,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp,), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%log1p, 1.0), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt_4, %view_3, %div), kwargs = {})
-#   %neg : [num_users=2] = call_function[target=torch.ops.aten.neg.default](args = (%where,), kwargs = {})
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%neg, [1], True), kwargs = {})
-#   %sub_49 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%neg, %amax), kwargs = {})
-#   %exp_1 : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub_49,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp_1, [1], True), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -152,22 +128,6 @@ def triton_red_fused__softmax_neg_softplus_1(in_ptr0, out_ptr0, out_ptr1, ks0, k
     tl.store(out_ptr1 + (x0), tmp52, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/yq/cyqb56fv26eqg7hcp5fstwz4oq6oc36fpenfpomu76u4gw4b3t7j.py
-# Topologically Sorted Source Nodes: [x_5, x_6], Original ATen: [aten.softplus, aten.neg, aten._softmax]
-# Source node to ATen node mapping:
-#   x_5 => div, exp, gt_4, log1p, mul_64, where
-#   x_6 => div_1, exp_1, neg, sub_49
-# Graph fragment:
-#   %mul_64 : [num_users=2] = call_function[target=torch.ops.aten.mul.Tensor](args = (%view_3, 1.0), kwargs = {})
-#   %gt_4 : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%mul_64, 20.0), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%mul_64,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp,), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%log1p, 1.0), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt_4, %view_3, %div), kwargs = {})
-#   %neg : [num_users=2] = call_function[target=torch.ops.aten.neg.default](args = (%where,), kwargs = {})
-#   %sub_49 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%neg, %amax), kwargs = {})
-#   %exp_1 : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub_49,), kwargs = {})
-#   %div_1 : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%exp_1, %sum_1), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -212,12 +172,6 @@ def triton_poi_fused__softmax_neg_softplus_2(in_out_ptr0, in_ptr0, in_ptr1, ks0,
     tl.store(in_out_ptr0 + (x2), tmp27, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/zl/czlblfi7uufalq3mdbnkfjmtec27ehnrkczvnzs4o6etnzllgl2k.py
-# Topologically Sorted Source Nodes: [x_9], Original ATen: [aten.max_unpool3d]
-# Source node to ATen node mapping:
-#   x_9 => full
-# Graph fragment:
-#   %full : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([1, 1, %sub_63, %sub_65, %sub_67], 0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
 import triton
 import triton.language as tl
 
@@ -234,12 +188,6 @@ def triton_poi_fused_max_unpool3d_3(out_ptr0, xnumel, XBLOCK : tl.constexpr):
     tl.store(out_ptr0 + (x0), tmp0, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/id/cidb7ud7ob4t4buajzbfkyojca5davcecluhkljw2itkqr7ooci4.py
-# Topologically Sorted Source Nodes: [x_9], Original ATen: [aten.max_unpool3d]
-# Source node to ATen node mapping:
-#   x_9 => index_put
-# Graph fragment:
-#   %index_put : [num_users=1] = call_function[target=torch.ops.aten.index_put_.default](args = (%view_6, [%view_5], %view_7), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -264,12 +212,6 @@ def triton_poi_fused_max_unpool3d_4(in_ptr0, in_ptr1, out_ptr0, ks0, ks1, ks2, x
     tl.store(out_ptr0 + (tl.broadcast_to(2*(((tmp6 // (2 + 2*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)))) % (2 + 2*(ks0 // 4)))) + 4*(((tmp6 // (4 + 4*(ks0 // 4) + 4*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)) + 4*(ks0 // 4)*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)))) % (2*(triton_helpers.div_floor_integer(ks2*(triton_helpers.div_floor_integer(4 + ks0,  2 + (ks0 // 2)))*(triton_helpers.div_floor_integer(4 + ks1,  2 + (ks1 // 2))),  2))))) + 2*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2))*(((tmp6 // (2 + 2*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)))) % (2 + 2*(ks0 // 4)))) + 4*(ks0 // 4)*(((tmp6 // (4 + 4*(ks0 // 4) + 4*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)) + 4*(ks0 // 4)*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)))) % (2*(triton_helpers.div_floor_integer(ks2*(triton_helpers.div_floor_integer(4 + ks0,  2 + (ks0 // 2)))*(triton_helpers.div_floor_integer(4 + ks1,  2 + (ks1 // 2))),  2))))) + 4*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2))*(((tmp6 // (4 + 4*(ks0 // 4) + 4*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)) + 4*(ks0 // 4)*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)))) % (2*(triton_helpers.div_floor_integer(ks2*(triton_helpers.div_floor_integer(4 + ks0,  2 + (ks0 // 2)))*(triton_helpers.div_floor_integer(4 + ks1,  2 + (ks1 // 2))),  2))))) + 4*(ks0 // 4)*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2))*(((tmp6 // (4 + 4*(ks0 // 4) + 4*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)) + 4*(ks0 // 4)*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2)))) % (2*(triton_helpers.div_floor_integer(ks2*(triton_helpers.div_floor_integer(4 + ks0,  2 + (ks0 // 2)))*(triton_helpers.div_floor_integer(4 + ks1,  2 + (ks1 // 2))),  2))))) + ((tmp6 % (2 + 2*(triton_helpers.div_floor_integer((-1) + (triton_helpers.div_floor_integer((-1) + (ks1 // 2),  2)),  2))))), [XBLOCK])), tmp8, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/22/c22pvbvdzfvmblfbf5ooj4ylbko25govdnj2ng6cchhjadwfr4gm.py
-# Topologically Sorted Source Nodes: [x_11], Original ATen: [aten.relu]
-# Source node to ATen node mapping:
-#   x_11 => relu_1
-# Graph fragment:
-#   %relu_1 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%squeeze_1,), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -302,38 +244,38 @@ def call(args):
         torch.cuda.set_device(0)
         (1 + (s2 // 2)) // 2
         buf0 = empty_strided_cuda((1, 2*s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))) + s0*(s1 // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))), 1, (1 + (s2 // 2)) // 2), (2*s0*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))) + s0*(s1 // 2)*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))), (1 + (s2 // 2)) // 2, (1 + (s2 // 2)) // 2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.avg_pool2d]
+
         triton_poi_fused_avg_pool2d_0_xnumel = 2*s0*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))) + s0*(s1 // 2)*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))
         get_raw_stream(0)
         triton_poi_fused_avg_pool2d_0[grid(triton_poi_fused_avg_pool2d_0_xnumel)](arg3_1, buf0, 16, 3, 64, 64, 6528, XBLOCK=256, num_warps=4, num_stages=1)
         del arg3_1
         buf1 = empty_strided_cuda((1, 1, 2 + (s1 // 2), (1 + (s2 // 2)) // 2), (2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2), 2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2), (1 + (s2 // 2)) // 2, 1), torch.float32)
         buf2 = empty_strided_cuda((1, 1, 2 + (s1 // 2), (1 + (s2 // 2)) // 2), (2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2), 2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2), (1 + (s2 // 2)) // 2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_5, x_6], Original ATen: [aten.softplus, aten.neg, aten._softmax]
+
         triton_red_fused__softmax_neg_softplus_1_xnumel = 2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2)
         s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))
         get_raw_stream(0)
         triton_red_fused__softmax_neg_softplus_1[grid(triton_red_fused__softmax_neg_softplus_1_xnumel)](buf0, buf1, buf2, 16, 64, 544, 12, XBLOCK=1, R0_BLOCK=16, num_warps=2, num_stages=1)
         2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2)
-        buf3 = reinterpret_tensor(buf0, (1, s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))), 2 + (s1 // 2), (1 + (s2 // 2)) // 2), (2*s0*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))) + s0*(s1 // 2)*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))), 2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2), (1 + (s2 // 2)) // 2, 1), 0); del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x_5, x_6], Original ATen: [aten.softplus, aten.neg, aten._softmax]
+        buf3 = reinterpret_tensor(buf0, (1, s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))), 2 + (s1 // 2), (1 + (s2 // 2)) // 2), (2*s0*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))) + s0*(s1 // 2)*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))), 2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2), (1 + (s2 // 2)) // 2, 1), 0); del buf0
+
         triton_poi_fused__softmax_neg_softplus_2_xnumel = 2*s0*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))) + s0*(s1 // 2)*((1 + (s2 // 2)) // 2)*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))
         get_raw_stream(0)
         triton_poi_fused__softmax_neg_softplus_2[grid(triton_poi_fused__softmax_neg_softplus_2_xnumel)](buf3, buf1, buf2, 544, 6528, XBLOCK=256, num_warps=4, num_stages=1)
         del buf1
         del buf2
-        # Topologically Sorted Source Nodes: [max_pool3d], Original ATen: [aten.max_pool3d_with_indices]
+
         buf4 = torch.ops.aten.max_pool3d_with_indices.default(reinterpret_tensor(buf3, (1, 1, s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2))), 2 + (s1 // 2), (1 + (s2 // 2)) // 2), (0, 0, 2*((1 + (s2 // 2)) // 2) + (s1 // 2)*((1 + (s2 // 2)) // 2), (1 + (s2 // 2)) // 2, 1), 0), [2, 2, 2], [2, 2, 2])
         del buf3
         buf5 = buf4[0]
         buf6 = buf4[1]
         del buf4
         buf7 = empty_strided_cuda((1, 1, 2*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2), 2 + 2*(s1 // 4), 2 + 2*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2)), (8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2), 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2), 4 + 4*(s1 // 4) + 4*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 4*(s1 // 4)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2), 2 + 2*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_9], Original ATen: [aten.max_unpool3d]
+
         triton_poi_fused_max_unpool3d_3_xnumel = 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2)
         get_raw_stream(0)
         triton_poi_fused_max_unpool3d_3[grid(triton_poi_fused_max_unpool3d_3_xnumel)](buf7, 6528, XBLOCK=256, num_warps=4, num_stages=1)
-        # Topologically Sorted Source Nodes: [x_9], Original ATen: [aten.max_unpool3d]
+
         triton_poi_fused_max_unpool3d_4_xnumel = ((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*((1 + (s2 // 2)) // 4) + (s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*((1 + (s2 // 2)) // 4)
         get_raw_stream(0)
         triton_poi_fused_max_unpool3d_4[grid(triton_poi_fused_max_unpool3d_4_xnumel)](buf6, buf5, buf7, 64, 64, 3, 816, XBLOCK=128, num_warps=4, num_stages=1)
@@ -343,7 +285,7 @@ def call(args):
         2 + 2*(s1 // 4)
         4 + 4*(s1 // 4) + 4*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 4*(s1 // 4)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2)
         buf9 = empty_strided_cuda((1, 2*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2), 2 + 2*(s1 // 4), 2 + 2*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2)), (8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2), 4 + 4*(s1 // 4) + 4*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 4*(s1 // 4)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2), 2 + 2*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_11], Original ATen: [aten.relu]
+
         triton_poi_fused_relu_5_xnumel = 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2) + 8*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2) + 8*(s1 // 4)*((s0*((4 + s1) // (2 + (s1 // 2)))*((4 + s2) // (2 + (s2 // 2)))) // 2)*(((-1) + (((-1) + (s2 // 2)) // 2)) // 2)
         get_raw_stream(0)
         triton_poi_fused_relu_5[grid(triton_poi_fused_relu_5_xnumel)](buf7, buf9, 16, 34, 544, 3, 64, 64, 6528, XBLOCK=256, num_warps=4, num_stages=1)

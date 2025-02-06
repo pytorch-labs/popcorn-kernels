@@ -1,4 +1,4 @@
-# AOT ID: ['49_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,17 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/fn/cfn6ktyp6lcsj5wrd5eexlkaq7oefquqizglgqg4etus2bnin432.py
-# Topologically Sorted Source Nodes: [x_1], Original ATen: [aten._native_batch_norm_legit]
-# Source node to ATen node mapping:
-#   x_1 => add_6, mul_9, rsqrt, sub_2, var_mean
-# Graph fragment:
-#   %var_mean : [num_users=2] = call_function[target=torch.ops.aten.var_mean.correction](args = (%view_1, [0, 2]), kwargs = {correction: 0, keepdim: True})
-#   %sub_2 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view_1, %getitem_1), kwargs = {})
-#   %add_6 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%getitem, 1e-05), kwargs = {})
-#   %rsqrt : [num_users=1] = call_function[target=torch.ops.aten.rsqrt.default](args = (%add_6,), kwargs = {})
-#   %mul_9 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_2, %rsqrt), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice
@@ -89,7 +78,7 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf3 = empty_strided_cuda((1, 128, s1*s2), (128*s1*s2, s1*s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten._native_batch_norm_legit]
+
         s1*s2
         get_raw_stream(0)
         triton_red_fused__native_batch_norm_legit_0[grid(128)](arg2_1, buf3, 64, 64, 128, 4096, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)

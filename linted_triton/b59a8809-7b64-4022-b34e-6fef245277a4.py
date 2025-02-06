@@ -1,4 +1,4 @@
-# AOT ID: ['78_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,18 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/xw/cxwf7w242a5ojzdi5udh63cbqrvaxdj6ehewouni4i2uc4v5anty.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.constant_pad_nd, aten.avg_pool2d, aten.mul, aten.add, aten.pow, aten.div]
-# Source node to ATen node mapping:
-#   x => add_18, avg_pool2d, constant_pad_nd, div, mul_20, pow_1
-# Graph fragment:
-#   %constant_pad_nd : [num_users=1] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%unsqueeze, [0, 0, 2, 2], 0.0), kwargs = {})
-#   %avg_pool2d : [num_users=1] = call_function[target=torch.ops.aten.avg_pool2d.default](args = (%constant_pad_nd, [5, 1], [1, 1]), kwargs = {})
-#   %mul_20 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%squeeze, 0.0001), kwargs = {})
-#   %add_18 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mul_20, 1.0), kwargs = {})
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%add_18, 0.75), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%arg2_1, %pow_1), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice
@@ -102,12 +90,6 @@ def triton_poi_fused_add_avg_pool2d_constant_pad_nd_div_mul_pow_0(in_out_ptr0, i
     tl.store(in_out_ptr0 + (x2), tmp55, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/x5/cx5gctwk42iocnp6zgarmvsi4ltpddbxll34pmfn2a6a7ryw7sfg.py
-# Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.constant_pad_nd]
-# Source node to ATen node mapping:
-#   x_3 => constant_pad_nd_1
-# Graph fragment:
-#   %constant_pad_nd_1 : [num_users=1] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%squeeze_1, [2, 2], 0.0), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -147,15 +129,15 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 1, s0, s1), (s0*s1, s0*s1, s1, 1), torch.float32)
-        buf1 = reinterpret_tensor(buf0, (1, s0, s1), (s0*s1, s1, 1), 0); del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.constant_pad_nd, aten.avg_pool2d, aten.mul, aten.add, aten.pow, aten.div]
+        buf1 = reinterpret_tensor(buf0, (1, s0, s1), (s0*s1, s1, 1), 0); del buf0
+
         triton_poi_fused_add_avg_pool2d_constant_pad_nd_div_mul_pow_0_xnumel = s0*s1
         get_raw_stream(0)
         triton_poi_fused_add_avg_pool2d_constant_pad_nd_div_mul_pow_0[grid(triton_poi_fused_add_avg_pool2d_constant_pad_nd_div_mul_pow_0_xnumel)](buf1, arg2_1, 64, 10, 640, XBLOCK=128, num_warps=4, num_stages=1)
         del arg2_1
         4 + (s1 // 2)
         buf2 = empty_strided_cuda((1, s0, 4 + (s1 // 2)), (4*s0 + s0*(s1 // 2), 4 + (s1 // 2), 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3], Original ATen: [aten.constant_pad_nd]
+
         triton_poi_fused_constant_pad_nd_1_xnumel = 4*s0 + s0*(s1 // 2)
         get_raw_stream(0)
         triton_poi_fused_constant_pad_nd_1[grid(triton_poi_fused_constant_pad_nd_1_xnumel)](buf1, buf2, 36, 64, 360, XBLOCK=128, num_warps=4, num_stages=1)

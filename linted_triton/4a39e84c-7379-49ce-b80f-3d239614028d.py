@@ -1,4 +1,4 @@
-# AOT ID: ['82_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,17 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/gz/cgz55gnu73mdyou5lyex4x5onprde5muekl4cocryrfsmuuc6t5h.py
-# Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.hardswish]
-# Source node to ATen node mapping:
-#   x_2 => add_14, clamp_max_2, clamp_min_2, div, mul_11
-# Graph fragment:
-#   %add_14 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%permute, 3), kwargs = {})
-#   %clamp_min_2 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_14, 0), kwargs = {})
-#   %clamp_max_2 : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_2, 6), kwargs = {})
-#   %mul_11 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%permute, %clamp_max_2), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_11, 6), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -66,7 +55,7 @@ def call(args):
         torch.cuda.set_device(0)
         16 + 4*s1 + 4*s2 + s1*s2
         buf0 = empty_strided_cuda((1, 16 + 4*s1 + 4*s2 + s1*s2, s0), (16*s0 + 4*s0*s1 + 4*s0*s2 + s0*s1*s2, 1, 16 + 4*s1 + 4*s2 + s1*s2), torch.float32)
-        # Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.hardswish]
+
         triton_poi_fused_hardswish_0_xnumel = 16*s0 + 4*s0*s1 + 4*s0*s2 + s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_hardswish_0[grid(triton_poi_fused_hardswish_0_xnumel)](arg3_1, buf0, 1296, 32, 32, 3888, XBLOCK=128, num_warps=4, num_stages=1)

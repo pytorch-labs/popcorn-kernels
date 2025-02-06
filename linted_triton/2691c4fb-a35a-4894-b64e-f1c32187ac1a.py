@@ -1,4 +1,4 @@
-# AOT ID: ['117_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -20,13 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/fy/cfync6en72arpnm5olb2vi5whmvopnetqp7nbwwzm6ujjpviqnae.py
-# Topologically Sorted Source Nodes: [pow_1], Original ATen: [aten.pow]
-# Source node to ATen node mapping:
-#   pow_1 => pow_1
-# Graph fragment:
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%unsqueeze, 2.0), kwargs = {})
-
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
 triton_helpers.set_driver_to_gpu()
@@ -47,22 +40,6 @@ def triton_poi_fused_pow_0(in_ptr0, out_ptr0, xnumel, XBLOCK : tl.constexpr):
     tl.store(out_ptr0 + (x0), tmp6, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/cq/ccql3pdmb27qtpfnf3asduau6p66py4ig2jjdkreqbl2ncj4cajc.py
-# Topologically Sorted Source Nodes: [sign, abs_1, relu, mul, mul_1, x_2], Original ATen: [aten.sign, aten.abs, aten.relu, aten.mul, aten.pow]
-# Source node to ATen node mapping:
-#   abs_1 => abs_2
-#   mul => mul_41
-#   mul_1 => mul_47
-#   relu => relu
-#   sign => sign
-#   x_2 => pow_2
-# Graph fragment:
-#   %sign : [num_users=1] = call_function[target=torch.ops.aten.sign.default](args = (%avg_pool3d,), kwargs = {})
-#   %abs_2 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%avg_pool3d,), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%abs_2,), kwargs = {})
-#   %mul_41 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sign, %relu), kwargs = {})
-#   %mul_47 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_41, 27), kwargs = {})
-#   %pow_2 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%mul_47, 0.5), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -102,18 +79,18 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 1, s0, s1, s2), (s0*s1*s2, s0*s1*s2, s1*s2, s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [pow_1], Original ATen: [aten.pow]
+
         triton_poi_fused_pow_0_xnumel = s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_pow_0[grid(triton_poi_fused_pow_0_xnumel)](arg3_1, buf0, 262144, XBLOCK=1024, num_warps=4, num_stages=1)
         del arg3_1
-        # Topologically Sorted Source Nodes: [pow_1, out], Original ATen: [aten.pow, aten.avg_pool3d]
+
         buf1 = torch.ops.aten.avg_pool3d.default(buf0, [3, 3, 3], [2, 2, 2], [0, 0, 0], False, True, None)
         del buf0
         buf2 = buf1
         del buf1
-        buf3 = reinterpret_tensor(buf2, (1, 1, 1 + (((-3) + s0) // 2), 1 + (((-3) + s1) // 2), 1 + (((-3) + s2) // 2)), (1 + (((-3) + s0) // 2)*(((-3) + s1) // 2) + (((-3) + s0) // 2)*(((-3) + s2) // 2) + (((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s0) // 2)*(((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s0) // 2) + (((-3) + s1) // 2) + (((-3) + s2) // 2), 1, 1 + (((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s1) // 2) + (((-3) + s2) // 2), 1 + (((-3) + s2) // 2), 1), 0); del buf2  # reuse
-        # Topologically Sorted Source Nodes: [sign, abs_1, relu, mul, mul_1, x_2], Original ATen: [aten.sign, aten.abs, aten.relu, aten.mul, aten.pow]
+        buf3 = reinterpret_tensor(buf2, (1, 1, 1 + (((-3) + s0) // 2), 1 + (((-3) + s1) // 2), 1 + (((-3) + s2) // 2)), (1 + (((-3) + s0) // 2)*(((-3) + s1) // 2) + (((-3) + s0) // 2)*(((-3) + s2) // 2) + (((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s0) // 2)*(((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s0) // 2) + (((-3) + s1) // 2) + (((-3) + s2) // 2), 1, 1 + (((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s1) // 2) + (((-3) + s2) // 2), 1 + (((-3) + s2) // 2), 1), 0); del buf2
+
         triton_poi_fused_abs_mul_pow_relu_sign_1_xnumel = 1 + (((-3) + s0) // 2)*(((-3) + s1) // 2) + (((-3) + s0) // 2)*(((-3) + s2) // 2) + (((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s0) // 2)*(((-3) + s1) // 2)*(((-3) + s2) // 2) + (((-3) + s0) // 2) + (((-3) + s1) // 2) + (((-3) + s2) // 2)
         get_raw_stream(0)
         triton_poi_fused_abs_mul_pow_relu_sign_1[grid(triton_poi_fused_abs_mul_pow_relu_sign_1_xnumel)](buf3, 29791, XBLOCK=256, num_warps=4, num_stages=1)

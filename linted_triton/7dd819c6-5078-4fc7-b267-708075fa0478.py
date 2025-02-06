@@ -1,4 +1,4 @@
-# AOT ID: ['208_forward']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/ue/cueofwhg4igednsbsf5xrraau2k5di4whnms3xhcjwpqxes3uf6r.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.mean]
-# Source node to ATen node mapping:
-#   x => mean
-# Graph fragment:
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%primals_3, [-1, -2], True), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -52,23 +45,6 @@ def triton_red_fused_mean_0(in_ptr0, out_ptr0, ks0, ks1, xnumel, r0_numel, XBLOC
     tl.store(out_ptr0 + (x0), tmp2, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/re/crewsmv2pcrmbjwfzrsmv22weocxcb6lukw6qqpepuohlgcjla22.py
-# Topologically Sorted Source Nodes: [x_2, x_3, x_4, x_5], Original ATen: [aten.add, aten._log_softmax]
-# Source node to ATen node mapping:
-#   x_2 => add
-#   x_3 => add_1
-#   x_4 => add_2
-#   x_5 => amax, exp, log, sub, sub_1, sum_1
-# Graph fragment:
-#   %add : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%view, %expand), kwargs = {})
-#   %add_1 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%add, %expand_1), kwargs = {})
-#   %add_2 : [num_users=2] = call_function[target=torch.ops.aten.add.Tensor](args = (%add_1, %expand_2), kwargs = {})
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%add_2, [1], True), kwargs = {})
-#   %sub : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%add_2, %amax), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%sub,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %log : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%sum_1,), kwargs = {})
-#   %sub_1 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%sub, %log), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -120,14 +96,14 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 10, 1, 1), (10, 1, 10, 10), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.mean]
+
         s1*s2
         get_raw_stream(0)
         triton_red_fused_mean_0[grid(10)](primals_3, buf0, 64, 64, 10, 4096, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)
         del primals_3
-        buf2 = reinterpret_tensor(buf0, (1, 10), (10, 1), 0); del buf0  # reuse
-        buf4 = buf2; del buf2  # reuse
-        # Topologically Sorted Source Nodes: [x_2, x_3, x_4, x_5], Original ATen: [aten.add, aten._log_softmax]
+        buf2 = reinterpret_tensor(buf0, (1, 10), (10, 1), 0); del buf0
+        buf4 = buf2; del buf2
+
         get_raw_stream(0)
         triton_per_fused__log_softmax_add_1[grid(1)](buf4, primals_4, primals_5, primals_6, 64, 64, 1, 10, XBLOCK=1, num_warps=2, num_stages=1)
         del primals_4

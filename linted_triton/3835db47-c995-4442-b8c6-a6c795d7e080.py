@@ -1,4 +1,4 @@
-# AOT ID: ['34_forward']
+
 import torch
 from torch._inductor.select_algorithm import extern_kernels
 import triton
@@ -21,17 +21,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/2r/c2rarhhfscwji6oghgfyv3tergn4ekhg22ylkdhvm4o44rngfz6m.py
-# Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.convolution, aten.relu]
-# Source node to ATen node mapping:
-#   x => convolution
-#   x_1 => relu
-#   x_2 => convolution_1
-# Graph fragment:
-#   %convolution : [num_users=1] = call_function[target=torch.ops.aten.convolution.default](args = (%primals_1, %primals_2, %primals_3, [1, 1], [0, 0], [1, 1], False, [0, 0], 1), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%convolution,), kwargs = {})
-#   %convolution_1 : [num_users=1] = call_function[target=torch.ops.aten.convolution.default](args = (%relu, %primals_4, %primals_5, [1, 1], [0, 0], [1, 1], False, [0, 0], 1), kwargs = {})
-
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
 triton_helpers.set_driver_to_gpu()
@@ -52,18 +41,6 @@ def triton_poi_fused_convolution_relu_0(in_out_ptr0, in_ptr0, xnumel, XBLOCK : t
     tl.store(in_out_ptr0 + (x2), tmp4, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/2s/c2s64fiqqgrv5yoo2olfivpw6ezu2aatnbxystzgpee7v7zhjckw.py
-# Topologically Sorted Source Nodes: [x, x_1, x_2, x_3], Original ATen: [aten.convolution, aten.relu]
-# Source node to ATen node mapping:
-#   x => convolution
-#   x_1 => relu
-#   x_2 => convolution_1
-#   x_3 => relu_1
-# Graph fragment:
-#   %convolution : [num_users=1] = call_function[target=torch.ops.aten.convolution.default](args = (%primals_1, %primals_2, %primals_3, [1, 1], [0, 0], [1, 1], False, [0, 0], 1), kwargs = {})
-#   %relu : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%convolution,), kwargs = {})
-#   %convolution_1 : [num_users=1] = call_function[target=torch.ops.aten.convolution.default](args = (%relu, %primals_4, %primals_5, [1, 1], [0, 0], [1, 1], False, [0, 0], 1), kwargs = {})
-#   %relu_1 : [num_users=1] = call_function[target=torch.ops.aten.relu.default](args = (%convolution_1,), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -87,12 +64,6 @@ def triton_poi_fused_convolution_relu_1(in_ptr0, in_ptr1, out_ptr0, xnumel, XBLO
     tl.store(out_ptr0 + (x0 + 3616*x1), tmp4, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/mc/cmctav2sinfb74xd4l6hp5jniwthbu4bgp5uv4qou5lss3xxmnsn.py
-# Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.max_unpool3d]
-# Source node to ATen node mapping:
-#   x_6 => full_default
-# Graph fragment:
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([72000], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
 import triton
 import triton.language as tl
 
@@ -110,13 +81,6 @@ def triton_poi_fused_max_unpool3d_2(out_ptr0, xnumel, XBLOCK : tl.constexpr):
     tl.store(out_ptr0 + (x0), tmp0, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/6l/c6lwivg5bqhn5hhp5peqvmiypmsq6scbip5umyri2kikwfvg4mat.py
-# Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.max_unpool3d]
-# Source node to ATen node mapping:
-#   x_6 => full_default, index_put
-# Graph fragment:
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([72000], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %index_put : [num_users=1] = call_function[target=torch.ops.aten.index_put_.default](args = (%full_default, [%view_1], %view_3), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -142,12 +106,6 @@ def triton_poi_fused_max_unpool3d_3(in_ptr0, in_ptr1, out_ptr0, xnumel, XBLOCK :
     tl.store(out_ptr0 + (tl.broadcast_to(tmp6, [XBLOCK])), tmp8, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/xf/cxfpw2dspdjbh5dalzxsnzqqsbz64i4nac3a5ut3jd27fgugy6ev.py
-# Topologically Sorted Source Nodes: [x_10], Original ATen: [aten.arange]
-# Source node to ATen node mapping:
-#   x_10 => iota_1
-# Graph fragment:
-#   %iota_1 : [num_users=2] = call_function[target=torch.ops.prims.iota.default](args = (1,), kwargs = {start: 0, step: 72000, dtype: torch.int64, device: cuda:0, requires_grad: False})
 import triton
 import triton.language as tl
 
@@ -163,12 +121,6 @@ def triton_poi_fused_arange_4(out_ptr0, xnumel, XBLOCK : tl.constexpr):
     tl.store(out_ptr0 + (tl.full([XBLOCK], 0, tl.int32)), tmp0, None)
 
 
-# kernel path: /tmp/torchinductor_sahanp/wf/cwf5zt5mpwihsexx773qru57knydoriwql34tdwwgqtg3k2wz6xb.py
-# Topologically Sorted Source Nodes: [long], Original ATen: [aten._to_copy]
-# Source node to ATen node mapping:
-#   long => convert_element_type
-# Graph fragment:
-#   %convert_element_type : [num_users=1] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%view_7, torch.int64), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -187,17 +139,6 @@ def triton_poi_fused__to_copy_5(in_ptr0, out_ptr0, xnumel, XBLOCK : tl.constexpr
     tl.store(out_ptr0 + (x0), tmp1, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/4a/c4afiurvjvd4hrfksjylo4ame34v2frzacwq4z7i3acssgw6omr7.py
-# Topologically Sorted Source Nodes: [x_11], Original ATen: [aten.neg, aten._softmax]
-# Source node to ATen node mapping:
-#   x_11 => amax, div, exp, neg, sub, sum_1
-# Graph fragment:
-#   %neg : [num_users=2] = call_function[target=torch.ops.aten.neg.default](args = (%getitem_2,), kwargs = {})
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%neg, [1], True), kwargs = {})
-#   %sub : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%neg, %amax), kwargs = {})
-#   %exp : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%exp, %sum_1), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -239,51 +180,51 @@ def call(args):
     assert_size_stride(primals_6, (100, 10), (10, 1))
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.convolution]
+
         buf0 = extern_kernels.convolution(primals_1, primals_2, stride=(1, 1), padding=(0, 0), dilation=(1, 1), transposed=False, output_padding=(0, 0), groups=1, bias=None)
         assert_size_stride(buf0, (1, 10, 62, 62), (38440, 3844, 62, 1))
         del primals_1
         del primals_2
-        buf1 = buf0; del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.convolution, aten.relu]
+        buf1 = buf0; del buf0
+
         get_raw_stream(0)
         triton_poi_fused_convolution_relu_0[grid(38440)](buf1, primals_3, 38440, XBLOCK=512, num_warps=4, num_stages=1)
         del primals_3
-        # Topologically Sorted Source Nodes: [x, x_1, x_2], Original ATen: [aten.convolution, aten.relu]
+
         buf2 = extern_kernels.convolution(buf1, primals_4, stride=(1, 1), padding=(0, 0), dilation=(1, 1), transposed=False, output_padding=(0, 0), groups=1, bias=None)
         assert_size_stride(buf2, (1, 20, 60, 60), (72000, 3600, 60, 1))
         del buf1
         del primals_4
         buf3 = empty_strided_cuda((1, 20, 60, 60), (72320, 3616, 60, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x, x_1, x_2, x_3], Original ATen: [aten.convolution, aten.relu]
+
         get_raw_stream(0)
         triton_poi_fused_convolution_relu_1[grid(72000)](buf2, primals_5, buf3, 72000, XBLOCK=512, num_warps=8, num_stages=1)
         del primals_5
-        # Topologically Sorted Source Nodes: [max_pool3d], Original ATen: [aten.max_pool3d_with_indices]
+
         buf4 = torch.ops.aten.max_pool3d_with_indices.default(reinterpret_tensor(buf3, (1, 1, 20, 60, 60), (0, 0, 3616, 60, 1), 0), [2, 2, 2], [2, 2, 2])
         del buf3
         buf5 = buf4[0]
         buf6 = buf4[1]
         del buf4
-        buf7 = reinterpret_tensor(buf2, (72000, ), (1, ), 0); del buf2  # reuse
-        # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.max_unpool3d]
+        buf7 = reinterpret_tensor(buf2, (72000, ), (1, ), 0); del buf2
+
         get_raw_stream(0)
         triton_poi_fused_max_unpool3d_2[grid(72000)](buf7, 72000, XBLOCK=1024, num_warps=4, num_stages=1)
-        # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.max_unpool3d]
+
         get_raw_stream(0)
         triton_poi_fused_max_unpool3d_3[grid(9000)](buf6, buf5, buf7, 9000, XBLOCK=256, num_warps=4, num_stages=1)
         del buf5
         del buf6
         buf9 = empty_strided_cuda((1, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [x_10], Original ATen: [aten.arange]
+
         get_raw_stream(0)
         triton_poi_fused_arange_4[grid(1)](buf9, 1, XBLOCK=1, num_warps=1, num_stages=1)
         buf10 = empty_strided_cuda((1, 72000), (72000, 1), torch.int64)
-        # Topologically Sorted Source Nodes: [long], Original ATen: [aten._to_copy]
+
         get_raw_stream(0)
         triton_poi_fused__to_copy_5[grid(72000)](buf7, buf10, 72000, XBLOCK=1024, num_warps=4, num_stages=1)
         del buf7
-        # Topologically Sorted Source Nodes: [x_10], Original ATen: [aten._embedding_bag]
+
         buf11 = torch.ops.aten._embedding_bag.default(primals_6, reinterpret_tensor(buf10, (72000, ), (1, ), 0), buf9, False, 1)
         del primals_6
         buf12 = buf11[0]
@@ -291,8 +232,8 @@ def call(args):
         buf14 = buf11[2]
         buf15 = buf11[3]
         del buf11
-        buf18 = buf12; del buf12  # reuse
-        # Topologically Sorted Source Nodes: [x_11], Original ATen: [aten.neg, aten._softmax]
+        buf18 = buf12; del buf12
+
         get_raw_stream(0)
         triton_per_fused__softmax_neg_6[grid(1)](buf18, 1, 10, XBLOCK=1, num_warps=2, num_stages=1)
     return (buf18, buf9, reinterpret_tensor(buf10, (72000, ), (1, ), 0), buf13, buf14, buf15, buf18, )

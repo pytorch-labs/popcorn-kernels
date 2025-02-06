@@ -1,4 +1,4 @@
-# AOT ID: ['179_inference']
+
 from ctypes import c_void_p, c_long, c_int
 import torch
 import math
@@ -40,7 +40,7 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-#include "/tmp/torchinductor_sahanp/3b/c3bi5gk6mslf6u4iaqafhxm64z6u65e3eain4xlary5blqnvv6xx.h"
+
 extern "C"  void kernel(const int64_t* in_ptr0,
                        int64_t* out_ptr0,
                        const int64_t ks0,
@@ -93,39 +93,39 @@ extern "C"  void kernel(const int64_t* in_ptr0,
 ''')
 
 
-# kernel path: /tmp/torchinductor_sahanp/jp/cjpcufrlathlqsar3h4timtn2uihv4ji3z35dphhpnmmshowfm2m.py
-# Topologically Sorted Source Nodes: [nll_loss, log_softmax, bce_loss, add], Original ATen: [aten.nll_loss_forward, aten._log_softmax, aten.binary_cross_entropy_with_logits, aten.add]
-# Source node to ATen node mapping:
-#   add => add_26
-#   bce_loss => abs_1, exp_1, full_default_2, log1p, mean, minimum, mul_32, neg_1, sub_19, sub_20, sub_21
-#   log_softmax => amax, exp, sub_16, sum_1
-#   nll_loss => convert_element_type_3, div, full_default_1, ne_1, ne_2, neg, sum_2, sum_3, where_1
-# Graph fragment:
-#   %ne_1 : [num_users=1] = call_function[target=torch.ops.aten.ne.Scalar](args = (%device_put, -100), kwargs = {})
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%view, [1], True), kwargs = {})
-#   %sub_16 : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view, %amax), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%sub_16,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %neg : [num_users=1] = call_function[target=torch.ops.aten.neg.default](args = (%squeeze,), kwargs = {})
-#   %full_default_1 : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where_1 : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%ne_1, %neg, %full_default_1), kwargs = {})
-#   %sum_3 : [num_users=1] = call_function[target=torch.ops.aten.sum.default](args = (%where_1,), kwargs = {})
-#   %ne_2 : [num_users=1] = call_function[target=torch.ops.aten.ne.Scalar](args = (%device_put, -100), kwargs = {})
-#   %sum_2 : [num_users=1] = call_function[target=torch.ops.aten.sum.default](args = (%ne_2,), kwargs = {})
-#   %convert_element_type_3 : [num_users=1] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%sum_2, torch.float32), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%sum_3, %convert_element_type_3), kwargs = {})
-#   %sub_19 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (1, %device_put_1), kwargs = {})
-#   %mul_32 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%sub_19, %view), kwargs = {})
-#   %full_default_2 : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %minimum : [num_users=1] = call_function[target=torch.ops.aten.minimum.default](args = (%full_default_2, %view), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%view,), kwargs = {})
-#   %neg_1 : [num_users=1] = call_function[target=torch.ops.aten.neg.default](args = (%abs_1,), kwargs = {})
-#   %exp_1 : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%neg_1,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp_1,), kwargs = {})
-#   %sub_20 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%minimum, %log1p), kwargs = {})
-#   %sub_21 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%mul_32, %sub_20), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%sub_21,), kwargs = {})
-#   %add_26 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%div, %mean), kwargs = {})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import triton
 import triton.language as tl
 from triton.compiler.compiler import AttrsDescriptor
@@ -230,18 +230,18 @@ def call(args):
     assert_size_stride(arg3_1, (1, 1, s0, s1, s2), (s0*s1*s2, s0*s1*s2, s1*s2, s2, 1))
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.max_pool3d_with_indices]
+
         buf0 = torch.ops.aten.max_pool3d_with_indices.default(arg3_1, [2, 2, 2], [2, 2, 2])
         del arg3_1
         buf1 = buf0[0]
         del buf0
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.max_pool3d_with_indices]
+
         buf3 = torch.ops.aten.max_pool3d_with_indices.default(buf1, [2, 2, 2], [2, 2, 2])
         del buf1
         buf4 = buf3[0]
         del buf3
     buf6 = empty_strided_cpu((2, ), (1, ), torch.int64)
-    # Topologically Sorted Source Nodes: [], Original ATen: []
+
     aten.randint.low_out(-9223372036854775808, 9223372036854775807, [2], out=buf6)
     buf7 = empty_strided_cpu((1, ), (1, ), torch.int64)
     cpp_fused_randint_0(buf6, buf7, s0, s1, s2)
@@ -259,8 +259,8 @@ def call(args):
         buf12.copy_(buf11, False)
         del buf11
         buf9 = empty_strided_cuda((1, 1), (1, 1), torch.float32)
-        buf14 = reinterpret_tensor(buf9, (), (), 0); del buf9  # reuse
-        # Topologically Sorted Source Nodes: [nll_loss, log_softmax, bce_loss, add], Original ATen: [aten.nll_loss_forward, aten._log_softmax, aten.binary_cross_entropy_with_logits, aten.add]
+        buf14 = reinterpret_tensor(buf9, (), (), 0); del buf9
+
         triton_red_fused__log_softmax_add_binary_cross_entropy_with_logits_nll_loss_forward_2_r0_numel = (s0 // 4)*(s1 // 4)*(s2 // 4)
         stream0 = get_raw_stream(0)
         triton_red_fused__log_softmax_add_binary_cross_entropy_with_logits_nll_loss_forward_2[grid(1)](buf14, buf4, buf12, buf8, 32, 32, 32, 1, 512, XBLOCK=1, R0_BLOCK=512, num_warps=4, num_stages=1)

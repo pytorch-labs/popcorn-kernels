@@ -1,4 +1,4 @@
-# AOT ID: ['4_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/px/cpxifk6ndttaa2gb5iq5stegj34uyf3dl2d7gllw3azb7mvdxxb2.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.constant_pad_nd]
-# Source node to ATen node mapping:
-#   x => constant_pad_nd
-# Graph fragment:
-#   %constant_pad_nd : [num_users=1] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%arg0_1, [2, 2], 0.0), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -56,7 +49,7 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 3, 32, 36), (3456, 1152, 36, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.constant_pad_nd]
+
         get_raw_stream(0)
         triton_poi_fused_constant_pad_nd_0[grid(3456)](arg0_1, buf0, 3456, XBLOCK=256, num_warps=4, num_stages=1)
         del arg0_1

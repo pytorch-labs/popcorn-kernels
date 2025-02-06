@@ -1,4 +1,4 @@
-# AOT ID: ['89_forward']
+
 import torch
 from torch._inductor.select_algorithm import extern_kernels
 import triton
@@ -21,13 +21,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/wo/cwofv3pqrnlxa7rtrfhpwzbmhzay7ovw6otnj6fv2oizj62udpkw.py
-# Topologically Sorted Source Nodes: [h1], Original ATen: [aten._to_copy]
-# Source node to ATen node mapping:
-#   h1 => full_default
-# Graph fragment:
-#   %full_default : [num_users=3] = call_function[target=torch.ops.aten.full.default](args = ([1, 256], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
 triton_helpers.set_driver_to_gpu()
@@ -43,12 +36,6 @@ def triton_poi_fused__to_copy_0(out_ptr0, xnumel, XBLOCK : tl.constexpr):
     tl.store(out_ptr0 + (x0), tmp0, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/oi/coimjdvbfarzzwnifgpcbpmdzhzcv3usdrekslhkwo3cstvyae3i.py
-# Topologically Sorted Source Nodes: [h2], Original ATen: [aten._to_copy]
-# Source node to ATen node mapping:
-#   h2 => full_default_1
-# Graph fragment:
-#   %full_default_1 : [num_users=3] = call_function[target=torch.ops.aten.full.default](args = ([1, 512], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
 import triton
 import triton.language as tl
 
@@ -66,17 +53,6 @@ def triton_poi_fused__to_copy_1(out_ptr0, xnumel, XBLOCK : tl.constexpr):
     tl.store(out_ptr0 + (x0), tmp0, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/ij/cijsqthq26iffqma4ydhrgdrr2agjwks6go7yd66lmvkrnr3k7ss.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.pow, aten.mean, aten.add, aten.rsqrt, aten.mul]
-# Source node to ATen node mapping:
-#   x => add, mean, mul, mul_1, pow_1, rsqrt
-# Graph fragment:
-#   %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%getitem_38, 2), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%pow_1, [1], True), kwargs = {})
-#   %add : [num_users=1] = call_function[target=torch.ops.aten.add.Scalar](args = (%mean, 1.1920928955078125e-07), kwargs = {})
-#   %rsqrt : [num_users=2] = call_function[target=torch.ops.aten.rsqrt.default](args = (%add,), kwargs = {})
-#   %mul : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%getitem_38, %rsqrt), kwargs = {})
-#   %mul_1 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul, %primals_10), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -110,13 +86,6 @@ def triton_per_fused_add_mean_mul_pow_rsqrt_2(in_out_ptr0, in_ptr0, in_ptr1, out
     tl.store(out_ptr0 + (tl.broadcast_to(r0_0, [R0_BLOCK])), tmp12, None)
 
 
-# kernel path: /tmp/torchinductor_sahanp/qq/cqqsclrot5jzqeeazjsmmcz3isjeimvz7wco4h6ws7qg5wimms47.py
-# Topologically Sorted Source Nodes: [head_logprob], Original ATen: [aten._log_softmax]
-# Source node to ATen node mapping:
-#   head_logprob => amax, sub
-# Graph fragment:
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%mm_40, [1], True), kwargs = {})
-#   %sub : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%mm_40, %amax), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -146,15 +115,6 @@ def triton_poi_fused__log_softmax_3(in_ptr0, out_ptr0, xnumel, XBLOCK : tl.const
     tl.store(out_ptr0 + (x0), tmp12, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/hv/chvqjnbrmzy3yei2z3k3575mj7vcqfoi2xxkmbs7fgykd5kyrln4.py
-# Topologically Sorted Source Nodes: [head_logprob], Original ATen: [aten._log_softmax]
-# Source node to ATen node mapping:
-#   head_logprob => exp, log, sub_1, sum_1
-# Graph fragment:
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%sub,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %log : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%sum_1,), kwargs = {})
-#   %sub_1 : [num_users=3] = call_function[target=torch.ops.aten.sub.Tensor](args = (%sub, %log), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -189,16 +149,6 @@ def triton_poi_fused__log_softmax_4(in_ptr0, out_ptr0, xnumel, XBLOCK : tl.const
     tl.store(out_ptr0 + (x0), tmp17, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/ay/cayzibmk63e5sksy4zrytfbs7ubd4gsygecg5m2n22blowvulv6p.py
-# Topologically Sorted Source Nodes: [cluster_logprob_1], Original ATen: [aten._log_softmax]
-# Source node to ATen node mapping:
-#   cluster_logprob_1 => amax_2, exp_2, log_2, sub_4, sum_3
-# Graph fragment:
-#   %amax_2 : [num_users=2] = call_function[target=torch.ops.aten.amax.default](args = (%mm_44, [1], True), kwargs = {})
-#   %sub_4 : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%mm_44, %amax_2), kwargs = {})
-#   %exp_2 : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%sub_4,), kwargs = {})
-#   %sum_3 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp_2, [1], True), kwargs = {})
-#   %log_2 : [num_users=2] = call_function[target=torch.ops.aten.log.default](args = (%sum_3,), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -249,33 +199,6 @@ def triton_poi_fused__log_softmax_5(in_ptr0, out_ptr0, out_ptr1, xnumel, XBLOCK 
     tl.store(out_ptr1 + (tl.full([XBLOCK], 0, tl.int32)), tmp34, None)
 
 
-# kernel path: /tmp/torchinductor_sahanp/gy/cgy25pyfjd3ycsw6e6g2nofhjfuaw57ak5yu2aq7uqo564gzzwev.py
-# Topologically Sorted Source Nodes: [setitem, cluster_logprob, output_logprob, setitem_1, cluster_logprob_1, output_logprob_1, setitem_2], Original ATen: [aten.copy, aten._log_softmax, aten.add]
-# Source node to ATen node mapping:
-#   cluster_logprob => amax_1, exp_1, log_1, sub_2, sub_3, sum_2
-#   cluster_logprob_1 => sub_4, sub_5
-#   output_logprob => add_1
-#   output_logprob_1 => add_2
-#   setitem => copy
-#   setitem_1 => copy_1
-#   setitem_2 => copy_2
-# Graph fragment:
-#   %copy : [num_users=1] = call_function[target=torch.ops.aten.copy.default](args = (%slice_24, %slice_22), kwargs = {})
-#   %slice_scatter_default : [num_users=2] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%empty, %copy, 1, 0, 2), kwargs = {})
-#   %amax_1 : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%mm_42, [1], True), kwargs = {})
-#   %sub_2 : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%mm_42, %amax_1), kwargs = {})
-#   %exp_1 : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%sub_2,), kwargs = {})
-#   %sum_2 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp_1, [1], True), kwargs = {})
-#   %log_1 : [num_users=1] = call_function[target=torch.ops.aten.log.default](args = (%sum_2,), kwargs = {})
-#   %sub_3 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%sub_2, %log_1), kwargs = {})
-#   %add_1 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%sub_3, %unsqueeze), kwargs = {})
-#   %copy_1 : [num_users=1] = call_function[target=torch.ops.aten.copy.default](args = (%slice_34, %add_1), kwargs = {})
-#   %slice_scatter_default_1 : [num_users=2] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%slice_scatter_default, %copy_1, 1, 2, 4), kwargs = {})
-#   %sub_4 : [num_users=2] = call_function[target=torch.ops.aten.sub.Tensor](args = (%mm_44, %amax_2), kwargs = {})
-#   %sub_5 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%sub_4, %log_2), kwargs = {})
-#   %add_2 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%sub_5, %unsqueeze_1), kwargs = {})
-#   %copy_2 : [num_users=1] = call_function[target=torch.ops.aten.copy.default](args = (%slice_44, %add_2), kwargs = {})
-#   %slice_scatter_default_2 : [num_users=1] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%slice_scatter_default_1, %copy_2, 1, 4, 10), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -351,219 +274,219 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 256), (256, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [h1], Original ATen: [aten._to_copy]
+
         get_raw_stream(0)
         triton_poi_fused__to_copy_0[grid(256)](buf0, 256, XBLOCK=128, num_warps=4, num_stages=1)
         buf1 = empty_strided_cuda((1, 512), (512, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [h2], Original ATen: [aten._to_copy]
+
         get_raw_stream(0)
         triton_poi_fused__to_copy_1[grid(512)](buf1, 512, XBLOCK=128, num_warps=4, num_stages=1)
         buf2 = empty_strided_cuda((1, 768), (768, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [ret], Original ATen: [aten.mm]
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 0), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf2)
         buf3 = empty_strided_cuda((1, 768), (768, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [ret], Original ATen: [aten.mm]
+
         extern_kernels.mm(buf0, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf3)
-        # Topologically Sorted Source Nodes: [ret], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf4 = torch.ops.aten._thnn_fused_gru_cell.default(buf2, buf3, buf0, primals_4, primals_5)
         buf5 = buf4[0]
         buf6 = buf4[1]
         del buf4
         buf7 = empty_strided_cuda((1, 1536), (1536, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [ret_1], Original ATen: [aten.mm]
+
         extern_kernels.mm(buf5, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf7)
         buf8 = empty_strided_cuda((1, 1536), (1536, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [ret_1], Original ATen: [aten.mm]
+
         extern_kernels.mm(buf1, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf8)
-        # Topologically Sorted Source Nodes: [ret_1], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf9 = torch.ops.aten._thnn_fused_gru_cell.default(buf7, buf8, buf1, primals_8, primals_9)
         buf10 = buf9[0]
         buf11 = buf9[1]
         del buf9
-        buf12 = buf3; del buf3  # reuse
-        # Topologically Sorted Source Nodes: [ret_2], Original ATen: [aten.mm]
+        buf12 = buf3; del buf3
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 128), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf12)
-        buf13 = buf2; del buf2  # reuse
-        # Topologically Sorted Source Nodes: [ret_2], Original ATen: [aten.mm]
+        buf13 = buf2; del buf2
+
         extern_kernels.mm(buf5, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf13)
-        # Topologically Sorted Source Nodes: [ret_2], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf14 = torch.ops.aten._thnn_fused_gru_cell.default(buf12, buf13, buf5, primals_4, primals_5)
         buf15 = buf14[0]
         buf16 = buf14[1]
         del buf14
-        buf17 = buf8; del buf8  # reuse
-        # Topologically Sorted Source Nodes: [ret_3], Original ATen: [aten.mm]
+        buf17 = buf8; del buf8
+
         extern_kernels.mm(buf15, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf17)
-        buf18 = buf7; del buf7  # reuse
-        # Topologically Sorted Source Nodes: [ret_3], Original ATen: [aten.mm]
+        buf18 = buf7; del buf7
+
         extern_kernels.mm(buf10, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf18)
-        # Topologically Sorted Source Nodes: [ret_3], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf19 = torch.ops.aten._thnn_fused_gru_cell.default(buf17, buf18, buf10, primals_8, primals_9)
         buf20 = buf19[0]
         buf21 = buf19[1]
         del buf19
-        buf22 = buf13; del buf13  # reuse
-        # Topologically Sorted Source Nodes: [ret_4], Original ATen: [aten.mm]
+        buf22 = buf13; del buf13
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 256), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf22)
-        buf23 = buf12; del buf12  # reuse
-        # Topologically Sorted Source Nodes: [ret_4], Original ATen: [aten.mm]
+        buf23 = buf12; del buf12
+
         extern_kernels.mm(buf15, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf23)
-        # Topologically Sorted Source Nodes: [ret_4], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf24 = torch.ops.aten._thnn_fused_gru_cell.default(buf22, buf23, buf15, primals_4, primals_5)
         buf25 = buf24[0]
         buf26 = buf24[1]
         del buf24
-        buf27 = buf18; del buf18  # reuse
-        # Topologically Sorted Source Nodes: [ret_5], Original ATen: [aten.mm]
+        buf27 = buf18; del buf18
+
         extern_kernels.mm(buf25, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf27)
-        buf28 = buf17; del buf17  # reuse
-        # Topologically Sorted Source Nodes: [ret_5], Original ATen: [aten.mm]
+        buf28 = buf17; del buf17
+
         extern_kernels.mm(buf20, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf28)
-        # Topologically Sorted Source Nodes: [ret_5], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf29 = torch.ops.aten._thnn_fused_gru_cell.default(buf27, buf28, buf20, primals_8, primals_9)
         buf30 = buf29[0]
         buf31 = buf29[1]
         del buf29
-        buf32 = buf23; del buf23  # reuse
-        # Topologically Sorted Source Nodes: [ret_6], Original ATen: [aten.mm]
+        buf32 = buf23; del buf23
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 384), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf32)
-        buf33 = buf22; del buf22  # reuse
-        # Topologically Sorted Source Nodes: [ret_6], Original ATen: [aten.mm]
+        buf33 = buf22; del buf22
+
         extern_kernels.mm(buf25, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf33)
-        # Topologically Sorted Source Nodes: [ret_6], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf34 = torch.ops.aten._thnn_fused_gru_cell.default(buf32, buf33, buf25, primals_4, primals_5)
         buf35 = buf34[0]
         buf36 = buf34[1]
         del buf34
-        buf37 = buf28; del buf28  # reuse
-        # Topologically Sorted Source Nodes: [ret_7], Original ATen: [aten.mm]
+        buf37 = buf28; del buf28
+
         extern_kernels.mm(buf35, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf37)
-        buf38 = buf27; del buf27  # reuse
-        # Topologically Sorted Source Nodes: [ret_7], Original ATen: [aten.mm]
+        buf38 = buf27; del buf27
+
         extern_kernels.mm(buf30, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf38)
-        # Topologically Sorted Source Nodes: [ret_7], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf39 = torch.ops.aten._thnn_fused_gru_cell.default(buf37, buf38, buf30, primals_8, primals_9)
         buf40 = buf39[0]
         buf41 = buf39[1]
         del buf39
-        buf42 = buf33; del buf33  # reuse
-        # Topologically Sorted Source Nodes: [ret_8], Original ATen: [aten.mm]
+        buf42 = buf33; del buf33
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 512), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf42)
-        buf43 = buf32; del buf32  # reuse
-        # Topologically Sorted Source Nodes: [ret_8], Original ATen: [aten.mm]
+        buf43 = buf32; del buf32
+
         extern_kernels.mm(buf35, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf43)
-        # Topologically Sorted Source Nodes: [ret_8], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf44 = torch.ops.aten._thnn_fused_gru_cell.default(buf42, buf43, buf35, primals_4, primals_5)
         buf45 = buf44[0]
         buf46 = buf44[1]
         del buf44
-        buf47 = buf38; del buf38  # reuse
-        # Topologically Sorted Source Nodes: [ret_9], Original ATen: [aten.mm]
+        buf47 = buf38; del buf38
+
         extern_kernels.mm(buf45, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf47)
-        buf48 = buf37; del buf37  # reuse
-        # Topologically Sorted Source Nodes: [ret_9], Original ATen: [aten.mm]
+        buf48 = buf37; del buf37
+
         extern_kernels.mm(buf40, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf48)
-        # Topologically Sorted Source Nodes: [ret_9], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf49 = torch.ops.aten._thnn_fused_gru_cell.default(buf47, buf48, buf40, primals_8, primals_9)
         buf50 = buf49[0]
         buf51 = buf49[1]
         del buf49
-        buf52 = buf43; del buf43  # reuse
-        # Topologically Sorted Source Nodes: [ret_10], Original ATen: [aten.mm]
+        buf52 = buf43; del buf43
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 640), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf52)
-        buf53 = buf42; del buf42  # reuse
-        # Topologically Sorted Source Nodes: [ret_10], Original ATen: [aten.mm]
+        buf53 = buf42; del buf42
+
         extern_kernels.mm(buf45, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf53)
-        # Topologically Sorted Source Nodes: [ret_10], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf54 = torch.ops.aten._thnn_fused_gru_cell.default(buf52, buf53, buf45, primals_4, primals_5)
         buf55 = buf54[0]
         buf56 = buf54[1]
         del buf54
-        buf57 = buf48; del buf48  # reuse
-        # Topologically Sorted Source Nodes: [ret_11], Original ATen: [aten.mm]
+        buf57 = buf48; del buf48
+
         extern_kernels.mm(buf55, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf57)
-        buf58 = buf47; del buf47  # reuse
-        # Topologically Sorted Source Nodes: [ret_11], Original ATen: [aten.mm]
+        buf58 = buf47; del buf47
+
         extern_kernels.mm(buf50, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf58)
-        # Topologically Sorted Source Nodes: [ret_11], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf59 = torch.ops.aten._thnn_fused_gru_cell.default(buf57, buf58, buf50, primals_8, primals_9)
         buf60 = buf59[0]
         buf61 = buf59[1]
         del buf59
-        buf62 = buf53; del buf53  # reuse
-        # Topologically Sorted Source Nodes: [ret_12], Original ATen: [aten.mm]
+        buf62 = buf53; del buf53
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 768), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf62)
-        buf63 = buf52; del buf52  # reuse
-        # Topologically Sorted Source Nodes: [ret_12], Original ATen: [aten.mm]
+        buf63 = buf52; del buf52
+
         extern_kernels.mm(buf55, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf63)
-        # Topologically Sorted Source Nodes: [ret_12], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf64 = torch.ops.aten._thnn_fused_gru_cell.default(buf62, buf63, buf55, primals_4, primals_5)
         buf65 = buf64[0]
         buf66 = buf64[1]
         del buf64
-        buf67 = buf58; del buf58  # reuse
-        # Topologically Sorted Source Nodes: [ret_13], Original ATen: [aten.mm]
+        buf67 = buf58; del buf58
+
         extern_kernels.mm(buf65, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf67)
-        buf68 = buf57; del buf57  # reuse
-        # Topologically Sorted Source Nodes: [ret_13], Original ATen: [aten.mm]
+        buf68 = buf57; del buf57
+
         extern_kernels.mm(buf60, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf68)
-        # Topologically Sorted Source Nodes: [ret_13], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf69 = torch.ops.aten._thnn_fused_gru_cell.default(buf67, buf68, buf60, primals_8, primals_9)
         buf70 = buf69[0]
         buf71 = buf69[1]
         del buf69
-        buf72 = buf63; del buf63  # reuse
-        # Topologically Sorted Source Nodes: [ret_14], Original ATen: [aten.mm]
+        buf72 = buf63; del buf63
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 896), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf72)
-        buf73 = buf62; del buf62  # reuse
-        # Topologically Sorted Source Nodes: [ret_14], Original ATen: [aten.mm]
+        buf73 = buf62; del buf62
+
         extern_kernels.mm(buf65, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf73)
-        # Topologically Sorted Source Nodes: [ret_14], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf74 = torch.ops.aten._thnn_fused_gru_cell.default(buf72, buf73, buf65, primals_4, primals_5)
         buf75 = buf74[0]
         buf76 = buf74[1]
         del buf74
-        buf77 = buf68; del buf68  # reuse
-        # Topologically Sorted Source Nodes: [ret_15], Original ATen: [aten.mm]
+        buf77 = buf68; del buf68
+
         extern_kernels.mm(buf75, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf77)
-        buf78 = buf67; del buf67  # reuse
-        # Topologically Sorted Source Nodes: [ret_15], Original ATen: [aten.mm]
+        buf78 = buf67; del buf67
+
         extern_kernels.mm(buf70, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf78)
-        # Topologically Sorted Source Nodes: [ret_15], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf79 = torch.ops.aten._thnn_fused_gru_cell.default(buf77, buf78, buf70, primals_8, primals_9)
         buf80 = buf79[0]
         buf81 = buf79[1]
         del buf79
-        buf82 = buf73; del buf73  # reuse
-        # Topologically Sorted Source Nodes: [ret_16], Original ATen: [aten.mm]
+        buf82 = buf73; del buf73
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 1024), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf82)
-        buf83 = buf72; del buf72  # reuse
-        # Topologically Sorted Source Nodes: [ret_16], Original ATen: [aten.mm]
+        buf83 = buf72; del buf72
+
         extern_kernels.mm(buf75, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf83)
-        # Topologically Sorted Source Nodes: [ret_16], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf84 = torch.ops.aten._thnn_fused_gru_cell.default(buf82, buf83, buf75, primals_4, primals_5)
         buf85 = buf84[0]
         buf86 = buf84[1]
         del buf84
-        buf87 = buf78; del buf78  # reuse
-        # Topologically Sorted Source Nodes: [ret_17], Original ATen: [aten.mm]
+        buf87 = buf78; del buf78
+
         extern_kernels.mm(buf85, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf87)
-        buf88 = buf77; del buf77  # reuse
-        # Topologically Sorted Source Nodes: [ret_17], Original ATen: [aten.mm]
+        buf88 = buf77; del buf77
+
         extern_kernels.mm(buf80, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf88)
-        # Topologically Sorted Source Nodes: [ret_17], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf89 = torch.ops.aten._thnn_fused_gru_cell.default(buf87, buf88, buf80, primals_8, primals_9)
         buf90 = buf89[0]
         buf91 = buf89[1]
         del buf89
-        buf92 = buf83; del buf83  # reuse
-        # Topologically Sorted Source Nodes: [ret_18], Original ATen: [aten.mm]
+        buf92 = buf83; del buf83
+
         extern_kernels.mm(reinterpret_tensor(primals_1, (1, 128), (128, 1), 1152), reinterpret_tensor(primals_2, (128, 768), (1, 128), 0), out=buf92)
         del primals_2
-        buf93 = buf82; del buf82  # reuse
-        # Topologically Sorted Source Nodes: [ret_18], Original ATen: [aten.mm]
+        buf93 = buf82; del buf82
+
         extern_kernels.mm(buf85, reinterpret_tensor(primals_3, (256, 768), (1, 256), 0), out=buf93)
-        # Topologically Sorted Source Nodes: [ret_18], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf94 = torch.ops.aten._thnn_fused_gru_cell.default(buf92, buf93, buf85, primals_4, primals_5)
         del buf92
         del buf93
@@ -572,13 +495,13 @@ def call(args):
         buf95 = buf94[0]
         buf96 = buf94[1]
         del buf94
-        buf97 = buf88; del buf88  # reuse
-        # Topologically Sorted Source Nodes: [ret_19], Original ATen: [aten.mm]
+        buf97 = buf88; del buf88
+
         extern_kernels.mm(buf95, reinterpret_tensor(primals_6, (256, 1536), (1, 256), 0), out=buf97)
-        buf98 = buf87; del buf87  # reuse
-        # Topologically Sorted Source Nodes: [ret_19], Original ATen: [aten.mm]
+        buf98 = buf87; del buf87
+
         extern_kernels.mm(buf90, reinterpret_tensor(primals_7, (512, 1536), (1, 512), 0), out=buf98)
-        # Topologically Sorted Source Nodes: [ret_19], Original ATen: [aten._thnn_fused_gru_cell]
+
         buf99 = torch.ops.aten._thnn_fused_gru_cell.default(buf97, buf98, buf90, primals_8, primals_9)
         del buf97
         del buf98
@@ -588,48 +511,48 @@ def call(args):
         buf101 = buf99[1]
         del buf99
         buf102 = empty_strided_cuda((1, 1), (1, 1), torch.float32)
-        buf103 = buf102; del buf102  # reuse
+        buf103 = buf102; del buf102
         buf104 = empty_strided_cuda((1, 512), (512, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.pow, aten.mean, aten.add, aten.rsqrt, aten.mul]
+
         get_raw_stream(0)
         triton_per_fused_add_mean_mul_pow_rsqrt_2[grid(1)](buf103, buf100, primals_10, buf104, 1, 512, num_warps=4, num_stages=1)
-        # Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.adaptive_max_pool3d]
+
         buf105 = torch.ops.aten.adaptive_max_pool3d.default(reinterpret_tensor(buf104, (1, 512, 1, 1, 1), (0, 1, 0, 0, 0), 0), [1, 1, 1])
         buf106 = buf105[0]
         buf107 = buf105[1]
         del buf105
         buf108 = empty_strided_cuda((1, 4), (4, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [head_output], Original ATen: [aten.mm]
+
         extern_kernels.mm(reinterpret_tensor(buf106, (1, 512), (512, 1), 0), reinterpret_tensor(primals_11, (512, 4), (1, 512), 0), out=buf108)
         buf110 = empty_strided_cuda((1, 4), (4, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [head_logprob], Original ATen: [aten._log_softmax]
+
         get_raw_stream(0)
         triton_poi_fused__log_softmax_3[grid(4)](buf108, buf110, 4, XBLOCK=4, num_warps=1, num_stages=1)
         buf111 = empty_strided_cuda((1, 4), (4, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [head_logprob], Original ATen: [aten._log_softmax]
+
         get_raw_stream(0)
         triton_poi_fused__log_softmax_4[grid(4)](buf110, buf111, 4, XBLOCK=4, num_warps=1, num_stages=1)
         del buf110
         buf112 = empty_strided_cuda((1, 128), (128, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [input_1], Original ATen: [aten.mm]
+
         extern_kernels.mm(reinterpret_tensor(buf106, (1, 512), (512, 1), 0), reinterpret_tensor(primals_12, (512, 128), (1, 512), 0), out=buf112)
         buf113 = empty_strided_cuda((1, 2), (2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [input_2], Original ATen: [aten.mm]
+
         extern_kernels.mm(buf112, reinterpret_tensor(primals_13, (128, 2), (1, 128), 0), out=buf113)
         buf115 = empty_strided_cuda((1, 32), (32, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [input_3], Original ATen: [aten.mm]
+
         extern_kernels.mm(reinterpret_tensor(buf106, (1, 512), (512, 1), 0), reinterpret_tensor(primals_14, (512, 32), (1, 512), 0), out=buf115)
         buf116 = empty_strided_cuda((1, 6), (6, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [input_4], Original ATen: [aten.mm]
+
         extern_kernels.mm(buf115, reinterpret_tensor(primals_15, (32, 6), (1, 32), 0), out=buf116)
         buf117 = empty_strided_cuda((1, 1), (1, 1), torch.float32)
         buf118 = empty_strided_cuda((1, 1), (1, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [cluster_logprob_1], Original ATen: [aten._log_softmax]
+
         get_raw_stream(0)
         triton_poi_fused__log_softmax_5[grid(1)](buf116, buf117, buf118, 1, XBLOCK=1, num_warps=1, num_stages=1)
         buf114 = empty_strided_cuda((1, 10), (10, 1), torch.float32)
-        buf119 = buf114; del buf114  # reuse
-        # Topologically Sorted Source Nodes: [setitem, cluster_logprob, output_logprob, setitem_1, cluster_logprob_1, output_logprob_1, setitem_2], Original ATen: [aten.copy, aten._log_softmax, aten.add]
+        buf119 = buf114; del buf114
+
         get_raw_stream(0)
         triton_poi_fused__log_softmax_add_copy_6[grid(10)](buf119, buf113, buf111, buf116, buf117, buf118, 10, XBLOCK=16, num_warps=1, num_stages=1)
         del buf111

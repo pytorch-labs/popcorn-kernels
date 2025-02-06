@@ -1,4 +1,4 @@
-# AOT ID: ['73_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -20,14 +20,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
 
-# kernel path: /tmp/torchinductor_sahanp/ld/cldn2qdgb3t6ym43k5vwtnuils5a6tbf4ypkjz6ticbkzkzxawsr.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.native_dropout]
-# Source node to ATen node mapping:
-#   x => inductor_lookup_seed_default, inductor_random_default_1
-# Graph fragment:
-#   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-#   %inductor_random_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %arg0_1, %arg1_1, %arg2_1, %arg3_1], %inductor_lookup_seed_default, rand), kwargs = {})
-
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
 
@@ -43,16 +35,6 @@ def triton_poi_fused_native_dropout_0(in_ptr0, out_ptr0, load_seed_offset, xnume
     tl.store(out_ptr0 + (x0), tmp2, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/3l/c3lffgosubfrbotvovv3yioa7ocs5lbhnpczy5zzijc2t6m3i5hj.py
-# Topologically Sorted Source Nodes: [x, x_1], Original ATen: [aten.native_dropout, aten.mean]
-# Source node to ATen node mapping:
-#   x => gt_3, mul_2, mul_3
-#   x_1 => mean
-# Graph fragment:
-#   %gt_3 : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%inductor_random_default_1, 0.5), kwargs = {})
-#   %mul_2 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%gt_3, %arg4_1), kwargs = {})
-#   %mul_3 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_2, 2.0), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%mul_3, [-1, -2, -3], True), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -93,22 +75,6 @@ def triton_red_fused_mean_native_dropout_1(in_ptr0, in_ptr1, out_ptr0, ks0, ks1,
     tl.store(out_ptr0 + (x3), tmp14, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/5j/c5jm6rij7ptgm4jz67lbp74urqevhlb4a35hnocukkyz4dvtmasp.py
-# Topologically Sorted Source Nodes: [x_3, x, x_1], Original ATen: [aten.native_dropout, aten.mean]
-# Source node to ATen node mapping:
-#   x => gt_3, mul_2, mul_3
-#   x_1 => mean
-#   x_3 => gt_5, inductor_lookup_seed_default_1, inductor_random_default, mul_18, mul_19
-# Graph fragment:
-#   %inductor_lookup_seed_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 1), kwargs = {})
-#   %inductor_random_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, %arg0_1], %inductor_lookup_seed_default_1, rand), kwargs = {})
-#   %gt_5 : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%inductor_random_default, 0.5), kwargs = {})
-#   %gt_3 : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%inductor_random_default_1, 0.5), kwargs = {})
-#   %mul_2 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%gt_3, %arg4_1), kwargs = {})
-#   %mul_3 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_2, 2.0), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%mul_3, [-1, -2, -3], True), kwargs = {})
-#   %mul_18 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%gt_5, %view), kwargs = {})
-#   %mul_19 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul_18, 2.0), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -156,15 +122,15 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((2, ), (1, ), torch.int64)
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+
         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [2], out=buf0)
         buf2 = empty_strided_cuda((1, s0, s1, s2, s3), (s0*s1*s2*s3, s1*s2*s3, s2*s3, s3, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.native_dropout]
+
         triton_poi_fused_native_dropout_0_xnumel = s0*s1*s2*s3
         get_raw_stream(0)
         triton_poi_fused_native_dropout_0[grid(triton_poi_fused_native_dropout_0_xnumel)](buf0, buf2, 0, 786432, XBLOCK=1024, num_warps=4, num_stages=1)
         buf3 = empty_strided_cuda((1, s0, 1, 1, 1, 32), (32*s0, 32, 32*s0, 32*s0, 32*s0, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x, x_1], Original ATen: [aten.native_dropout, aten.mean]
+
         triton_red_fused_mean_native_dropout_1_xnumel = 32*s0
         (31 + s1*s2*s3) // 32
         get_raw_stream(0)
@@ -172,8 +138,8 @@ def call(args):
         del arg4_1
         del buf2
         buf1 = empty_strided_cuda((1, s0), (s0, 1), torch.float32)
-        buf5 = buf1; del buf1  # reuse
-        # Topologically Sorted Source Nodes: [x_3, x, x_1], Original ATen: [aten.native_dropout, aten.mean]
+        buf5 = buf1; del buf1
+
         get_raw_stream(0)
         triton_per_fused_mean_native_dropout_2[grid(s0)](buf5, buf3, buf0, 1, 64, 64, 64, 3, 32, XBLOCK=1, num_warps=2, num_stages=1)
         del buf0

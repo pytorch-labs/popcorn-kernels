@@ -1,4 +1,4 @@
-# AOT ID: ['18_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,16 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/xq/cxqkjwvyucahsznkij5j5lvpbfhoo2wqvwbk3pm5d2ttvxst45t7.py
-# Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.copy]
-# Source node to ATen node mapping:
-#   x_2 => copy
-# Graph fragment:
-#   %copy : [num_users=1] = call_function[target=torch.ops.aten.copy.default](args = (%slice_3, %slice_4), kwargs = {})
-#   %slice_scatter_default : [num_users=1] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%slice_tensor, %copy, 2, 1, 11), kwargs = {})
-#   %slice_scatter_default_1 : [num_users=3] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%empty, %slice_scatter_default, 3, 1, 69), kwargs = {})
-#   %slice_scatter_default_2 : [num_users=3] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%slice_scatter_default_1, %slice_11, 3, 0, 1), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -90,13 +80,6 @@ def triton_poi_fused_copy_0(in_ptr0, in_ptr1, out_ptr0, xnumel, XBLOCK : tl.cons
     tl.store(out_ptr0 + (x2), tmp44, xmask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/yq/cyqcfndwwjvuvlunuozbrm32wtlanord24i2fgm5mnwtne72mzr5.py
-# Topologically Sorted Source Nodes: [], Original ATen: []
-# Source node to ATen node mapping:
-# Graph fragment:
-#   %slice_scatter_default_3 : [num_users=3] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%slice_scatter_default_2, %slice_16, 3, 69, 70), kwargs = {})
-#   %slice_scatter_default_4 : [num_users=3] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%slice_scatter_default_3, %slice_21, 2, 0, 1), kwargs = {})
-#   %slice_scatter_default_5 : [num_users=1] = call_function[target=torch.ops.aten.slice_scatter.default](args = (%slice_scatter_default_4, %slice_26, 2, 11, 12), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -168,12 +151,12 @@ def call(args):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 1, 12, 70), (840, 840, 70, 1), torch.float32)
         buf1 = empty_strided_cuda((1, 1, 12, 70), (840, 840, 70, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_2], Original ATen: [aten.copy]
+
         get_raw_stream(0)
         triton_poi_fused_copy_0[grid(840)](arg0_1, buf0, buf1, 840, XBLOCK=128, num_warps=4, num_stages=1)
         del arg0_1
-        buf2 = reinterpret_tensor(buf0, (1, 1, 12, 70), (840, 1, 70, 1), 0); del buf0  # reuse
-        # Topologically Sorted Source Nodes: [], Original ATen: []
+        buf2 = reinterpret_tensor(buf0, (1, 1, 12, 70), (840, 1, 70, 1), 0); del buf0
+
         get_raw_stream(0)
         triton_poi_fused_1[grid(840)](buf1, buf2, 840, XBLOCK=128, num_warps=4, num_stages=1)
         del buf1

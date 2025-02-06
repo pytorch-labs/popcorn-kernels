@@ -1,4 +1,4 @@
-# AOT ID: ['4_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,25 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/6m/c6mvtix2k7at5bk6duga5aycitoahrnie6h4lo5zlus4ycg6vhcn.py
-# Topologically Sorted Source Nodes: [x_1, x_3, x_4], Original ATen: [aten._adaptive_avg_pool2d, aten.neg, aten._softmax, aten.abs, aten.le, aten.scalar_tensor, aten.where]
-# Source node to ATen node mapping:
-#   x_1 => _adaptive_avg_pool2d
-#   x_3 => amax, div, exp, neg, sub, sum_1
-#   x_4 => abs_1, full_default, le, where
-# Graph fragment:
-#   %_adaptive_avg_pool2d : [num_users=1] = call_function[target=torch.ops.aten._adaptive_avg_pool2d.default](args = (%unsqueeze, [1, 10]), kwargs = {})
-#   %neg : [num_users=2] = call_function[target=torch.ops.aten.neg.default](args = (%view_1,), kwargs = {})
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%neg, [1], True), kwargs = {})
-#   %sub : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%neg, %amax), kwargs = {})
-#   %exp : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %div : [num_users=2] = call_function[target=torch.ops.aten.div.Tensor](args = (%exp, %sum_1), kwargs = {})
-#   %abs_1 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%div,), kwargs = {})
-#   %le : [num_users=1] = call_function[target=torch.ops.aten.le.Scalar](args = (%abs_1, 0.5), kwargs = {})
-#   %full_default : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%le, %full_default, %div), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -99,8 +80,8 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, 1, 1, 10), (10, 10, 10, 1), torch.float32)
-        buf3 = reinterpret_tensor(buf0, (1, 10), (10, 1), 0); del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x_1, x_3, x_4], Original ATen: [aten._adaptive_avg_pool2d, aten.neg, aten._softmax, aten.abs, aten.le, aten.scalar_tensor, aten.where]
+        buf3 = reinterpret_tensor(buf0, (1, 10), (10, 1), 0); del buf0
+
         get_raw_stream(0)
         triton_per_fused__adaptive_avg_pool2d__softmax_abs_le_neg_scalar_tensor_where_0[grid(1)](buf3, arg0_1, 1, 10, XBLOCK=1, num_warps=2, num_stages=1)
         del arg0_1

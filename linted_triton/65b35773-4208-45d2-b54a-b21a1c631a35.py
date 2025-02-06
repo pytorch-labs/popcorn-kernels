@@ -1,4 +1,4 @@
-# AOT ID: ['162_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,40 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/yg/cygghm5niuhejgfuha2sa6glfi2cg645p74ibesfsypy3wk35hk7.py
-# Topologically Sorted Source Nodes: [x, x_1, x_2, target, loss, x_3], Original ATen: [aten.constant_pad_nd, aten.hardswish, aten.ones_like, aten.ne, aten.fill, aten.sub, aten.clamp_min, aten.zeros_like, aten.where, aten.add, aten.mean]
-# Source node to ATen node mapping:
-#   loss => add_42, clamp_min_2, full_1, full_2, mean, ne_13, ne_14, sub_11, where, where_1
-#   target => full
-#   x => constant_pad_nd
-#   x_1 => add_2, clamp_max, clamp_min, div, mul_2
-#   x_2 => constant_pad_nd_1
-#   x_3 => add_7, clamp_max_1, clamp_min_1, div_1, mul_7
-# Graph fragment:
-#   %constant_pad_nd : [num_users=2] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%arg1_1, [2, 2], 0.0), kwargs = {})
-#   %add_2 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%constant_pad_nd, 3), kwargs = {})
-#   %clamp_min : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_2, 0), kwargs = {})
-#   %clamp_max : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min, 6), kwargs = {})
-#   %mul_2 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%constant_pad_nd, %clamp_max), kwargs = {})
-#   %div : [num_users=1] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_2, 6), kwargs = {})
-#   %constant_pad_nd_1 : [num_users=3] = call_function[target=torch.ops.aten.constant_pad_nd.default](args = (%div, [3, 3], 1.0), kwargs = {})
-#   %full : [num_users=2] = call_function[target=torch.ops.aten.full.default](args = ([1, %sym_size_int_1], 1), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %ne_13 : [num_users=1] = call_function[target=torch.ops.aten.ne.Scalar](args = (%full, 1), kwargs = {})
-#   %full_2 : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([1, %sym_size_int_1], 1.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %add_7 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%constant_pad_nd_1, 3), kwargs = {})
-#   %clamp_min_1 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%add_7, 0), kwargs = {})
-#   %clamp_max_1 : [num_users=1] = call_function[target=torch.ops.aten.clamp_max.default](args = (%clamp_min_1, 6), kwargs = {})
-#   %mul_7 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%constant_pad_nd_1, %clamp_max_1), kwargs = {})
-#   %div_1 : [num_users=2] = call_function[target=torch.ops.aten.div.Tensor](args = (%mul_7, 6), kwargs = {})
-#   %sub_11 : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%full_2, %div_1), kwargs = {})
-#   %clamp_min_2 : [num_users=1] = call_function[target=torch.ops.aten.clamp_min.default](args = (%sub_11, 0), kwargs = {})
-#   %full_1 : [num_users=2] = call_function[target=torch.ops.aten.full.default](args = ([1, %sym_size_int_1], 0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%ne_13, %clamp_min_2, %full_1), kwargs = {})
-#   %ne_14 : [num_users=1] = call_function[target=torch.ops.aten.ne.Scalar](args = (%full, -1), kwargs = {})
-#   %where_1 : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%ne_14, %div_1, %full_1), kwargs = {})
-#   %add_42 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%where, %where_1), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.default](args = (%add_42,), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -130,8 +96,8 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((), (), torch.float32)
-        buf1 = buf0; del buf0  # reuse
-        # Topologically Sorted Source Nodes: [x, x_1, x_2, target, loss, x_3], Original ATen: [aten.constant_pad_nd, aten.hardswish, aten.ones_like, aten.ne, aten.fill, aten.sub, aten.clamp_min, aten.zeros_like, aten.where, aten.add, aten.mean]
+        buf1 = buf0; del buf0
+
         10 + s0
         get_raw_stream(0)
         triton_red_fused_add_clamp_min_constant_pad_nd_fill_hardswish_mean_ne_ones_like_sub_where_zeros_like_0[grid(1)](buf1, arg1_1, 10, 1, 20, XBLOCK=1, R0_BLOCK=32, num_warps=2, num_stages=1)

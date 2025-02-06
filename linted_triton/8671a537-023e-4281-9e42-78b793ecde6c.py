@@ -1,4 +1,4 @@
-# AOT ID: ['33_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,22 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/7y/c7y6lewlp5p76w3fyw52fz6bq2wxuvgap3nomyph5ckaqk72q3x4.py
-# Topologically Sorted Source Nodes: [x_3, x_4], Original ATen: [aten._softmax, aten.abs, aten.le, aten.scalar_tensor, aten.where]
-# Source node to ATen node mapping:
-#   x_3 => amax, div, exp, sub, sum_1
-#   x_4 => abs_2, full_default_1, le_1, where_1
-# Graph fragment:
-#   %amax : [num_users=1] = call_function[target=torch.ops.aten.amax.default](args = (%view_1, [1], True), kwargs = {})
-#   %sub : [num_users=1] = call_function[target=torch.ops.aten.sub.Tensor](args = (%view_1, %amax), kwargs = {})
-#   %exp : [num_users=2] = call_function[target=torch.ops.aten.exp.default](args = (%sub,), kwargs = {})
-#   %sum_1 : [num_users=1] = call_function[target=torch.ops.aten.sum.dim_IntList](args = (%exp, [1], True), kwargs = {})
-#   %div : [num_users=2] = call_function[target=torch.ops.aten.div.Tensor](args = (%exp, %sum_1), kwargs = {})
-#   %abs_2 : [num_users=1] = call_function[target=torch.ops.aten.abs.default](args = (%div,), kwargs = {})
-#   %le_1 : [num_users=1] = call_function[target=torch.ops.aten.le.Scalar](args = (%abs_2, 0.5), kwargs = {})
-#   %full_default_1 : [num_users=1] = call_function[target=torch.ops.aten.full.default](args = ([], 0.0), kwargs = {dtype: torch.float32, layout: torch.strided, device: cuda:0, pin_memory: False})
-#   %where_1 : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%le_1, %full_default_1, %div), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import math as tl_math
@@ -79,7 +63,7 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf2 = empty_strided_cuda((1, 784), (784, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_3, x_4], Original ATen: [aten._softmax, aten.abs, aten.le, aten.scalar_tensor, aten.where]
+
         get_raw_stream(0)
         triton_per_fused__softmax_abs_le_scalar_tensor_where_0[grid(1)](arg0_1, buf2, 1, 784, num_warps=8, num_stages=1)
         del arg0_1

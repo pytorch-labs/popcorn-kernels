@@ -1,4 +1,4 @@
-# AOT ID: ['42_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,22 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/23/c23xbjxwws65e2bjnk36symml4wm2mms64abtjx2omi6detmvjoy.py
-# Topologically Sorted Source Nodes: [x_3, x_4, x_6], Original ATen: [aten.mish, aten._unsafe_index, aten.mean]
-# Source node to ATen node mapping:
-#   x_3 => exp, gt, log1p, mul_24, tanh, where
-#   x_4 => _unsafe_index
-#   x_6 => mean
-# Graph fragment:
-#   %gt : [num_users=1] = call_function[target=torch.ops.aten.gt.Scalar](args = (%view_1, 20), kwargs = {})
-#   %exp : [num_users=1] = call_function[target=torch.ops.aten.exp.default](args = (%view_1,), kwargs = {})
-#   %log1p : [num_users=1] = call_function[target=torch.ops.aten.log1p.default](args = (%exp,), kwargs = {})
-#   %where : [num_users=1] = call_function[target=torch.ops.aten.where.self](args = (%gt, %view_1, %log1p), kwargs = {})
-#   %tanh : [num_users=1] = call_function[target=torch.ops.aten.tanh.default](args = (%where,), kwargs = {})
-#   %mul_24 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%view_1, %tanh), kwargs = {})
-#   %_unsafe_index : [num_users=1] = call_function[target=torch.ops.aten._unsafe_index.Tensor](args = (%mul_24, [None, None, %unsqueeze_1, %convert_element_type_3]), kwargs = {})
-#   %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%unsqueeze_2, [-1, -2, -3], True), kwargs = {})
 
 from torch._inductor.runtime import triton_helpers
 from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
@@ -101,8 +85,8 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf1 = empty_strided_cuda((1, s0, 1, 1, 1), (s0, 1, s0, s0, s0), torch.float32)
-        buf2 = buf1; del buf1  # reuse
-        # Topologically Sorted Source Nodes: [x_3, x_4, x_6], Original ATen: [aten.mish, aten._unsafe_index, aten.mean]
+        buf2 = buf1; del buf1
+
         128*s1
         get_raw_stream(0)
         triton_red_fused__unsafe_index_mean_mish_0[grid(s0)](buf2, arg2_1, 64, 3, 8192, XBLOCK=1, R0_BLOCK=2048, num_warps=16, num_stages=1)

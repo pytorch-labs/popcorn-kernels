@@ -1,4 +1,4 @@
-# AOT ID: ['66_inference']
+
 import torch
 import triton
 import triton.language as tl
@@ -19,13 +19,6 @@ alloc_from_pool = torch.ops.inductor._alloc_from_pool
 
 empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
 
-
-# kernel path: /tmp/torchinductor_sahanp/vc/cvco56l436v5xahgfp3cxi36fxqghrrmusau5i7tgbigkscfs52l.py
-# Topologically Sorted Source Nodes: [x], Original ATen: [aten.im2col]
-# Source node to ATen node mapping:
-#   x => clone
-# Graph fragment:
-#   %clone : [num_users=1] = call_function[target=torch.ops.aten.clone.default](args = (%permute,), kwargs = {memory_format: torch.contiguous_format})
 
 from torch._inductor.runtime import triton_helpers
 triton_helpers.set_driver_to_gpu()
@@ -63,12 +56,6 @@ def triton_poi_fused_im2col_0(in_ptr0, out_ptr0, ks0, ks1, ynumel, xnumel, YBLOC
     tl.store(out_ptr0 + (x6 + ks0*ks1*y7), tmp14, xmask & ymask)
 
 
-# kernel path: /tmp/torchinductor_sahanp/3g/c3gko5yjx6gocgyihjv6x3ezyra2wr5am4o3t3qjxlso7umwrjpr.py
-# Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.view]
-# Source node to ATen node mapping:
-#   x_1 => view_1
-# Graph fragment:
-#   %view_1 : [num_users=1] = call_function[target=torch.ops.aten.reshape.default](args = (%view, [1, -1, 9]), kwargs = {})
 import triton
 import triton.language as tl
 
@@ -97,14 +84,14 @@ def call(args):
     with torch.cuda._DeviceGuard(0):
         torch.cuda.set_device(0)
         buf0 = empty_strided_cuda((1, s0, 3, 3, s1, s2), (9*s0*s1*s2, 9*s1*s2, 3*s1*s2, s1*s2, s2, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x], Original ATen: [aten.im2col]
+
         triton_poi_fused_im2col_0_ynumel = 9*s0
         triton_poi_fused_im2col_0_xnumel = s1*s2
         get_raw_stream(0)
         triton_poi_fused_im2col_0[grid(triton_poi_fused_im2col_0_ynumel, triton_poi_fused_im2col_0_xnumel)](arg3_1, buf0, 32, 32, 27, 1024, XBLOCK=256, YBLOCK=1, num_warps=4, num_stages=1)
         del arg3_1
         buf1 = empty_strided_cuda((1, s0*s1*s2, 9), (9*s0*s1*s2, 9, 1), torch.float32)
-        # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.view]
+
         triton_poi_fused_view_1_xnumel = 9*s0*s1*s2
         get_raw_stream(0)
         triton_poi_fused_view_1[grid(triton_poi_fused_view_1_xnumel)](buf0, buf1, 3, 32, 32, 27648, XBLOCK=256, num_warps=4, num_stages=1)
