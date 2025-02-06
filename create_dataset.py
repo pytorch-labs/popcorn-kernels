@@ -6,74 +6,71 @@ import os
 import subprocess
 import tokenize
 from collections import defaultdict
+from io import BytesIO
 
 import tqdm
 from compile_code import compile_from_folder
 from torch.utils._get_clean_triton import get_clean_triton
 
 
-def remove_extraneous_newlines(file_path):
+def remove_python_comments(source: str) -> str:
     """
-    Read the lines from the given Python file, and remove any "extra" blank lines
-    so that consecutive blank lines collapse into just one.
+    Remove all comments from a Python source code string without altering other formatting.
 
-    1. Read all lines from the file.
-    2. Track whether the previous line was blank.
-    3. Only append a blank line to the new list of lines if the previous line wasn't blank.
-    4. Return the adjusted code as a string.
+    This function uses the built-in tokenize module to break the source code
+    into tokens, then reconstructs the source code while omitting any token
+    of type COMMENT. It carefully adds back any whitespace or newlines that occur
+    between tokens, so that the formatting of the remaining code is preserved.
     """
-    with open(file_path, "r") as f:
-        lines = f.readlines()
 
-    cleaned_lines = []
-    prev_line_blank = False
+    # Encode the source to bytes and create a BytesIO stream for tokenization.
+    source_bytes = source.encode("utf-8")
+    stream = BytesIO(source_bytes)
 
-    for line in lines:
-        if line.strip() == "":
-            # This line is blank
-            if not prev_line_blank:
-                # Keep one blank line if the previous line wasn't blank
-                cleaned_lines.append(line)
-            # Mark that we've encountered a blank line
-            prev_line_blank = True
-        else:
-            # This line isn't blank, so just keep it
-            cleaned_lines.append(line)
-            # Reset the blank line marker
-            prev_line_blank = False
+    # Initialize the token generator.
+    tokens = tokenize.tokenize(stream.readline)
 
-    return "".join(cleaned_lines)
+    # We'll rebuild the source using pieces accumulated in this list.
+    result = []
+    # Keep track of the position (line, column) of the end of the last token added.
+    last_lineno, last_col = 1, 0
 
+    for token in tokens:
+        token_type = token.type
+        token_string = token.string
+        start_line, start_col = token.start
+        end_line, end_col = token.end
 
-def remove_python_comments(file_path):
-    """
-    Removes all single-line and inline Python comments from the given file.
-
-    Steps:
-    1. Read the source file into a string.
-    2. Tokenize the string using Python's built-in tokenize.generate_tokens.
-    3. Filter out any token of type COMMENT.
-    4. Use tokenize.untokenize to reconstruct valid Python code from the filtered tokens.
-
-    Returns:
-        A string containing the original Python code without comments.
-    """
-    with open(file_path, "r") as f:
-        code = f.read()
-
-    # Tokenize the file's content
-    tokens = tokenize.generate_tokens(io.StringIO(code).readline)
-
-    # Filter out COMMENT tokens
-    filtered_tokens = []
-    for token_type, token_string, start_pos, end_pos, line in tokens:
-        if token_type == tokenize.COMMENT:
-            # Skip any token identified as a comment
+        # Skip the encoding and endmarker tokens.
+        if token_type in (tokenize.ENCODING, tokenize.ENDMARKER):
             continue
-        filtered_tokens.append((token_type, token_string))
 
-    # Reconstruct the code without comments
-    return tokenize.untokenize(filtered_tokens)
+        if token_type == tokenize.COMMENT:
+            # Instead of outputting the comment, update the current position.
+            # This has the effect of “removing” the comment along with any space that was
+            # solely part of the comment region.
+            last_lineno, last_col = end_line, end_col
+            continue
+
+        # If there is a gap between the last token and the current token,
+        # fill it in (this preserves spaces and newlines from the original source).
+        if start_line > last_lineno:
+            # Add newlines for any skipped lines.
+            result.append("\n")
+            # After a newline, reset column to 0.
+            last_col = 0
+
+        # Add any extra spaces needed to reach the token’s start column.
+        if start_col > last_col:
+            result.append(" " * (start_col - last_col))
+
+        # Append the current token’s text.
+        result.append(token_string)
+        # Update the last position to the end of the current token.
+        last_lineno, last_col = end_line, end_col
+
+    # Join all pieces and return the reconstructed source.
+    return "".join(result)
 
 
 def extract_output_code(dir_path):
@@ -105,51 +102,74 @@ def extract_output_code(dir_path):
     for uuid, code_files in tqdm.tqdm(
         uuid_to_code.items(), desc="Cleaning triton code"
     ):
-        code_file = list(code_files)[0]
-        if not os.path.exists(f"cleaned_triton/{uuid}.py"):
-            continue
-            try:
-                os.environ["TORCHINDUCTOR_DUMP_LAUNCH_PARAMS"] = "1"
-                subprocess.run(["python", code_file])
-                get_clean_triton(code_file, f"cleaned_triton/{uuid}.py")
-            except Exception as e:
-                print(f"Failed to clean triton code for {uuid}: {e}")
-                continue
-        else:
-            print(f"cleaned_triton/{uuid}.py already exists, skipping")
+        # code_file = list(code_files)[0]
+        # if not os.path.exists(f"cleaned_triton/{uuid}.py"):
+        #     try:
+        #         os.environ["TORCHINDUCTOR_DUMP_LAUNCH_PARAMS"] = "1"
+        #         subprocess.run(["python", code_file])
+        #         get_clean_triton(code_file, f"cleaned_triton/{uuid}.py")
+        #     except Exception as e:
+        #         print(f"Failed to clean triton code for {uuid}: {e}")
+        #         continue
+        # else:
+        #     # print(f"cleaned_triton/{uuid}.py already exists, skipping")
+        #     pass
         uuid_to_clean_code[uuid] = f"cleaned_triton/{uuid}.py"
 
+    # copy cleaned triton code to linted folder
+    # create the linted_triton folder if it doesn't exist
+    if not os.path.exists("linted_triton"):
+        os.makedirs("linted_triton")
+    # copy the cleaned triton code to the linted_triton folder
+    # clean out the linted_triton folder first
+    subprocess.run(["rm", "-rf", "linted_triton/*"])
+    for uuid, code_file in tqdm.tqdm(
+        uuid_to_clean_code.items(), desc="copying cleaned triton code"
+    ):
+        subprocess.run(
+            ["cp", f"cleaned_triton/{uuid}.py", f"linted_triton/{uuid}.py"],
+        )
+    # lint the triton code
     # for uuid, code_file in tqdm.tqdm(
     #     uuid_to_clean_code.items(), desc="cleaning dataset"
     # ):
     bad_files = []
-    for uuid, code_file in tqdm.tqdm(uuid_to_clean_code.items(), desc="linting code"):
-        try:
-            commentless_code = remove_python_comments(code_file)
-            with open(code_file, "w") as f:
-                f.write(commentless_code)
-            clean_code = remove_extraneous_newlines(code_file)
-            with open(code_file, "w") as f:
-                f.write(clean_code)
-            # remove unused imports and variables
-
-            subprocess.run(
-                [
-                    "autoflake",
-                    "--in-place",
-                    "--remove-all-unused-imports",
-                    "--remove-unused-variables",
-                    code_file,
-                ]
-            )
-        except Exception as e:
-            # print(f"Failed to clean triton code for {uuid}: {e}")
-            bad_files.append(uuid)
-
-    for uuid, code_file in tqdm.tqdm(
-        uuid_to_clean_code.items(), desc="Creating dataset"
-    ):
-        if uuid in bad_files:
+    # subprocess.run(
+    #     [
+    #         "ruff",
+    #         "check",
+    #         "linted_triton",
+    #         "--fix",
+    #         "--unsafe-fixes",
+    #         "--fix-only",
+    #     ]
+    # )
+    # for uuid in tqdm.tqdm(uuid_to_clean_code.keys(), desc="linting code"):
+    #     try:
+    #         code_file = f"linted_triton/{uuid}.py"
+    #         if not os.path.exists(code_file):
+    #             continue
+    #         code = open(code_file, "r").read()
+    #         commentless_code = remove_python_comments(code)
+    #         with open(code_file, "w") as f:
+    #             f.write(commentless_code)
+    #     except Exception as e:
+    #         # print(f"Failed to clean triton code for {uuid}: {e}")
+    #         bad_files.append(uuid)
+    # apply ruff linter
+    subprocess.run(
+        [
+            "ruff",
+            "check",
+            "linted_triton",
+            "--fix",
+            "--unsafe-fixes",
+            "--fix-only",
+        ]
+    )
+    for uuid in tqdm.tqdm(uuid_to_clean_code.keys(), desc="Creating dataset"):
+        code_file = f"linted_triton/{uuid}.py"
+        if not os.path.exists(code_file):
             continue
         else:
             generated_code_file = f"generated/random_torch_{uuid}.py"
@@ -157,8 +177,6 @@ def extract_output_code(dir_path):
                 generated_code = f.read()
             with open(code_file, "r") as f:
                 triton_code = f.read()
-            with open(code_file, "w") as f:
-                f.write(triton_code)
             dataset.append(
                 {
                     "uuid": uuid,

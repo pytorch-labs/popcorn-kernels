@@ -1,35 +1,35 @@
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0] failed while attempting to run meta for aten.avg_pool3d.default
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0] Traceback (most recent call last):
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     r = func(*args, **kwargs)
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     return self._op(*args, **kwargs)
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     result = fn(*args, **kwargs)
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 2835, in meta_avg_pool3d
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     pool3d_shape_check(
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ~~~~~~~~~~~~~~~~~~^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         input,
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^^^^^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ...<20 lines>...
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         check_input_size=True,
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     )
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 4363, in pool3d_shape_check
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     torch._check(
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ~~~~~~~~~~~~^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         itime >= kT and iheight >= kH and iwidth >= kW,
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ...<3 lines>...
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ),
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     )
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     _check_with(RuntimeError, cond, message)
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     raise error_type(message_evaluated)
-E0127 12:00:57.125000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0] RuntimeError: input image (T: 1 H: 1 W: 20) smaller than kernel size (kT: 2 kH: 2 kW: 2)
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0] failed while attempting to run meta for aten.avg_pool3d.default
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0] Traceback (most recent call last):
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     r = func(*args, **kwargs)
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     return self._op(*args, **kwargs)
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     result = fn(*args, **kwargs)
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 2835, in meta_avg_pool3d
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     pool3d_shape_check(
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ~~~~~~~~~~~~~~~~~~^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         input,
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^^^^^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ...<20 lines>...
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         check_input_size=True,
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^^^^^^^^^^^^^^^^^^^^^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     )
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 4363, in pool3d_shape_check
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     torch._check(
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ~~~~~~~~~~~~^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         itime >= kT and iheight >= kH and iwidth >= kW,
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ...<3 lines>...
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ),
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]         ^^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     )
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     _check_with(RuntimeError, cond, message)
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0]     raise error_type(message_evaluated)
+E0205 10:39:50.510000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [3/0] RuntimeError: input image (T: 1 H: 1 W: 20) smaller than kernel size (kT: 2 kH: 2 kW: 2)

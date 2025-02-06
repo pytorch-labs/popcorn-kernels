@@ -1,109 +1,109 @@
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] Output code: 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] # AOT ID: ['0_inference']
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from ctypes import c_void_p, c_long, c_int
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import torch
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import math
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import random
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import os
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import tempfile
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from math import inf, nan
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from cmath import nanj
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.hooks import run_intermediate_hooks
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.utils import maybe_profile
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.codegen.memory_planning import _align as align
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch import device, empty_strided
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.async_compile import AsyncCompile
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.select_algorithm import extern_kernels
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.codegen.multi_kernel import MultiKernelCall
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] aten = torch.ops.aten
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] inductor_ops = torch.ops.inductor
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] _quantized = torch.ops._quantized
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] assert_size_stride = torch._C._dynamo.guards.assert_size_stride
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_cpu = torch._C._dynamo.guards._empty_strided_cpu
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_cuda = torch._C._dynamo.guards._empty_strided_cuda
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_xpu = torch._C._dynamo.guards._empty_strided_xpu
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] reinterpret_tensor = torch._C._dynamo.guards._reinterpret_tensor
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] alloc_from_pool = torch.ops.inductor._alloc_from_pool
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] async_compile = AsyncCompile()
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] async_compile.wait(globals())
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] del async_compile
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] def call(args):
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     arg0_1, = args
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     args.clear()
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     assert_size_stride(arg0_1, (1, 3, 64, 64), (12288, 4096, 64, 1))
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     return (reinterpret_tensor(arg0_1, (1, 4096, 3), (12288, 1, 4096), 0), )
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] def benchmark_compiled_module(times=10, repeat=10):
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     from torch._dynamo.testing import rand_strided
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     from torch._inductor.utils import print_performance
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     arg0_1 = rand_strided((1, 3, 64, 64), (12288, 4096, 64, 1), device='cuda:0', dtype=torch.float32)
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     fn = lambda: call([arg0_1])
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     return print_performance(fn, times=times, repeat=repeat)
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] if __name__ == "__main__":
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     from torch._inductor.wrapper_benchmark import compiled_module_main
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     compiled_module_main('None', benchmark_compiled_module)
-V0127 12:24:17.395000 1940816 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
-V0127 12:24:17.401000 1940816 site-packages/torch/_inductor/graph.py:2022] [0/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/yr/cyrsc26jff4cfhces77eae73b2a7d3hsqmpwvz6gcgddeo4zws2s.py
-I0127 12:24:17.406000 1940816 site-packages/torch/_inductor/graph.py:2056] [0/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/yr/cyrsc26jff4cfhces77eae73b2a7d3hsqmpwvz6gcgddeo4zws2s.py
-W0127 12:24:17.408000 1940816 site-packages/torch/_functorch/_aot_autograd/autograd_cache.py:887] [0/0_1] Bypassing autograd cache due to: Cannot cache a graph with functional tensor
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Triton compilation failed: triton_red_fused_exp_mean_mul_sub_zeros_like_3
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] def triton_red_fused_exp_mean_mul_sub_zeros_like_3(in_ptr0, out_ptr0, ks0, ks1, ks2, ks3, ks4, ks5, xnumel, r0_numel, XBLOCK : tl.constexpr, R0_BLOCK : tl.constexpr):
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xnumel = 36
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rnumel = r0_numel
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     RBLOCK: tl.constexpr = R0_BLOCK
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xoffset = tl.program_id(0) * XBLOCK
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xindex = xoffset + tl.arange(0, XBLOCK)[:, None]
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xmask = xindex < xnumel
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     r0_base = tl.arange(0, R0_BLOCK)[None, :]
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rbase = r0_base
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x0 = xindex
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     _tmp6 = tl.full([XBLOCK, R0_BLOCK], 0, tl.float32)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_1 = r0_index
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = tl.load(in_ptr0 + (((-8)*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0)))) + 64*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + ((-16)*ks4*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0))) + ((-8)*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + 2*ks4*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + (((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) % ks2))), r0_mask & xmask, eviction_policy='evict_last', other=0.0)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp1 = tl_math.exp(tmp0)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp2 = 0.0
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp3 = tmp2 * tmp0
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp4 = tmp1 - tmp3
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp5 = tl.broadcast_to(tmp4, [XBLOCK, R0_BLOCK])
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp7 = _tmp6 + tmp5
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         _tmp6 = tl.where(r0_mask & xmask, tmp7, _tmp6)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp6 = tl.sum(_tmp6, 1)[:, None]
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tl.store(out_ptr0 + (x0), tmp6, xmask)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] 
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] metadata: {'signature': {'in_ptr0': '*fp32', 'out_ptr0': '*fp32', 'ks0': 'i32', 'ks1': 'i32', 'ks2': 'i32', 'ks3': 'i32', 'ks4': 'i32', 'ks5': 'i32', 'xnumel': 'i32', 'r0_numel': 'i32'}, 'device': 0, 'constants': {'XBLOCK': 1, 'R0_BLOCK': 2048}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1), 'tt.equal_to': ()}, 'cls': 'AttrsDescriptor'})], 'device_type': 'cuda', 'num_warps': 16, 'num_stages': 1, 'debug': True, 'cc': 90}
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Traceback (most recent call last):
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_inductor/runtime/triton_heuristics.py", line 505, in _precompile_config
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     binary = triton.compile(*compile_args, **compile_kwargs)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 273, in compile
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     module = src.make_ir(options, codegen_fns, module_map, context)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 100, in make_ir
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                        module_map=module_map)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] triton.compiler.errors.CompilationError: at 18:43:
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xmask = xindex < xnumel
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     r0_base = tl.arange(0, R0_BLOCK)[None, :]
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rbase = r0_base
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x0 = xindex
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     _tmp6 = tl.full([XBLOCK, R0_BLOCK], 0, tl.float32)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_1 = r0_index
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = tl.load(in_ptr0 + (((-8)*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0)))) + 64*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + ((-16)*ks4*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0))) + ((-8)*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + 2*ks4*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + (((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) % ks2))), r0_mask & xmask, eviction_policy='evict_last', other=0.0)
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                                            ^
-E0127 12:27:24.102000 1942322 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] TypeError('unexpected type fp32')
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] Output code: 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] # AOT ID: ['0_inference']
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from ctypes import c_void_p, c_long, c_int
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import torch
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import math
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import random
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import os
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] import tempfile
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from math import inf, nan
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from cmath import nanj
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.hooks import run_intermediate_hooks
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.utils import maybe_profile
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.codegen.memory_planning import _align as align
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch import device, empty_strided
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.async_compile import AsyncCompile
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.select_algorithm import extern_kernels
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] from torch._inductor.codegen.multi_kernel import MultiKernelCall
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] aten = torch.ops.aten
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] inductor_ops = torch.ops.inductor
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] _quantized = torch.ops._quantized
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] assert_size_stride = torch._C._dynamo.guards.assert_size_stride
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_cpu = torch._C._dynamo.guards._empty_strided_cpu
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_cuda = torch._C._dynamo.guards._empty_strided_cuda
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_xpu = torch._C._dynamo.guards._empty_strided_xpu
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] reinterpret_tensor = torch._C._dynamo.guards._reinterpret_tensor
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] alloc_from_pool = torch.ops.inductor._alloc_from_pool
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] async_compile = AsyncCompile()
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] async_compile.wait(globals())
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] del async_compile
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] def call(args):
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     arg0_1, = args
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     args.clear()
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     assert_size_stride(arg0_1, (1, 3, 64, 64), (12288, 4096, 64, 1))
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     return (reinterpret_tensor(arg0_1, (1, 4096, 3), (12288, 1, 4096), 0), )
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] def benchmark_compiled_module(times=10, repeat=10):
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     from torch._dynamo.testing import rand_strided
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     from torch._inductor.utils import print_performance
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     arg0_1 = rand_strided((1, 3, 64, 64), (12288, 4096, 64, 1), device='cuda:0', dtype=torch.float32)
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     fn = lambda: call([arg0_1])
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     return print_performance(fn, times=times, repeat=repeat)
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] if __name__ == "__main__":
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     from torch._inductor.wrapper_benchmark import compiled_module_main
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code]     compiled_module_main('None', benchmark_compiled_module)
+V0205 11:27:13.392000 3201829 site-packages/torch/_inductor/graph.py:2014] [0/0_1] [__output_code] 
+V0205 11:27:13.407000 3201829 site-packages/torch/_inductor/graph.py:2022] [0/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/yr/cyrsc26jff4cfhces77eae73b2a7d3hsqmpwvz6gcgddeo4zws2s.py
+I0205 11:27:13.412000 3201829 site-packages/torch/_inductor/graph.py:2056] [0/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/yr/cyrsc26jff4cfhces77eae73b2a7d3hsqmpwvz6gcgddeo4zws2s.py
+W0205 11:27:13.414000 3201829 site-packages/torch/_functorch/_aot_autograd/autograd_cache.py:887] [0/0_1] Bypassing autograd cache due to: Cannot cache a graph with functional tensor
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Triton compilation failed: triton_red_fused_exp_mean_mul_sub_zeros_like_3
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] def triton_red_fused_exp_mean_mul_sub_zeros_like_3(in_ptr0, out_ptr0, ks0, ks1, ks2, ks3, ks4, ks5, xnumel, r0_numel, XBLOCK : tl.constexpr, R0_BLOCK : tl.constexpr):
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xnumel = 36
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rnumel = r0_numel
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     RBLOCK: tl.constexpr = R0_BLOCK
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xoffset = tl.program_id(0) * XBLOCK
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xindex = xoffset + tl.arange(0, XBLOCK)[:, None]
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xmask = xindex < xnumel
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     r0_base = tl.arange(0, R0_BLOCK)[None, :]
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rbase = r0_base
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x0 = xindex
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     _tmp6 = tl.full([XBLOCK, R0_BLOCK], 0, tl.float32)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_1 = r0_index
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = tl.load(in_ptr0 + (((-8)*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0)))) + 64*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + ((-16)*ks4*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0))) + ((-8)*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + 2*ks4*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + (((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) % ks2))), r0_mask & xmask, eviction_policy='evict_last', other=0.0)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp1 = tl_math.exp(tmp0)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp2 = 0.0
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp3 = tmp2 * tmp0
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp4 = tmp1 - tmp3
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp5 = tl.broadcast_to(tmp4, [XBLOCK, R0_BLOCK])
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp7 = _tmp6 + tmp5
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         _tmp6 = tl.where(r0_mask & xmask, tmp7, _tmp6)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp6 = tl.sum(_tmp6, 1)[:, None]
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tl.store(out_ptr0 + (x0), tmp6, xmask)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] 
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] metadata: {'signature': {'in_ptr0': '*fp32', 'out_ptr0': '*fp32', 'ks0': 'i32', 'ks1': 'i32', 'ks2': 'i32', 'ks3': 'i32', 'ks4': 'i32', 'ks5': 'i32', 'xnumel': 'i32', 'r0_numel': 'i32'}, 'device': 0, 'constants': {'XBLOCK': 1, 'R0_BLOCK': 2048}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1), 'tt.equal_to': ()}, 'cls': 'AttrsDescriptor'})], 'device_type': 'cuda', 'num_warps': 16, 'num_stages': 1, 'debug': True, 'cc': 90}
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Traceback (most recent call last):
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_inductor/runtime/triton_heuristics.py", line 505, in _precompile_config
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     binary = triton.compile(*compile_args, **compile_kwargs)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 273, in compile
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     module = src.make_ir(options, codegen_fns, module_map, context)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 100, in make_ir
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                        module_map=module_map)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] triton.compiler.errors.CompilationError: at 18:43:
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xmask = xindex < xnumel
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     r0_base = tl.arange(0, R0_BLOCK)[None, :]
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rbase = r0_base
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x0 = xindex
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     _tmp6 = tl.full([XBLOCK, R0_BLOCK], 0, tl.float32)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_1 = r0_index
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = tl.load(in_ptr0 + (((-8)*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0)))) + 64*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + ((-16)*ks4*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0))) + ((-8)*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + 2*ks4*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + (((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) % ks2))), r0_mask & xmask, eviction_policy='evict_last', other=0.0)
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                                            ^
+E0205 11:30:20.645000 3204085 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] TypeError('unexpected type fp32')

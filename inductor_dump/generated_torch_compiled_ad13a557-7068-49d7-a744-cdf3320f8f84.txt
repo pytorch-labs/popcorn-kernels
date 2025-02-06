@@ -1,10 +1,10 @@
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0] failed while attempting to run meta for aten.pixel_shuffle.default
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0] Traceback (most recent call last):
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]     r = func(*args, **kwargs)
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]     return self._op(*args, **kwargs)
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 6488, in meta_pixel_shuffle
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]     len(self.shape) > 2 and self.shape[-3] % (upscale_factor * upscale_factor) == 0
-E0127 12:28:11.201000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0] AssertionError: Invalid input shape for pixel_shuffle: torch.Size([1, 50, 2, 2]) with upscale_factor = 2
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0] failed while attempting to run meta for aten.pixel_shuffle.default
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0] Traceback (most recent call last):
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]     r = func(*args, **kwargs)
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]     return self._op(*args, **kwargs)
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_meta_registrations.py", line 6488, in meta_pixel_shuffle
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0]     len(self.shape) > 2 and self.shape[-3] % (upscale_factor * upscale_factor) == 0
+E0205 11:31:07.329000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [197/0] AssertionError: Invalid input shape for pixel_shuffle: torch.Size([1, 50, 2, 2]) with upscale_factor = 2

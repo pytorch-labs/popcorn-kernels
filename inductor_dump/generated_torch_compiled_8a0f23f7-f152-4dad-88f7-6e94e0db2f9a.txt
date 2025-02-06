@@ -1,62 +1,62 @@
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] Output code: 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] # AOT ID: ['48_inference']
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from ctypes import c_void_p, c_long, c_int
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import torch
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import math
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import random
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import os
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import tempfile
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from math import inf, nan
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from cmath import nanj
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.hooks import run_intermediate_hooks
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.utils import maybe_profile
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.codegen.memory_planning import _align as align
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch import device, empty_strided
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.async_compile import AsyncCompile
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.select_algorithm import extern_kernels
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.codegen.multi_kernel import MultiKernelCall
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] aten = torch.ops.aten
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] inductor_ops = torch.ops.inductor
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] _quantized = torch.ops._quantized
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] assert_size_stride = torch._C._dynamo.guards.assert_size_stride
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_cpu = torch._C._dynamo.guards._empty_strided_cpu
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_cuda = torch._C._dynamo.guards._empty_strided_cuda
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_xpu = torch._C._dynamo.guards._empty_strided_xpu
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] reinterpret_tensor = torch._C._dynamo.guards._reinterpret_tensor
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] alloc_from_pool = torch.ops.inductor._alloc_from_pool
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] async_compile = AsyncCompile()
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] async_compile.wait(globals())
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] del async_compile
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] def call(args):
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg0_1, arg1_1, arg2_1, arg3_1 = args
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     args.clear()
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     s0 = arg0_1
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     s1 = arg1_1
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     s2 = arg2_1
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     assert_size_stride(arg3_1, (1, s0, s1, s2), (s0*s1*s2, s1*s2, s2, 1))
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     return (reinterpret_tensor(arg3_1, (1, s0, s1*s2), (s0*s1*s2, s1*s2, 1), 0), s0, s1, s2, )
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] def benchmark_compiled_module(times=10, repeat=10):
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     from torch._dynamo.testing import rand_strided
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     from torch._inductor.utils import print_performance
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg0_1 = 3
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg1_1 = 32
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg2_1 = 32
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg3_1 = rand_strided((1, 3, 32, 32), (3072, 1024, 32, 1), device='cuda:0', dtype=torch.float32)
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     fn = lambda: call([arg0_1, arg1_1, arg2_1, arg3_1])
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     return print_performance(fn, times=times, repeat=repeat)
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] if __name__ == "__main__":
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     from torch._inductor.wrapper_benchmark import compiled_module_main
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     compiled_module_main('None', benchmark_compiled_module)
-V0127 12:03:03.918000 1492919 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
-V0127 12:03:03.919000 1492919 site-packages/torch/_inductor/graph.py:2022] [119/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/dm/cdmk3s5bguu6cmbkakywulltkvu6ckl5bffynxfwaa3xfs5evy33.py
-I0127 12:03:03.920000 1492919 site-packages/torch/_inductor/graph.py:2056] [119/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/dm/cdmk3s5bguu6cmbkakywulltkvu6ckl5bffynxfwaa3xfs5evy33.py
-W0127 12:03:03.921000 1492919 site-packages/torch/_functorch/_aot_autograd/autograd_cache.py:887] [119/0_1] Bypassing autograd cache due to: Cannot cache a graph with functional tensor
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] Output code: 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] # AOT ID: ['48_inference']
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from ctypes import c_void_p, c_long, c_int
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import torch
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import math
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import random
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import os
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] import tempfile
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from math import inf, nan
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from cmath import nanj
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.hooks import run_intermediate_hooks
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.utils import maybe_profile
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.codegen.memory_planning import _align as align
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch import device, empty_strided
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.async_compile import AsyncCompile
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.select_algorithm import extern_kernels
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] from torch._inductor.codegen.multi_kernel import MultiKernelCall
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] aten = torch.ops.aten
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] inductor_ops = torch.ops.inductor
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] _quantized = torch.ops._quantized
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] assert_size_stride = torch._C._dynamo.guards.assert_size_stride
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_cpu = torch._C._dynamo.guards._empty_strided_cpu
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_cuda = torch._C._dynamo.guards._empty_strided_cuda
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_xpu = torch._C._dynamo.guards._empty_strided_xpu
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] reinterpret_tensor = torch._C._dynamo.guards._reinterpret_tensor
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] alloc_from_pool = torch.ops.inductor._alloc_from_pool
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] async_compile = AsyncCompile()
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] async_compile.wait(globals())
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] del async_compile
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] def call(args):
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg0_1, arg1_1, arg2_1, arg3_1 = args
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     args.clear()
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     s0 = arg0_1
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     s1 = arg1_1
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     s2 = arg2_1
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     assert_size_stride(arg3_1, (1, s0, s1, s2), (s0*s1*s2, s1*s2, s2, 1))
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     return (reinterpret_tensor(arg3_1, (1, s0, s1*s2), (s0*s1*s2, s1*s2, 1), 0), s0, s1, s2, )
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] def benchmark_compiled_module(times=10, repeat=10):
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     from torch._dynamo.testing import rand_strided
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     from torch._inductor.utils import print_performance
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg0_1 = 3
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg1_1 = 32
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg2_1 = 32
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     arg3_1 = rand_strided((1, 3, 32, 32), (3072, 1024, 32, 1), device='cuda:0', dtype=torch.float32)
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     fn = lambda: call([arg0_1, arg1_1, arg2_1, arg3_1])
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     return print_performance(fn, times=times, repeat=repeat)
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] if __name__ == "__main__":
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     from torch._inductor.wrapper_benchmark import compiled_module_main
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code]     compiled_module_main('None', benchmark_compiled_module)
+V0205 10:42:01.074000 2062045 site-packages/torch/_inductor/graph.py:2014] [119/0_1] [__output_code] 
+V0205 10:42:01.075000 2062045 site-packages/torch/_inductor/graph.py:2022] [119/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/dm/cdmk3s5bguu6cmbkakywulltkvu6ckl5bffynxfwaa3xfs5evy33.py
+I0205 10:42:01.076000 2062045 site-packages/torch/_inductor/graph.py:2056] [119/0_1] [__output_code] Output code written to: /tmp/torchinductor_sahanp/dm/cdmk3s5bguu6cmbkakywulltkvu6ckl5bffynxfwaa3xfs5evy33.py
+W0205 10:42:01.078000 2062045 site-packages/torch/_functorch/_aot_autograd/autograd_cache.py:887] [119/0_1] Bypassing autograd cache due to: Cannot cache a graph with functional tensor

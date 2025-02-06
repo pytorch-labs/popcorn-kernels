@@ -1,8 +1,8 @@
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0] failed while attempting to run meta for aten.fractional_max_pool3d.default
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0] Traceback (most recent call last):
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]     r = func(*args, **kwargs)
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]     return self._op(*args, **kwargs)
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 11:34:39.927000 703210 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0] RuntimeError: fractional_max_pool3d_out(): Expected 4D or 5D tensor, but got: [1, 1, 1, 3, 34, 34]
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0] failed while attempting to run meta for aten.fractional_max_pool3d.default
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0] Traceback (most recent call last):
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]     r = func(*args, **kwargs)
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]     return self._op(*args, **kwargs)
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0204 20:56:02.283000 2742634 site-packages/torch/_subclasses/fake_tensor.py:2380] [290/0] RuntimeError: fractional_max_pool3d_out(): Expected 4D or 5D tensor, but got: [1, 1, 1, 3, 34, 34]

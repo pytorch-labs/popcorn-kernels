@@ -1,26 +1,26 @@
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0] failed while attempting to run meta for aten.glu.default
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0] Traceback (most recent call last):
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     r = func(*args, **kwargs)
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     return self._op(*args, **kwargs)
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     result = fn(*args, **kwargs)
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 146, in _fn
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     result = fn(**bound.arguments)
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/nn/functional/__init__.py", line 1186, in glu
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     torch._check(
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     ~~~~~~~~~~~~^
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         a.shape[dim] % 2 == 0,
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         ^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         lambda: f"Halving dimension must be even, but dimension {dim} is size {a.shape[dim]}",
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     )
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     ^
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     _check_with(RuntimeError, cond, message)
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     raise error_type(message_evaluated)
-E0127 12:24:47.772000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0] RuntimeError: Halving dimension must be even, but dimension 1 is size 27
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0] failed while attempting to run meta for aten.glu.default
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0] Traceback (most recent call last):
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     r = func(*args, **kwargs)
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     return self._op(*args, **kwargs)
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 305, in _fn
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     result = fn(*args, **kwargs)
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/wrappers.py", line 146, in _fn
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     result = fn(**bound.arguments)
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/nn/functional/__init__.py", line 1186, in glu
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     torch._check(
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     ~~~~~~~~~~~~^
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         a.shape[dim] % 2 == 0,
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         ^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         lambda: f"Halving dimension must be even, but dimension {dim} is size {a.shape[dim]}",
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     )
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     ^
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     _check_with(RuntimeError, cond, message)
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0]     raise error_type(message_evaluated)
+E0205 11:27:43.751000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [22/0] RuntimeError: Halving dimension must be even, but dimension 1 is size 27

@@ -1,68 +1,68 @@
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] fake tensor raised TypeError
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] Traceback (most recent call last):
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1267, in __torch_dispatch__
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self.dispatch(func, types, args, kwargs)
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1808, in dispatch
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._cached_dispatch_impl(func, types, args, kwargs)
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1378, in _cached_dispatch_impl
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     output = self._dispatch_impl(func, types, args, kwargs)
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2304, in _dispatch_impl
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     func.prim_meta_impl(*args, **kwargs)
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims/__init__.py", line 1548, in _split_dim_meta
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return a.as_strided(new_shape, new_strides, a.storage_offset())
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/fx/experimental/sym_node.py", line 203, in maybe_as_int
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return int(self.expr)
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 308, in __int__
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     r = self.round(2)
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 3838, in round
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     raise TypeError(
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]         'Expected a number but got %s:' % func_name(x))
-E0127 12:27:40.423000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] TypeError: Expected a number but got FloorDiv:
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] fake tensor raised TypeError
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] Traceback (most recent call last):
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1267, in __torch_dispatch__
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self.dispatch(func, types, args, kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1808, in dispatch
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._cached_dispatch_impl(func, types, args, kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1378, in _cached_dispatch_impl
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     output = self._dispatch_impl(func, types, args, kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2282, in _dispatch_impl
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     decomposition_table[func](*args, **kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 4664, in view
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return _reshape_view_helper(a, *shape, allow_copy=False)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3803, in _reshape_view_helper
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     a_ = prims.split_dim(a_, idx, length)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._op(*args, **kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/utils/_stats.py", line 27, in wrapper
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return fn(*args, **kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1267, in __torch_dispatch__
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self.dispatch(func, types, args, kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1808, in dispatch
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._cached_dispatch_impl(func, types, args, kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1378, in _cached_dispatch_impl
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     output = self._dispatch_impl(func, types, args, kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2304, in _dispatch_impl
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     func.prim_meta_impl(*args, **kwargs)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims/__init__.py", line 1548, in _split_dim_meta
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return a.as_strided(new_shape, new_strides, a.storage_offset())
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/fx/experimental/sym_node.py", line 203, in maybe_as_int
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return int(self.expr)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 308, in __int__
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     r = self.round(2)
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 3838, in round
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     raise TypeError(
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]         'Expected a number but got %s:' % func_name(x))
-E0127 12:27:40.426000 1940816 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] TypeError: Expected a number but got FloorDiv:
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] fake tensor raised TypeError
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] Traceback (most recent call last):
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1267, in __torch_dispatch__
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self.dispatch(func, types, args, kwargs)
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1808, in dispatch
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._cached_dispatch_impl(func, types, args, kwargs)
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1378, in _cached_dispatch_impl
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     output = self._dispatch_impl(func, types, args, kwargs)
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2304, in _dispatch_impl
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     func.prim_meta_impl(*args, **kwargs)
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims/__init__.py", line 1548, in _split_dim_meta
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return a.as_strided(new_shape, new_strides, a.storage_offset())
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/fx/experimental/sym_node.py", line 203, in maybe_as_int
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return int(self.expr)
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 308, in __int__
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     r = self.round(2)
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 3838, in round
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     raise TypeError(
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]         'Expected a number but got %s:' % func_name(x))
+E0205 11:30:36.862000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] TypeError: Expected a number but got FloorDiv:
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] fake tensor raised TypeError
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] Traceback (most recent call last):
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1267, in __torch_dispatch__
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self.dispatch(func, types, args, kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1808, in dispatch
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._cached_dispatch_impl(func, types, args, kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1378, in _cached_dispatch_impl
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     output = self._dispatch_impl(func, types, args, kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2282, in _dispatch_impl
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     decomposition_table[func](*args, **kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 4664, in view
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return _reshape_view_helper(a, *shape, allow_copy=False)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3803, in _reshape_view_helper
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     a_ = prims.split_dim(a_, idx, length)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._op(*args, **kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/utils/_stats.py", line 27, in wrapper
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return fn(*args, **kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1267, in __torch_dispatch__
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self.dispatch(func, types, args, kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1808, in dispatch
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return self._cached_dispatch_impl(func, types, args, kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 1378, in _cached_dispatch_impl
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     output = self._dispatch_impl(func, types, args, kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2304, in _dispatch_impl
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     func.prim_meta_impl(*args, **kwargs)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims/__init__.py", line 1548, in _split_dim_meta
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return a.as_strided(new_shape, new_strides, a.storage_offset())
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/fx/experimental/sym_node.py", line 203, in maybe_as_int
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     return int(self.expr)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 308, in __int__
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     r = self.round(2)
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/sympy/core/expr.py", line 3838, in round
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]     raise TypeError(
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0]         'Expected a number but got %s:' % func_name(x))
+E0205 11:30:36.865000 3201829 site-packages/torch/_subclasses/fake_tensor.py:1269] [150/0] TypeError: Expected a number but got FloorDiv:

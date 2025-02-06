@@ -1,0 +1,127 @@
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Triton compilation failed: triton_red_fused__native_batch_norm_legit_3
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] def triton_red_fused__native_batch_norm_legit_3(in_ptr0, out_ptr0, out_ptr1, out_ptr2, ks0, ks1, ks2, ks3, xnumel, r0_numel, XBLOCK : tl.constexpr, R0_BLOCK : tl.constexpr):
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xnumel = 70
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rnumel = r0_numel
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     RBLOCK: tl.constexpr = R0_BLOCK
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xoffset = tl.program_id(0) * XBLOCK
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xindex = xoffset + tl.arange(0, XBLOCK)[:, None]
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xmask = xindex < xnumel
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     r0_base = tl.arange(0, R0_BLOCK)[None, :]
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rbase = r0_base
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x0 = (xindex % 7)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x1 = xindex // 7
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp14_mean = tl.zeros([XBLOCK, R0_BLOCK], tl.float32)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp14_m2 = tl.zeros([XBLOCK, R0_BLOCK], tl.float32)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp14_weight = tl.zeros([XBLOCK, R0_BLOCK], tl.float32)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x3 = xindex
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_2 = r0_index
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = (-1) + ((((r0_2 + (108/7)*x0 + (18/7)*ks2*x0 + (24/7)*ks0*x0 + (24/7)*ks1*x0 + (4/7)*ks0*ks2*x0 + (4/7)*ks1*ks2*x0 + (6/7)*ks0*ks1*x0 + (1/7)*ks0*ks1*ks2*x0) // (6 + ks2)) % (18 + 4*ks0 + 4*ks1 + ks0*ks1)))
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp1 = tl.full([1, 1], 0, tl.int64)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp2 = tmp0 >= tmp1
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp3 = 16 + 4*ks0 + 4*ks1 + ks0*ks1
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp4 = tmp0 < tmp3
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp5 = (-1) + ((r0_2 % (6 + ks2)))
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp6 = tmp5 >= tmp1
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp7 = ks3
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp8 = tmp5 < tmp7
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp9 = tmp2 & tmp4
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp10 = tmp9 & tmp6
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp11 = tmp10 & tmp8
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp12 = tl.load(in_ptr0 + ((-5) + ((-1)*ks2) + 4*((((r0_2 + (108/7)*x0 + (18/7)*ks2*x0 + (24/7)*ks0*x0 + (24/7)*ks1*x0 + (4/7)*ks0*ks2*x0 + (4/7)*ks1*ks2*x0 + (6/7)*ks0*ks1*x0 + (1/7)*ks0*ks1*ks2*x0) // (6 + ks2)) % (18 + 4*ks0 + 4*ks1 + ks0*ks1))) + 64*x1 + ks2*((((r0_2 + (108/7)*x0 + (18/7)*ks2*x0 + (24/7)*ks0*x0 + (24/7)*ks1*x0 + (4/7)*ks0*ks2*x0 + (4/7)*ks1*ks2*x0 + (6/7)*ks0*ks1*x0 + (1/7)*ks0*ks1*ks2*x0) // (6 + ks2)) % (18 + 4*ks0 + 4*ks1 + ks0*ks1))) + 16*ks0*x1 + 16*ks1*x1 + 16*ks2*x1 + 4*ks0*ks1*x1 + 4*ks0*ks2*x1 + 4*ks1*ks2*x1 + ks0*ks1*ks2*x1 + ((r0_2 % (6 + ks2)))), r0_mask & tmp11 & xmask, eviction_policy='evict_last', other=0.5)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp13 = tl.broadcast_to(tmp12, [XBLOCK, R0_BLOCK])
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp14_mean_next, tmp14_m2_next, tmp14_weight_next = triton_helpers.welford_reduce(
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]             tmp13, tmp14_mean, tmp14_m2, tmp14_weight, roffset == 0
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         )
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp14_mean = tl.where(r0_mask & xmask, tmp14_mean_next, tmp14_mean)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp14_m2 = tl.where(r0_mask & xmask, tmp14_m2_next, tmp14_m2)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp14_weight = tl.where(r0_mask & xmask, tmp14_weight_next, tmp14_weight)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp17, tmp18, tmp19 = triton_helpers.welford(tmp14_mean, tmp14_m2, tmp14_weight, 1)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp14 = tmp17[:, None]
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp15 = tmp18[:, None]
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp16 = tmp19[:, None]
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tl.store(out_ptr0 + (x3), tmp14, xmask)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tl.store(out_ptr1 + (x3), tmp15, xmask)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tl.store(out_ptr2 + (x3), tmp16, xmask)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] 
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] metadata: {'signature': {'in_ptr0': '*fp32', 'out_ptr0': '*fp32', 'out_ptr1': '*fp32', 'out_ptr2': '*fp32', 'ks0': 'i32', 'ks1': 'i32', 'ks2': 'i32', 'ks3': 'i32', 'xnumel': 'i32', 'r0_numel': 'i32'}, 'device': 0, 'constants': {'XBLOCK': 1, 'R0_BLOCK': 2048}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1, 2, 3), 'tt.equal_to': ()}, 'cls': 'AttrsDescriptor'})], 'device_type': 'cuda', 'num_warps': 16, 'num_stages': 1, 'debug': True, 'cc': 90}
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Traceback (most recent call last):
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_inductor/runtime/triton_heuristics.py", line 505, in _precompile_config
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     binary = triton.compile(*compile_args, **compile_kwargs)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 273, in compile
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     module = src.make_ir(options, codegen_fns, module_map, context)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 100, in make_ir
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                        module_map=module_map)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] triton.compiler.errors.CompilationError: at 22:25:
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x1 = xindex // 7
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp14_mean = tl.zeros([XBLOCK, R0_BLOCK], tl.float32)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp14_m2 = tl.zeros([XBLOCK, R0_BLOCK], tl.float32)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp14_weight = tl.zeros([XBLOCK, R0_BLOCK], tl.float32)
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x3 = xindex
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_2 = r0_index
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = (-1) + ((((r0_2 + (108/7)*x0 + (18/7)*ks2*x0 + (24/7)*ks0*x0 + (24/7)*ks1*x0 + (4/7)*ks0*ks2*x0 + (4/7)*ks1*ks2*x0 + (6/7)*ks0*ks1*x0 + (1/7)*ks0*ks1*ks2*x0) // (6 + ks2)) % (18 + 4*ks0 + 4*ks1 + ks0*ks1)))
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                          ^
+E0205 14:43:50.740000 2037470 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] TypeError('unexpected type fp32')
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Triton compilation failed: triton_red_fused_exp_mean_mul_sub_zeros_like_3
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] def triton_red_fused_exp_mean_mul_sub_zeros_like_3(in_ptr0, out_ptr0, ks0, ks1, ks2, ks3, ks4, ks5, xnumel, r0_numel, XBLOCK : tl.constexpr, R0_BLOCK : tl.constexpr):
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xnumel = 36
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rnumel = r0_numel
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     RBLOCK: tl.constexpr = R0_BLOCK
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xoffset = tl.program_id(0) * XBLOCK
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xindex = xoffset + tl.arange(0, XBLOCK)[:, None]
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xmask = xindex < xnumel
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     r0_base = tl.arange(0, R0_BLOCK)[None, :]
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rbase = r0_base
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x0 = xindex
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     _tmp6 = tl.full([XBLOCK, R0_BLOCK], 0, tl.float32)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_1 = r0_index
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = tl.load(in_ptr0 + (((-8)*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0)))) + 64*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + ((-16)*ks4*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0))) + ((-8)*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + 2*ks4*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + (((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) % ks2))), r0_mask & xmask, eviction_policy='evict_last', other=0.0)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp1 = tl_math.exp(tmp0)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp2 = 0.0
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp3 = tmp2 * tmp0
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp4 = tmp1 - tmp3
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp5 = tl.broadcast_to(tmp4, [XBLOCK, R0_BLOCK])
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp7 = _tmp6 + tmp5
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         _tmp6 = tl.where(r0_mask & xmask, tmp7, _tmp6)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tmp6 = tl.sum(_tmp6, 1)[:, None]
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     tl.store(out_ptr0 + (x0), tmp6, xmask)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] 
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] metadata: {'signature': {'in_ptr0': '*fp32', 'out_ptr0': '*fp32', 'ks0': 'i32', 'ks1': 'i32', 'ks2': 'i32', 'ks3': 'i32', 'ks4': 'i32', 'ks5': 'i32', 'xnumel': 'i32', 'r0_numel': 'i32'}, 'device': 0, 'constants': {'XBLOCK': 1, 'R0_BLOCK': 2048}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1), 'tt.equal_to': ()}, 'cls': 'AttrsDescriptor'})], 'device_type': 'cuda', 'num_warps': 16, 'num_stages': 1, 'debug': True, 'cc': 90}
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] Traceback (most recent call last):
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_inductor/runtime/triton_heuristics.py", line 505, in _precompile_config
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     binary = triton.compile(*compile_args, **compile_kwargs)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 273, in compile
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     module = src.make_ir(options, codegen_fns, module_map, context)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/triton/compiler/compiler.py", line 100, in make_ir
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                        module_map=module_map)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] triton.compiler.errors.CompilationError: at 18:43:
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     xmask = xindex < xnumel
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     r0_base = tl.arange(0, R0_BLOCK)[None, :]
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     rbase = r0_base
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     x0 = xindex
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     _tmp6 = tl.full([XBLOCK, R0_BLOCK], 0, tl.float32)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]     for r0_offset in range(0, r0_numel, R0_BLOCK):
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_index = r0_offset + r0_base
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_mask = r0_index < r0_numel
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         roffset = r0_offset
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         rindex = r0_index
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         r0_1 = r0_index
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]         tmp0 = tl.load(in_ptr0 + (((-8)*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0)))) + 64*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + ((-16)*ks4*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // ks2) % ((-8) + ks0))) + ((-8)*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20))) + 2*ks4*ks5*(triton_helpers.div_floor_integer(ks3,  2*(ks3 // 4)))*((((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) // (64 + ks1 + ((-16)*ks4) + ((-16)*ks5))) % 20)) + (((r0_1 + (320/9)*x0 + ((-80/9)*ks4*x0) + ((-80/9)*ks5*x0) + (20/9)*ks4*ks5*x0) % ks2))), r0_mask & xmask, eviction_policy='evict_last', other=0.0)
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507]                                            ^
+E0205 14:51:06.493000 2203401 site-packages/torch/_inductor/runtime/triton_heuristics.py:507] TypeError('unexpected type fp32')

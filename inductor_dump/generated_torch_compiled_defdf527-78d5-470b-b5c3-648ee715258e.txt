@@ -1,253 +1,253 @@
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] Output code: 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # AOT ID: ['105_inference']
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from ctypes import c_void_p, c_long, c_int
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import torch
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import math
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import random
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import os
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import tempfile
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from math import inf, nan
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from cmath import nanj
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.hooks import run_intermediate_hooks
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.utils import maybe_profile
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.codegen.memory_planning import _align as align
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch import device, empty_strided
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.async_compile import AsyncCompile
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.select_algorithm import extern_kernels
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.codegen.multi_kernel import MultiKernelCall
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton.language as tl
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime.triton_heuristics import (
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     grid,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     split_scan_grid,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     grid_combo_kernels,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     start_graph,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     end_graph,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     cooperative_reduction_grid,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] )
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._C import _cuda_getCurrentRawStream as get_raw_stream
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._C import _cuda_getCurrentRawStream as get_raw_stream
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] aten = torch.ops.aten
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] inductor_ops = torch.ops.inductor
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] _quantized = torch.ops._quantized
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] assert_size_stride = torch._C._dynamo.guards.assert_size_stride
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] empty_strided_cpu = torch._C._dynamo.guards._empty_strided_cpu
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] empty_strided_cuda = torch._C._dynamo.guards._empty_strided_cuda
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] empty_strided_xpu = torch._C._dynamo.guards._empty_strided_xpu
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] reinterpret_tensor = torch._C._dynamo.guards._reinterpret_tensor
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] alloc_from_pool = torch.ops.inductor._alloc_from_pool
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] async_compile = AsyncCompile()
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # kernel path: /tmp/torchinductor_sahanp/2u/c2uio5agy6zf3faddgdmtmmahogsytx7pojobedoblrtu6wecsqf.py
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.bernoulli]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Source node to ATen node mapping:
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   x_1 => inductor_lookup_seed_default, inductor_random_default_2
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Graph fragment:
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %inductor_random_default_2 : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, 1, 1], %inductor_lookup_seed_default, rand), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] triton_poi_fused_bernoulli_0 = async_compile.triton('triton_poi_fused_bernoulli_0', '''
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton.language as tl
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from triton.compiler.compiler import AttrsDescriptor
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime import triton_helpers, triton_heuristics
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime.hints import AutotuneHint, ReductionHint, TileHint, DeviceProperties
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] triton_helpers.set_driver_to_gpu()
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] @triton_heuristics.pointwise(
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     size_hints={'x': 1}, 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     filename=__file__,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     triton_meta={'signature': {'in_ptr0': '*i64', 'out_ptr0': '*fp32', 'load_seed_offset': 'i32', 'xnumel': 'i32'}, 'device': DeviceProperties(type='cuda', index=0, multi_processor_count=132, cc=90, major=9, regs_per_multiprocessor=65536, max_threads_per_multi_processor=2048, warp_size=32), 'constants': {'xnumel': 1}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1), 'tt.equal_to': (3,)}, 'cls': 'AttrsDescriptor'})]},
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     inductor_meta={'autotune_hints': set(), 'kernel_name': 'triton_poi_fused_bernoulli_0', 'mutated_arg_names': [], 'optimize_mem': True, 'no_x_dim': False, 'num_load': 0, 'num_reduction': 0, 'backend_hash': 'E1309284F070F92E1AD25A7946F3C18B4B066B8A9F4AE2408BC7FC1EBFE3BEEE', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cache': True, 'autotune_pointwise': True, 'autotune_remote_cache': None, 'force_disable_caches': False, 'dynamic_scale_rblock': True, 'max_autotune': False, 'max_autotune_pointwise': False, 'min_split_scan_rblock': 256, 'spill_threshold': 16, 'store_cubin': False},
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     min_elem_per_thread=0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] )
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] @triton.jit
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] def triton_poi_fused_bernoulli_0(in_ptr0, out_ptr0, load_seed_offset, xnumel, XBLOCK : tl.constexpr):
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xnumel = 1
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xoffset = tl.program_id(0) * XBLOCK
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xindex = xoffset + tl.arange(0, XBLOCK)[:]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xmask = tl.full([XBLOCK], True, tl.int1)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp0 = tl.load(in_ptr0 + load_seed_offset)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp1 = tl.full([1], 0, tl.int32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp2 = tl.rand(tmp0, (tmp1).to(tl.uint32))
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tl.store(out_ptr0 + (tl.full([XBLOCK], 0, tl.int32)), tmp2, None)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] ''', device_str='cuda')
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # kernel path: /tmp/torchinductor_sahanp/tf/ctfvvs4ia2uldv5lejm7tiihmdohe344fpxf6tebnnxg22vfnkew.py
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Topologically Sorted Source Nodes: [x_4], Original ATen: [aten.bernoulli]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Source node to ATen node mapping:
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   x_4 => inductor_lookup_seed_default_1, inductor_random_default_1
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Graph fragment:
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %inductor_lookup_seed_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 1), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %inductor_random_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, 1, 1], %inductor_lookup_seed_default_1, rand), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] triton_poi_fused_bernoulli_1 = async_compile.triton('triton_poi_fused_bernoulli_1', '''
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton.language as tl
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from triton.compiler.compiler import AttrsDescriptor
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime import triton_helpers, triton_heuristics
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime.hints import AutotuneHint, ReductionHint, TileHint, DeviceProperties
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] triton_helpers.set_driver_to_gpu()
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] @triton_heuristics.pointwise(
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     size_hints={'x': 1}, 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     filename=__file__,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     triton_meta={'signature': {'in_ptr0': '*i64', 'out_ptr0': '*fp32', 'load_seed_offset': 'i32', 'xnumel': 'i32'}, 'device': DeviceProperties(type='cuda', index=0, multi_processor_count=132, cc=90, major=9, regs_per_multiprocessor=65536, max_threads_per_multi_processor=2048, warp_size=32), 'constants': {'load_seed_offset': 1, 'xnumel': 1}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1), 'tt.equal_to': (2, 3)}, 'cls': 'AttrsDescriptor'})]},
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     inductor_meta={'autotune_hints': set(), 'kernel_name': 'triton_poi_fused_bernoulli_1', 'mutated_arg_names': [], 'optimize_mem': True, 'no_x_dim': False, 'num_load': 0, 'num_reduction': 0, 'backend_hash': 'E1309284F070F92E1AD25A7946F3C18B4B066B8A9F4AE2408BC7FC1EBFE3BEEE', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cache': True, 'autotune_pointwise': True, 'autotune_remote_cache': None, 'force_disable_caches': False, 'dynamic_scale_rblock': True, 'max_autotune': False, 'max_autotune_pointwise': False, 'min_split_scan_rblock': 256, 'spill_threshold': 16, 'store_cubin': False},
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     min_elem_per_thread=0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] )
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] @triton.jit
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] def triton_poi_fused_bernoulli_1(in_ptr0, out_ptr0, load_seed_offset, xnumel, XBLOCK : tl.constexpr):
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xnumel = 1
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xoffset = tl.program_id(0) * XBLOCK
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xindex = xoffset + tl.arange(0, XBLOCK)[:]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xmask = tl.full([XBLOCK], True, tl.int1)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp0 = tl.load(in_ptr0 + load_seed_offset)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp1 = tl.full([1], 0, tl.int32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp2 = tl.rand(tmp0, (tmp1).to(tl.uint32))
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tl.store(out_ptr0 + (tl.full([XBLOCK], 0, tl.int32)), tmp2, None)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] ''', device_str='cuda')
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # kernel path: /tmp/torchinductor_sahanp/k2/ck2ivvmtbjl4kqjpbzmvhsve7ty37nahnzreuq7xu6aimiytbumm.py
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.bernoulli, aten._to_copy, aten.div, aten.mul]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Source node to ATen node mapping:
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   x_6 => convert_element_type_2, div_2, lt_2, mul_32
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] # Graph fragment:
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %lt_2 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default, 0.5), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %convert_element_type_2 : [num_users=1] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_2, torch.float32), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %div_2 : [num_users=1] = call_function[target=torch.ops.aten.div.Scalar](args = (%convert_element_type_2, 0.5), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] #   %mul_32 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%unsqueeze_2, %div_2), kwargs = {})
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] triton_poi_fused__to_copy_bernoulli_div_mul_2 = async_compile.triton('triton_poi_fused__to_copy_bernoulli_div_mul_2', '''
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] import triton.language as tl
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from triton.compiler.compiler import AttrsDescriptor
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime import triton_helpers, triton_heuristics
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] from torch._inductor.runtime.hints import AutotuneHint, ReductionHint, TileHint, DeviceProperties
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] triton_helpers.set_driver_to_gpu()
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] @triton_heuristics.pointwise(
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     size_hints={'x': 16}, 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     filename=__file__,
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     triton_meta={'signature': {'in_ptr0': '*fp32', 'in_ptr1': '*fp32', 'in_ptr2': '*fp32', 'in_ptr3': '*fp32', 'out_ptr0': '*fp32', 'ks0': 'i32', 'xnumel': 'i32'}, 'device': DeviceProperties(type='cuda', index=0, multi_processor_count=132, cc=90, major=9, regs_per_multiprocessor=65536, max_threads_per_multi_processor=2048, warp_size=32), 'constants': {}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1, 2, 3, 4), 'tt.equal_to': ()}, 'cls': 'AttrsDescriptor'})]},
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     inductor_meta={'autotune_hints': set(), 'kernel_name': 'triton_poi_fused__to_copy_bernoulli_div_mul_2', 'mutated_arg_names': [], 'optimize_mem': True, 'no_x_dim': False, 'num_load': 4, 'num_reduction': 0, 'backend_hash': 'E1309284F070F92E1AD25A7946F3C18B4B066B8A9F4AE2408BC7FC1EBFE3BEEE', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cache': True, 'autotune_pointwise': True, 'autotune_remote_cache': None, 'force_disable_caches': False, 'dynamic_scale_rblock': True, 'max_autotune': False, 'max_autotune_pointwise': False, 'min_split_scan_rblock': 256, 'spill_threshold': 16, 'store_cubin': False},
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     min_elem_per_thread=0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] )
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] @triton.jit
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] def triton_poi_fused__to_copy_bernoulli_div_mul_2(in_ptr0, in_ptr1, in_ptr2, in_ptr3, out_ptr0, ks0, xnumel, XBLOCK : tl.constexpr):
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xoffset = tl.program_id(0) * XBLOCK
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xindex = xoffset + tl.arange(0, XBLOCK)[:]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     xmask = xindex < xnumel
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     x0 = xindex
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp39 = tl.load(in_ptr3 + (0))
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp40 = tl.broadcast_to(tmp39, [XBLOCK])
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp0 = (-1) + x0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp1 = tl.full([1], 0, tl.int64)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp2 = tmp0 >= tmp1
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp3 = 4 + ks0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp4 = tmp0 < tmp3
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp5 = tmp2 & tmp4
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp6 = (-3) + x0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp7 = tl.full([1], 0, tl.int64)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp8 = tmp6 >= tmp7
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp9 = tl.broadcast_to(ks0, [XBLOCK])
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp10 = tmp6 < tmp9
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp11 = tmp8 & tmp10
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp12 = tmp11 & tmp5
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp13 = tl.load(in_ptr0 + ((-3) + x0), tmp12 & xmask, other=0.0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp14 = tl.load(in_ptr1 + (tl.full([XBLOCK], 0, tl.int32)), tmp12, eviction_policy='evict_last', other=0.0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp15 = 0.5
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp16 = tmp14 < tmp15
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp17 = tmp16.to(tl.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp18 = 2.0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp19 = tmp17 * tmp18
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp20 = tmp13 * tmp19
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp21 = tmp20 * tmp15
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp22 = 0.7071067811865476
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp23 = tmp20 * tmp22
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp24 = libdevice.erf(tmp23)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp25 = 1.0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp26 = tmp24 + tmp25
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp27 = tmp21 * tmp26
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp28 = tl.full(tmp27.shape, 0.0, tmp27.dtype)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp29 = tl.where(tmp12, tmp27, tmp28)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp30 = tl.load(in_ptr2 + (tl.full([XBLOCK], 0, tl.int32)), tmp5, eviction_policy='evict_last', other=0.0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp31 = 0.5
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp32 = tmp30 < tmp31
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp33 = tmp32.to(tl.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp34 = 2.0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp35 = tmp33 * tmp34
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp36 = tmp29 * tmp35
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp37 = tl.full(tmp36.shape, 0.0, tmp36.dtype)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp38 = tl.where(tmp5, tmp36, tmp37)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp41 = 0.5
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp42 = tmp40 < tmp41
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp43 = tmp42.to(tl.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp44 = 2.0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp45 = tmp43 * tmp44
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tmp46 = tmp38 * tmp45
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     tl.store(out_ptr0 + (x0), tmp46, xmask)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] ''', device_str='cuda')
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] async_compile.wait(globals())
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] del async_compile
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] def call(args):
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     arg0_1, arg1_1 = args
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     args.clear()
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     s0 = arg0_1
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     assert_size_stride(arg1_1, (1, s0), (s0, 1))
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     with torch.cuda._DeviceGuard(0):
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         torch.cuda.set_device(0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         buf0 = empty_strided_cuda((3, ), (1, ), torch.int64)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         # Topologically Sorted Source Nodes: [], Original ATen: []
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [3], out=buf0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         buf1 = empty_strided_cuda((1, 1, 1), (1, 1, 1), torch.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.bernoulli]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         stream0 = get_raw_stream(0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         triton_poi_fused_bernoulli_0.run(buf0, buf1, 0, 1, grid=grid(1), stream=stream0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         buf2 = empty_strided_cuda((1, 1, 1), (1, 1, 1), torch.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         # Topologically Sorted Source Nodes: [x_4], Original ATen: [aten.bernoulli]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         stream0 = get_raw_stream(0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         triton_poi_fused_bernoulli_1.run(buf0, buf2, 1, 1, grid=grid(1), stream=stream0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         buf3 = empty_strided_cuda((1, 1, 1), (1, 1, 1), torch.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.bernoulli]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         stream0 = get_raw_stream(0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         triton_poi_fused_bernoulli_0.run(buf0, buf3, 2, 1, grid=grid(1), stream=stream0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         del buf0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         buf4 = empty_strided_cuda((1, 1, 6 + s0), (6 + s0, 6 + s0, 1), torch.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.bernoulli, aten._to_copy, aten.div, aten.mul]
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         triton_poi_fused__to_copy_bernoulli_div_mul_2_xnumel = 6 + s0
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         stream0 = get_raw_stream(0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         triton_poi_fused__to_copy_bernoulli_div_mul_2.run(arg1_1, buf1, buf2, buf3, buf4, s0, triton_poi_fused__to_copy_bernoulli_div_mul_2_xnumel, grid=grid(triton_poi_fused__to_copy_bernoulli_div_mul_2_xnumel), stream=stream0)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         del arg1_1
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         del buf1
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         del buf2
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]         del buf3
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     return (reinterpret_tensor(buf4, (1, 6 + s0), (6 + s0, 1), 0), )
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] def benchmark_compiled_module(times=10, repeat=10):
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     from torch._dynamo.testing import rand_strided
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     from torch._inductor.utils import print_performance
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     arg0_1 = 10
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     arg1_1 = rand_strided((1, 10), (10, 1), device='cuda:0', dtype=torch.float32)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     fn = lambda: call([arg0_1, arg1_1])
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     return print_performance(fn, times=times, repeat=repeat)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] if __name__ == "__main__":
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     from torch._inductor.wrapper_benchmark import compiled_module_main
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code]     compiled_module_main('None', benchmark_compiled_module)
-V0127 12:55:31.654000 2031468 site-packages/torch/_inductor/graph.py:2014] [416/0] [__output_code] 
-V0127 12:55:31.659000 2031468 site-packages/torch/_inductor/graph.py:2022] [416/0] [__output_code] Output code written to: /tmp/torchinductor_sahanp/w2/cw22aovyodlwbqyljvw4ifbgti45chbh5upt7a4afwkx2yx4g5tf.py
-I0127 12:55:31.746000 2031468 site-packages/torch/_inductor/graph.py:2056] [416/0] [__output_code] Output code written to: /tmp/torchinductor_sahanp/w2/cw22aovyodlwbqyljvw4ifbgti45chbh5upt7a4afwkx2yx4g5tf.py
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] Output code: 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # AOT ID: ['179_inference']
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from ctypes import c_void_p, c_long, c_int
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import torch
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import math
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import random
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import os
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import tempfile
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from math import inf, nan
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from cmath import nanj
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.hooks import run_intermediate_hooks
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.utils import maybe_profile
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.codegen.memory_planning import _align as align
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch import device, empty_strided
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.async_compile import AsyncCompile
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.select_algorithm import extern_kernels
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.codegen.multi_kernel import MultiKernelCall
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton.language as tl
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime.triton_heuristics import (
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     grid,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     split_scan_grid,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     grid_combo_kernels,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     start_graph,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     end_graph,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     cooperative_reduction_grid,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] )
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._C import _cuda_getCurrentRawStream as get_raw_stream
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._C import _cuda_getCurrentRawStream as get_raw_stream
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] aten = torch.ops.aten
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] inductor_ops = torch.ops.inductor
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] _quantized = torch.ops._quantized
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] assert_size_stride = torch._C._dynamo.guards.assert_size_stride
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] empty_strided_cpu = torch._C._dynamo.guards._empty_strided_cpu
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] empty_strided_cuda = torch._C._dynamo.guards._empty_strided_cuda
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] empty_strided_xpu = torch._C._dynamo.guards._empty_strided_xpu
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] reinterpret_tensor = torch._C._dynamo.guards._reinterpret_tensor
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] alloc_from_pool = torch.ops.inductor._alloc_from_pool
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] async_compile = AsyncCompile()
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] empty_strided_p2p = torch._C._distributed_c10d._SymmetricMemory.empty_strided_p2p
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # kernel path: /tmp/torchinductor_sahanp/2u/c2uio5agy6zf3faddgdmtmmahogsytx7pojobedoblrtu6wecsqf.py
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.bernoulli]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Source node to ATen node mapping:
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   x_1 => inductor_lookup_seed_default, inductor_random_default_2
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Graph fragment:
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %inductor_lookup_seed_default : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 0), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %inductor_random_default_2 : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, 1, 1], %inductor_lookup_seed_default, rand), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] triton_poi_fused_bernoulli_0 = async_compile.triton('triton_poi_fused_bernoulli_0', '''
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton.language as tl
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from triton.compiler.compiler import AttrsDescriptor
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime import triton_helpers, triton_heuristics
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime.hints import AutotuneHint, ReductionHint, TileHint, DeviceProperties
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] triton_helpers.set_driver_to_gpu()
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] @triton_heuristics.pointwise(
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     size_hints={'x': 1}, 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     filename=__file__,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     triton_meta={'signature': {'in_ptr0': '*i64', 'out_ptr0': '*fp32', 'load_seed_offset': 'i32', 'xnumel': 'i32'}, 'device': DeviceProperties(type='cuda', index=0, multi_processor_count=132, cc=90, major=9, regs_per_multiprocessor=65536, max_threads_per_multi_processor=2048, warp_size=32), 'constants': {'xnumel': 1}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1), 'tt.equal_to': (3,)}, 'cls': 'AttrsDescriptor'})]},
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     inductor_meta={'autotune_hints': set(), 'kernel_name': 'triton_poi_fused_bernoulli_0', 'mutated_arg_names': [], 'optimize_mem': True, 'no_x_dim': False, 'num_load': 0, 'num_reduction': 0, 'backend_hash': 'E1309284F070F92E1AD25A7946F3C18B4B066B8A9F4AE2408BC7FC1EBFE3BEEE', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cache': True, 'autotune_pointwise': True, 'autotune_remote_cache': None, 'force_disable_caches': False, 'dynamic_scale_rblock': True, 'max_autotune': False, 'max_autotune_pointwise': False, 'min_split_scan_rblock': 256, 'spill_threshold': 16, 'store_cubin': False},
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     min_elem_per_thread=0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] )
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] @triton.jit
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] def triton_poi_fused_bernoulli_0(in_ptr0, out_ptr0, load_seed_offset, xnumel, XBLOCK : tl.constexpr):
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xnumel = 1
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xoffset = tl.program_id(0) * XBLOCK
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xindex = xoffset + tl.arange(0, XBLOCK)[:]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xmask = tl.full([XBLOCK], True, tl.int1)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp0 = tl.load(in_ptr0 + load_seed_offset)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp1 = tl.full([1], 0, tl.int32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp2 = tl.rand(tmp0, (tmp1).to(tl.uint32))
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tl.store(out_ptr0 + (tl.full([XBLOCK], 0, tl.int32)), tmp2, None)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] ''', device_str='cuda')
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # kernel path: /tmp/torchinductor_sahanp/tf/ctfvvs4ia2uldv5lejm7tiihmdohe344fpxf6tebnnxg22vfnkew.py
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Topologically Sorted Source Nodes: [x_4], Original ATen: [aten.bernoulli]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Source node to ATen node mapping:
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   x_4 => inductor_lookup_seed_default_1, inductor_random_default_1
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Graph fragment:
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %inductor_lookup_seed_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_lookup_seed.default](args = (%inductor_seeds_default, 1), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %inductor_random_default_1 : [num_users=1] = call_function[target=torch.ops.prims.inductor_random.default](args = ([1, 1, 1], %inductor_lookup_seed_default_1, rand), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] triton_poi_fused_bernoulli_1 = async_compile.triton('triton_poi_fused_bernoulli_1', '''
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton.language as tl
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from triton.compiler.compiler import AttrsDescriptor
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime import triton_helpers, triton_heuristics
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime.hints import AutotuneHint, ReductionHint, TileHint, DeviceProperties
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] triton_helpers.set_driver_to_gpu()
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] @triton_heuristics.pointwise(
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     size_hints={'x': 1}, 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     filename=__file__,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     triton_meta={'signature': {'in_ptr0': '*i64', 'out_ptr0': '*fp32', 'load_seed_offset': 'i32', 'xnumel': 'i32'}, 'device': DeviceProperties(type='cuda', index=0, multi_processor_count=132, cc=90, major=9, regs_per_multiprocessor=65536, max_threads_per_multi_processor=2048, warp_size=32), 'constants': {'load_seed_offset': 1, 'xnumel': 1}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1), 'tt.equal_to': (2, 3)}, 'cls': 'AttrsDescriptor'})]},
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     inductor_meta={'autotune_hints': set(), 'kernel_name': 'triton_poi_fused_bernoulli_1', 'mutated_arg_names': [], 'optimize_mem': True, 'no_x_dim': False, 'num_load': 0, 'num_reduction': 0, 'backend_hash': 'E1309284F070F92E1AD25A7946F3C18B4B066B8A9F4AE2408BC7FC1EBFE3BEEE', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cache': True, 'autotune_pointwise': True, 'autotune_remote_cache': None, 'force_disable_caches': False, 'dynamic_scale_rblock': True, 'max_autotune': False, 'max_autotune_pointwise': False, 'min_split_scan_rblock': 256, 'spill_threshold': 16, 'store_cubin': False},
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     min_elem_per_thread=0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] )
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] @triton.jit
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] def triton_poi_fused_bernoulli_1(in_ptr0, out_ptr0, load_seed_offset, xnumel, XBLOCK : tl.constexpr):
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xnumel = 1
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xoffset = tl.program_id(0) * XBLOCK
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xindex = xoffset + tl.arange(0, XBLOCK)[:]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xmask = tl.full([XBLOCK], True, tl.int1)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp0 = tl.load(in_ptr0 + load_seed_offset)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp1 = tl.full([1], 0, tl.int32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp2 = tl.rand(tmp0, (tmp1).to(tl.uint32))
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tl.store(out_ptr0 + (tl.full([XBLOCK], 0, tl.int32)), tmp2, None)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] ''', device_str='cuda')
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # kernel path: /tmp/torchinductor_sahanp/k2/ck2ivvmtbjl4kqjpbzmvhsve7ty37nahnzreuq7xu6aimiytbumm.py
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.bernoulli, aten._to_copy, aten.div, aten.mul]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Source node to ATen node mapping:
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   x_6 => convert_element_type_2, div_2, lt_2, mul_32
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] # Graph fragment:
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %lt_2 : [num_users=1] = call_function[target=torch.ops.aten.lt.Scalar](args = (%inductor_random_default, 0.5), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %convert_element_type_2 : [num_users=1] = call_function[target=torch.ops.prims.convert_element_type.default](args = (%lt_2, torch.float32), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %div_2 : [num_users=1] = call_function[target=torch.ops.aten.div.Scalar](args = (%convert_element_type_2, 0.5), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] #   %mul_32 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%unsqueeze_2, %div_2), kwargs = {})
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] triton_poi_fused__to_copy_bernoulli_div_mul_2 = async_compile.triton('triton_poi_fused__to_copy_bernoulli_div_mul_2', '''
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] import triton.language as tl
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from triton.compiler.compiler import AttrsDescriptor
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime import triton_helpers, triton_heuristics
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] from torch._inductor.runtime.hints import AutotuneHint, ReductionHint, TileHint, DeviceProperties
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] triton_helpers.set_driver_to_gpu()
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] @triton_heuristics.pointwise(
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     size_hints={'x': 16}, 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     filename=__file__,
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     triton_meta={'signature': {'in_ptr0': '*fp32', 'in_ptr1': '*fp32', 'in_ptr2': '*fp32', 'in_ptr3': '*fp32', 'out_ptr0': '*fp32', 'ks0': 'i32', 'xnumel': 'i32'}, 'device': DeviceProperties(type='cuda', index=0, multi_processor_count=132, cc=90, major=9, regs_per_multiprocessor=65536, max_threads_per_multi_processor=2048, warp_size=32), 'constants': {}, 'configs': [AttrsDescriptor.from_dict({'arg_properties': {'tt.divisibility': (0, 1, 2, 3, 4), 'tt.equal_to': ()}, 'cls': 'AttrsDescriptor'})]},
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     inductor_meta={'autotune_hints': set(), 'kernel_name': 'triton_poi_fused__to_copy_bernoulli_div_mul_2', 'mutated_arg_names': [], 'optimize_mem': True, 'no_x_dim': False, 'num_load': 4, 'num_reduction': 0, 'backend_hash': 'E1309284F070F92E1AD25A7946F3C18B4B066B8A9F4AE2408BC7FC1EBFE3BEEE', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cache': True, 'autotune_pointwise': True, 'autotune_remote_cache': None, 'force_disable_caches': False, 'dynamic_scale_rblock': True, 'max_autotune': False, 'max_autotune_pointwise': False, 'min_split_scan_rblock': 256, 'spill_threshold': 16, 'store_cubin': False},
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     min_elem_per_thread=0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] )
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] @triton.jit
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] def triton_poi_fused__to_copy_bernoulli_div_mul_2(in_ptr0, in_ptr1, in_ptr2, in_ptr3, out_ptr0, ks0, xnumel, XBLOCK : tl.constexpr):
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xoffset = tl.program_id(0) * XBLOCK
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xindex = xoffset + tl.arange(0, XBLOCK)[:]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     xmask = xindex < xnumel
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     x0 = xindex
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp39 = tl.load(in_ptr3 + (0))
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp40 = tl.broadcast_to(tmp39, [XBLOCK])
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp0 = (-1) + x0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp1 = tl.full([1], 0, tl.int64)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp2 = tmp0 >= tmp1
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp3 = 4 + ks0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp4 = tmp0 < tmp3
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp5 = tmp2 & tmp4
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp6 = (-3) + x0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp7 = tl.full([1], 0, tl.int64)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp8 = tmp6 >= tmp7
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp9 = tl.broadcast_to(ks0, [XBLOCK])
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp10 = tmp6 < tmp9
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp11 = tmp8 & tmp10
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp12 = tmp11 & tmp5
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp13 = tl.load(in_ptr0 + ((-3) + x0), tmp12 & xmask, other=0.0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp14 = tl.load(in_ptr1 + (tl.full([XBLOCK], 0, tl.int32)), tmp12, eviction_policy='evict_last', other=0.0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp15 = 0.5
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp16 = tmp14 < tmp15
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp17 = tmp16.to(tl.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp18 = 2.0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp19 = tmp17 * tmp18
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp20 = tmp13 * tmp19
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp21 = tmp20 * tmp15
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp22 = 0.7071067811865476
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp23 = tmp20 * tmp22
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp24 = libdevice.erf(tmp23)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp25 = 1.0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp26 = tmp24 + tmp25
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp27 = tmp21 * tmp26
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp28 = tl.full(tmp27.shape, 0.0, tmp27.dtype)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp29 = tl.where(tmp12, tmp27, tmp28)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp30 = tl.load(in_ptr2 + (tl.full([XBLOCK], 0, tl.int32)), tmp5, eviction_policy='evict_last', other=0.0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp31 = 0.5
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp32 = tmp30 < tmp31
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp33 = tmp32.to(tl.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp34 = 2.0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp35 = tmp33 * tmp34
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp36 = tmp29 * tmp35
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp37 = tl.full(tmp36.shape, 0.0, tmp36.dtype)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp38 = tl.where(tmp5, tmp36, tmp37)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp41 = 0.5
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp42 = tmp40 < tmp41
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp43 = tmp42.to(tl.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp44 = 2.0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp45 = tmp43 * tmp44
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tmp46 = tmp38 * tmp45
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     tl.store(out_ptr0 + (x0), tmp46, xmask)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] ''', device_str='cuda')
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] async_compile.wait(globals())
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] del async_compile
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] def call(args):
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     arg0_1, arg1_1 = args
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     args.clear()
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     s0 = arg0_1
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     assert_size_stride(arg1_1, (1, s0), (s0, 1))
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     with torch.cuda._DeviceGuard(0):
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         torch.cuda.set_device(0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         buf0 = empty_strided_cuda((3, ), (1, ), torch.int64)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         # Topologically Sorted Source Nodes: [], Original ATen: []
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         aten.randint.low_out(-9223372036854775808, 9223372036854775807, [3], out=buf0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         buf1 = empty_strided_cuda((1, 1, 1), (1, 1, 1), torch.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         # Topologically Sorted Source Nodes: [x_1], Original ATen: [aten.bernoulli]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         stream0 = get_raw_stream(0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         triton_poi_fused_bernoulli_0.run(buf0, buf1, 0, 1, grid=grid(1), stream=stream0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         buf2 = empty_strided_cuda((1, 1, 1), (1, 1, 1), torch.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         # Topologically Sorted Source Nodes: [x_4], Original ATen: [aten.bernoulli]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         stream0 = get_raw_stream(0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         triton_poi_fused_bernoulli_1.run(buf0, buf2, 1, 1, grid=grid(1), stream=stream0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         buf3 = empty_strided_cuda((1, 1, 1), (1, 1, 1), torch.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.bernoulli]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         stream0 = get_raw_stream(0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         triton_poi_fused_bernoulli_0.run(buf0, buf3, 2, 1, grid=grid(1), stream=stream0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         del buf0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         buf4 = empty_strided_cuda((1, 1, 6 + s0), (6 + s0, 6 + s0, 1), torch.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         # Topologically Sorted Source Nodes: [x_6], Original ATen: [aten.bernoulli, aten._to_copy, aten.div, aten.mul]
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         triton_poi_fused__to_copy_bernoulli_div_mul_2_xnumel = 6 + s0
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         stream0 = get_raw_stream(0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         triton_poi_fused__to_copy_bernoulli_div_mul_2.run(arg1_1, buf1, buf2, buf3, buf4, s0, triton_poi_fused__to_copy_bernoulli_div_mul_2_xnumel, grid=grid(triton_poi_fused__to_copy_bernoulli_div_mul_2_xnumel), stream=stream0)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         del arg1_1
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         del buf1
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         del buf2
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]         del buf3
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     return (reinterpret_tensor(buf4, (1, 6 + s0), (6 + s0, 1), 0), )
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] def benchmark_compiled_module(times=10, repeat=10):
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     from torch._dynamo.testing import rand_strided
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     from torch._inductor.utils import print_performance
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     arg0_1 = 10
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     arg1_1 = rand_strided((1, 10), (10, 1), device='cuda:0', dtype=torch.float32)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     fn = lambda: call([arg0_1, arg1_1])
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     return print_performance(fn, times=times, repeat=repeat)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] if __name__ == "__main__":
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     from torch._inductor.wrapper_benchmark import compiled_module_main
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code]     compiled_module_main('None', benchmark_compiled_module)
+V0205 11:55:18.751000 3201829 site-packages/torch/_inductor/graph.py:2014] [670/0] [__output_code] 
+V0205 11:55:18.755000 3201829 site-packages/torch/_inductor/graph.py:2022] [670/0] [__output_code] Output code written to: /tmp/torchinductor_sahanp/dq/cdqkrk7j4ngs5kufuqdjvp5ghcblsistgjaslg54c2whdf7ikfjc.py
+I0205 11:55:18.836000 3201829 site-packages/torch/_inductor/graph.py:2056] [670/0] [__output_code] Output code written to: /tmp/torchinductor_sahanp/dq/cdqkrk7j4ngs5kufuqdjvp5ghcblsistgjaslg54c2whdf7ikfjc.py

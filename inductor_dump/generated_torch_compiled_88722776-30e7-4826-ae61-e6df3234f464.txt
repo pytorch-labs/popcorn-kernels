@@ -1,19 +1,19 @@
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0] failed while attempting to run meta for aten.permute.default
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0] Traceback (most recent call last):
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     r = func(*args, **kwargs)
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     return self._op(*args, **kwargs)
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3306, in permute
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     _permutation = utils.canonicalize_dims(
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]         a.ndim, utils.extract_dims_from_varargs(dims)
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     )
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 724, in canonicalize_dims
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     return tuple(canonicalize_dim(rank, x, wrap_scalar) for x in indices)
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 724, in <genexpr>
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     return tuple(canonicalize_dim(rank, x, wrap_scalar) for x in indices)
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 701, in canonicalize_dim
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     raise IndexError(msg)
-E0127 12:02:35.774000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0] IndexError: Dimension out of range (expected to be in range of [-2, 1], but got 2)
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0] failed while attempting to run meta for aten.permute.default
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0] Traceback (most recent call last):
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     r = func(*args, **kwargs)
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     return self._op(*args, **kwargs)
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3306, in permute
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     _permutation = utils.canonicalize_dims(
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]         a.ndim, utils.extract_dims_from_varargs(dims)
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     )
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 724, in canonicalize_dims
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     return tuple(canonicalize_dim(rank, x, wrap_scalar) for x in indices)
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 724, in <genexpr>
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     return tuple(canonicalize_dim(rank, x, wrap_scalar) for x in indices)
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 701, in canonicalize_dim
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0]     raise IndexError(msg)
+E0205 10:41:30.851000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [102/0] IndexError: Dimension out of range (expected to be in range of [-2, 1], but got 2)

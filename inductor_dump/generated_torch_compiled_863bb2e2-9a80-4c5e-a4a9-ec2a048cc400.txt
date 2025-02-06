@@ -1,16 +1,16 @@
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0] failed while attempting to run meta for aten.permute.default
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0] Traceback (most recent call last):
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     r = func(*args, **kwargs)
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     return self._op(*args, **kwargs)
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3309, in permute
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     return prims.transpose(a, _permutation)
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     return self._op(*args, **kwargs)
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims/__init__.py", line 1613, in _transpose_meta
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     raise ValueError(msg)
-E0127 12:02:22.293000 1492919 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0] ValueError: Attempting to permute a tensor of rank 4, but received a permutation of length 3!
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0] failed while attempting to run meta for aten.permute.default
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0] Traceback (most recent call last):
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     r = func(*args, **kwargs)
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     return self._op(*args, **kwargs)
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3309, in permute
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     return prims.transpose(a, _permutation)
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     return self._op(*args, **kwargs)
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims/__init__.py", line 1613, in _transpose_meta
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0]     raise ValueError(msg)
+E0205 10:41:16.226000 2062045 site-packages/torch/_subclasses/fake_tensor.py:2380] [76/0] ValueError: Attempting to permute a tensor of rank 4, but received a permutation of length 3!

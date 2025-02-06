@@ -1,8 +1,8 @@
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0] failed while attempting to run meta for aten.fractional_max_pool3d.default
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0] Traceback (most recent call last):
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]     r = func(*args, **kwargs)
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]     return self._op(*args, **kwargs)
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 12:25:46.903000 1940816 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0] RuntimeError: fractional_max_pool3d_out(): pool time 2 too large relative to input time 3
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0] failed while attempting to run meta for aten.fractional_max_pool3d.default
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0] Traceback (most recent call last):
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]     r = func(*args, **kwargs)
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]     return self._op(*args, **kwargs)
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0205 11:28:42.817000 3201829 site-packages/torch/_subclasses/fake_tensor.py:2380] [45/0] RuntimeError: fractional_max_pool3d_out(): pool time 2 too large relative to input time 3

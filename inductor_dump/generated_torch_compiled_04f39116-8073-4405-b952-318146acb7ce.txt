@@ -1,26 +1,26 @@
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0] failed while attempting to run meta for aten.view.default
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0] Traceback (most recent call last):
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     r = func(*args, **kwargs)
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     return self._op(*args, **kwargs)
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 4664, in view
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     return _reshape_view_helper(a, *shape, allow_copy=False)
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3702, in _reshape_view_helper
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     shape = utils.infer_size(shape, a.numel())
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 939, in infer_size
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     torch._check(
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     ~~~~~~~~~~~~^
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         numel == newsize,
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         ^^^^^^^^^^^^^^^^^
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         lambda: f"shape '{list(shape)}' is invalid for input of size {numel}",
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     )
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     ^
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     _check_with(RuntimeError, cond, message)
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     raise error_type(message_evaluated)
-E0127 09:53:35.313000 3192161 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0] RuntimeError: shape '[1, 10, 10, 10]' is invalid for input of size 100
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0] failed while attempting to run meta for aten.view.default
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0] Traceback (most recent call last):
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_subclasses/fake_tensor.py", line 2376, in _dispatch_impl
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     r = func(*args, **kwargs)
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_ops.py", line 749, in __call__
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     return self._op(*args, **kwargs)
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]            ~~~~~~~~^^^^^^^^^^^^^^^^^
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 4664, in view
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     return _reshape_view_helper(a, *shape, allow_copy=False)
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_refs/__init__.py", line 3702, in _reshape_view_helper
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     shape = utils.infer_size(shape, a.numel())
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/_prims_common/__init__.py", line 939, in infer_size
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     torch._check(
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     ~~~~~~~~~~~~^
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         numel == newsize,
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         ^^^^^^^^^^^^^^^^^
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         lambda: f"shape '{list(shape)}' is invalid for input of size {numel}",
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     )
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     ^
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1651, in _check
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     _check_with(RuntimeError, cond, message)
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]   File "/home/sahanp/.conda/envs/popcorn/lib/python3.13/site-packages/torch/__init__.py", line 1633, in _check_with
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0]     raise error_type(message_evaluated)
+E0204 16:20:59.151000 2827036 site-packages/torch/_subclasses/fake_tensor.py:2380] [65/0] RuntimeError: shape '[1, 10, 10, 10]' is invalid for input of size 100
