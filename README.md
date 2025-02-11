@@ -15,7 +15,7 @@ uv pip install -r requirements.txt
 rm -rf /tmp/torchinductor_<username>/
 rm generated/*
 
-export DEEPSEEK_API_KEY=<deepseek api key>
+export OPENAI_API_KEY=<openai api key>
 
 python generate_code_random_torch.py --num_files <some number we used 3000>
 python clean.py --input_dir generated
