@@ -186,8 +186,6 @@ def generate_prompt(num_modules: int = 10):
 def generate_random_torch_from_prompt(prompt: str, model_name="gpt-4o-mini"):
     if "gpt" in model_name or "o1" in model_name:
         client = OpenAI()
-    elif "deepseek" in model_name:
-        client = OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
     else:
         raise ValueError(f"Unknown model: {model_name}")
     response = client.chat.completions.create(model=model_name, messages=[{"role": "user", "content": prompt}])
