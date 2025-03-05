@@ -8,6 +8,11 @@ This is repo synthetically generate pytorch programs and then create <pytorch, t
 uv pip install -r requirements.txt
 ```
 
+## NEW
+
+* Need to filter out combinations to avoid duplicating what is in KernelBench
+
+## OLD
 ### Running the code
 
 ```bash
