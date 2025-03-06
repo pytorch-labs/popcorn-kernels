@@ -1,0 +1,60 @@
+prompt = """
+Given a pattern, which is a list of PyTorch modules and operators, I want you to use them to implement an architecture in PyTorch (class inherit from nn.Module) by combining these patterns in a way that is valid PyTorch code. You can arrange the patterns in a way that makes sense to you.
+
+Make sure
+1. Make sure you have an init and a forward method, with clearly documented inputs output params' types and shapes and params for initializing the model. 
+2. The model is valid PyTorch code. Make sure the shapes are all correct and will match.
+3. Wrap the output code in a code block, followed by Final Pattern: [list of modules].
+
+
+For reference, here is an example of the output code for the pattern [Conv2D, ReLU, BiasAdd]:
+
+```
+# This is a random torch model generated with the following pattern: 
+# [Conv2D, ReLU, BiasAdd]
+# We put the operation in the order of Conv2D, ReLU, BiasAdd.
+# return the final pattern as [Conv2D, ReLU, BiasAdd]
+
+import torch
+import torch.nn as nn
+
+class Model(nn.Module):
+    \"\"\"
+    Simple model that performs a convolution, applies ReLU, and adds a bias term.
+    \"\"\"
+    def __init__(self, in_channels, out_channels, kernel_size, bias_shape):
+        super(Model, self).__init__()
+        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size)
+        self.bias = nn.Parameter(torch.randn(bias_shape)) 
+
+    def forward(self, x):
+        x = self.conv(x)
+        x = torch.relu(x)
+        x = x + self.bias
+        return x
+
+# some example shapes for the input and output of the model, specify the minimum amount you need but make sure they will match.
+batch_size = 128
+in_channels = 3
+out_channels = 16
+height, width = 32, 32
+kernel_size = 3
+bias_shape = (out_channels, 1, 1)
+
+def get_inputs():
+    # in the format of a list of tensors randomized
+    return [torch.randn(batch_size, in_channels, height, width)]
+
+def get_init_inputs():
+    # in the format of [ list[init args], dict[init kwargs (usually empty)]]
+    return [[in_channels, out_channels, kernel_size, bias_shape], {}]
+```
+Final Pattern: [Conv2D, ReLU, BiasAdd]
+
+
+Your task:
+
+Now write the code for the pattern {{pattern}}, name the class "Model".
+Also output the final pattern as list in the format of Final Pattern: [list of modules]
+
+"""

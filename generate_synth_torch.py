@@ -10,20 +10,20 @@ Notes: things I havent' thought about
 """
 
 # import operators that we defined
-from operators import core_operators, compound_operators, supporting_operators
 import subprocess
 import re
 import random
 import os
 import dotenv
-
-from utils import extract_final_pattern, extract_last_code, generate_gemini
-
 import tomli
-
-
-
 import pydra
+import shutil
+
+REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+from operators import core_operators, compound_operators, supporting_operators
+
+from utils import extract_final_pattern, extract_last_code, generate_gemini, test_synthetic_model
 
 class SynthConfig(pydra.Config):
     def __init__(self):
@@ -39,10 +39,11 @@ class SynthConfig(pydra.Config):
         self.num_supporting_ops_range = [1,5]
 
         # directory to save the generations to
-        self.program_dir = "./synth_torch_generations"
+        self.program_dir = "synth_torch_generations"
 
         self.verbose = False
-
+        self.debug_dir = "synth_torch_debug"
+        self.write_to_file = False
 
 def generate_patterns_pattern(
     operator_lists_with_ranges: list[tuple[list[str], tuple[int, int]]]
@@ -87,6 +88,11 @@ def generate_synth_torch_single(
     
     if config.verbose:
         print(f"Pattern to compose program: {pattern}")
+    if config.write_to_file:
+        # Clear existing files in debug directory
+        if os.path.exists(os.path.join(REPO_DIR, config.debug_dir)):
+            shutil.rmtree(os.path.join(REPO_DIR, config.debug_dir))
+        os.makedirs(os.path.join(REPO_DIR, config.debug_dir), exist_ok=True)
 
     # Step 2. Query the LLM and generate a synthetic program
     
@@ -95,22 +101,54 @@ def generate_synth_torch_single(
     
     prompt = data["prompt"].replace("{{pattern}}", str(pattern))
 
-    print(prompt)
+    if config.verbose:
+        print(prompt)
+    if config.write_to_file:
+        with open(os.path.join(REPO_DIR, config.debug_dir, "prompt.txt"), "w") as f:
+            f.write(prompt)
+
     response = generate_gemini(prompt)
-    # import pdb; pdb.set_trace()
-    print(response)
+
+    if config.verbose:
+        print(response)
+
+    if config.write_to_file:
+        with open(os.path.join(REPO_DIR, config.debug_dir, "response.txt"), "w") as f:
+            f.write(response)
 
     code = extract_last_code(response, "python")
     final_pattern = extract_final_pattern(response)
 
-    assert code and final_pattern, "Did not find both code or final pattern in response"
-
+    if not (code and final_pattern):
+        print("Did not find both code or final pattern in response")
+        return False
 
     # Step 3. Make sure this program is valid
+    file_name = f"synth_torch_{'_'.join(final_pattern)}.py"
 
-    
+    entry_point = f"SynthModel_{'_'.join(final_pattern)}"
+
+    # Step 4. Swap the forward call with entry point name
+    code = code.replace("Model", f"{entry_point}")
+
+    if config.write_to_file:
+        with open(os.path.join(REPO_DIR, config.debug_dir, file_name), "w") as f:
+            f.write(code)
+
+    # Step 5. Test the model
+    success, error = test_synthetic_model(torch_src=code, entry_point=entry_point)
+
+    if not success:
+        print(f"Error: {error}")
+        return False
+
+    # Step 6. Save the model    
+    if config.write_to_file:
+        with open(os.path.join(REPO_DIR, config.program_dir, file_name), "w") as f:
+            f.write(code)
+
     # Run the torch module as well as if could be torch.compile
-    
+       
 
 
     # TODO: check this is not in KernelBench (test set)
