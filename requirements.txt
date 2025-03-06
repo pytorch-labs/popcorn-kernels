@@ -10,3 +10,4 @@ autoflake
 eradicate
 ruff==0.9.4
 pydra-config
+tomli

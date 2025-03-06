@@ -3,6 +3,10 @@ Demonstrations of how to genreate torch models synthetically
 
 
 Currently just does one example
+
+Notes: things I havent' thought about
+- how to name them? (ops, orders, numerical?)
+- how to make sure they don't already exist in the generations
 """
 
 # import operators that we defined
@@ -11,8 +15,13 @@ import subprocess
 import re
 import random
 import os
+import dotenv
 
-from utils import extract_last_code
+from utils import extract_final_pattern, extract_last_code, generate_gemini
+
+import tomli
+
+
 
 import pydra
 
@@ -75,14 +84,33 @@ def generate_synth_torch_single(
         (supporting_operators, config.num_supporting_ops_range),
     ]
     pattern = generate_patterns_pattern(operator_lists_with_ranges)
-    print(f"Pattern: {pattern}")
     
+    if config.verbose:
+        print(f"Pattern to compose program: {pattern}")
+
     # Step 2. Query the LLM and generate a synthetic program
+    
+    with open("prompts/prompts_simon.toml", "rb") as f:
+        data = tomli.load(f)  # or tomllib.load(f)
+    
+    prompt = data["prompt"].replace("{{pattern}}", str(pattern))
+
+    print(prompt)
+    response = generate_gemini(prompt)
+    # import pdb; pdb.set_trace()
+    print(response)
+
+    code = extract_last_code(response, "python")
+    final_pattern = extract_final_pattern(response)
+
+    assert code and final_pattern, "Did not find both code or final pattern in response"
+
 
     # Step 3. Make sure this program is valid
+
+    
     # Run the torch module as well as if could be torch.compile
     
-
 
 
     # TODO: check this is not in KernelBench (test set)
@@ -98,4 +126,5 @@ def main(config: SynthConfig):
 
 
 if __name__ == "__main__":
+    dotenv.load_dotenv()
     main()
