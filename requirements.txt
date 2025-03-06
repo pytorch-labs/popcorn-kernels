@@ -11,3 +11,5 @@ eradicate
 ruff==0.9.4
 pydra-config
 tomli
+torch==2.5
+numpy

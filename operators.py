@@ -10,7 +10,7 @@ We can think about better naming and categorization of these operators.
 # Core operators (Names could be better)
 # These are basic building blocks
 matrix = ["Matmul", "Gemm", "BMM"]
-linear_operators = ["Linear", "Bilinear", "LazyLinear"]
+linear_operators = ["Linear", "Bilinear"] # "LazyLinear"
 
 convolutions = [
     "Conv1d", "Conv2d", "Conv3d", 
@@ -40,7 +40,8 @@ compound_operators = embedding + attention + recurrent + transformer
 
 activations = ["ReLU", "Sigmoid", "Tanh", "LeakyReLU", "GELU", "Swish", "Softmax", "Mish", "Hardtanh", "HardSwish", "ELU", "CELU", "SELU", "ReLU6", "PReLU", "RReLU", "LogSigmoid", "Softmin", "Softplus", "Softsign", "Softshrink", "Hardshrink", "Hardsigmoid", "Hardswish", "GLU", "SiLU", "Tanhshrink", "Threshold", "LogSoftmax", "Softmax2d"]
 element_wise_ops = ["Add", "Multiply", "Subtract", "Divide", "Clamp", "Scale", "ResidualAdd", "Identity", "CosineSimilarity", "PairwiseDistance"]
-normalizations = ["BatchNorm", "LayerNorm", "InstanceNorm", "GroupNorm", "BatchNorm1d", "BatchNorm2d", "BatchNorm3d", "InstanceNorm1d", "InstanceNorm2d", "InstanceNorm3d", "LazyBatchNorm1d", "LazyBatchNorm2d", "LazyBatchNorm3d", "LazyInstanceNorm1d", "LazyInstanceNorm2d", "LazyInstanceNorm3d", "LocalResponseNorm", "CrossMapLRN2d", "SyncBatchNorm", "RMSNorm"]
+normalizations = ["BatchNorm", "LayerNorm", "InstanceNorm", "GroupNorm", "BatchNorm1d", "BatchNorm2d", "BatchNorm3d", "InstanceNorm1d", "InstanceNorm2d", "InstanceNorm3d","LocalResponseNorm", "CrossMapLRN2d", "SyncBatchNorm", "RMSNorm"]
+#  "LazyBatchNorm1d", "LazyBatchNorm2d", "LazyBatchNorm3d", "LazyInstanceNorm1d", "LazyInstanceNorm2d", "LazyInstanceNorm3d", 
 pooling = ["MaxPool", "AvgPool", "GlobalAvgPool", "MaxPool1d", "MaxPool2d", "MaxPool3d", "AvgPool1d", "AvgPool2d", "AvgPool3d", "AdaptiveAvgPool1d", "AdaptiveAvgPool2d", "AdaptiveAvgPool3d", "AdaptiveMaxPool1d", "AdaptiveMaxPool2d", "AdaptiveMaxPool3d", "FractionalMaxPool2d", "FractionalMaxPool3d", "LPPool1d", "LPPool2d", "LPPool3d", "MaxUnpool1d", "MaxUnpool2d", "MaxUnpool3d"]
 bias = ["BiasAdd"]
 reductions = ["Sum", "Mean", "Max", "Min", "LogSumExp"]

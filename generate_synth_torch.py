@@ -19,8 +19,7 @@ import tomli
 import pydra
 import shutil
 
-REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+REPO_DIR = os.path.dirname(os.path.abspath(__file__))
 from operators import core_operators, compound_operators, supporting_operators
 
 from utils import extract_final_pattern, extract_last_code, generate_gemini, test_synthetic_model
@@ -101,6 +100,7 @@ def generate_synth_torch_single(
     
     prompt = data["prompt"].replace("{{pattern}}", str(pattern))
 
+    print(f"Prompting Model to Generate Program with Pattern: {pattern}")
     if config.verbose:
         print(prompt)
     if config.write_to_file:
@@ -119,14 +119,19 @@ def generate_synth_torch_single(
     code = extract_last_code(response, "python")
     final_pattern = extract_final_pattern(response)
 
+    print("Code Generation Success")
+    print(f"Final Pattern: {final_pattern}")
     if not (code and final_pattern):
         print("Did not find both code or final pattern in response")
         return False
 
     # Step 3. Make sure this program is valid
-    file_name = f"synth_torch_{'_'.join(final_pattern)}.py"
 
+    # according to Sahan's pipeline, these two should be the same
+    file_name = f"SynthModel_{'_'.join(final_pattern)}.py"
     entry_point = f"SynthModel_{'_'.join(final_pattern)}"
+    
+
 
     # Step 4. Swap the forward call with entry point name
     code = code.replace("Model", f"{entry_point}")
@@ -136,6 +141,7 @@ def generate_synth_torch_single(
             f.write(code)
 
     # Step 5. Test the model
+    print(f"Testing Model {entry_point} can pass torch Eager and torch.compile")
     success, error = test_synthetic_model(torch_src=code, entry_point=entry_point)
 
     if not success:

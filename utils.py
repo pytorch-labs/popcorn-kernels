@@ -3,20 +3,17 @@ Util file
 """
 import re
 import ast, astor
-# TODO
-# query a LLM
-# Extract Code
-
-import base64
 import os
 from google import genai
 from google.genai import types
 import torch
-import importlib
-import inspect
+
 from typing import Any, List, Tuple, Dict, Optional
 
-def generate_gemini(prompt: str, model: str = "gemini-2.0-flash-lite"):
+def generate_gemini(prompt: str, model: str = "gemini-2.0-flash"):
+    """
+    Querying Gemini API
+    """
     client = genai.Client(  
         api_key=os.environ.get("GEMINI_API_KEY"),
     )
@@ -37,7 +34,15 @@ def generate_gemini(prompt: str, model: str = "gemini-2.0-flash-lite"):
         response_mime_type="text/plain",
     )
 
-    print(f"Querying Gemini {model} with config: {generate_content_config}")
+    # show a select few attributes
+    config_dict = {
+        "temperature": generate_content_config.temperature,
+        "top_p": generate_content_config.top_p,
+        "top_k": generate_content_config.top_k,
+        "max_output_tokens": generate_content_config.max_output_tokens,
+        "response_mime_type": generate_content_config.response_mime_type
+    }
+    print(f"Querying Gemini {model} with config: {config_dict}")
 
     response = client.models.generate_content(
         model=model,
@@ -47,6 +52,9 @@ def generate_gemini(prompt: str, model: str = "gemini-2.0-flash-lite"):
     return response.text
 
 def extract_last_code(output_string: str, code_language_type: str) -> str:
+    """
+    Extract the last code block from the output string
+    """
     trimmed = output_string.strip()
     # Extracting all occurrences of content between backticks
     code_matches = re.finditer(r"```(.*?)```", trimmed, re.DOTALL)
@@ -78,10 +86,6 @@ def extract_final_pattern(output_string: str) -> list[str]:
     ]
 
     return final_pattern
-
-
-
-
 
 def swap_forward_call(pytorch_code, entry_point, generate_forward_call):
     """
@@ -123,6 +127,8 @@ def test_synthetic_model(torch_src: str, entry_point: str) -> Tuple[bool, Option
     """
     Tests a synthetic model by loading it with exec, initializing it with get_init_inputs,
     and running it with get_inputs.
+    Check if the model can pass torch Eager and torch.compile
+    Returns a tuple of (success, error_message)
     """
     try:
         # Read and execute the file content
