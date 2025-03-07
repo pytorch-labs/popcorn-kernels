@@ -25,7 +25,7 @@ from functools import partial
 REPO_DIR = os.path.dirname(os.path.abspath(__file__))
 from operators import core_operators, compound_operators, supporting_operators
 from tqdm import tqdm
-from utils import extract_final_pattern, extract_last_code, generate_gemini, test_synthetic_model, maybe_multithread
+from utils import extract_final_pattern, extract_last_code, generate_gemini, maybe_multiprocess, test_synthetic_model, maybe_multithread
 from typing import Tuple
 import threading
 from pathlib import Path
@@ -39,13 +39,13 @@ class SynthConfig(pydra.Config):
         super().__init__()
 
         # range of number of core operators
-        self.num_core_ops_range = [1,4]
+        self.num_core_ops_range = [0,4]
 
         # range of number of compound operators
-        self.num_compound_ops_range = [1,5]
+        self.num_compound_ops_range = [0,5]
 
         # range of number of supporting operators
-        self.num_supporting_ops_range = [0,7]
+        self.num_supporting_ops_range = [1,8]
 
         self.model_name = "gemini-2.0-flash"
         
@@ -91,7 +91,7 @@ def generate_patterns_pattern(
         A string with the selected operators joined by underscores
     """
     def weighted_random(min_val, max_val):
-        p = 0.2  # Probability parameter (higher = more skewed to smaller values)
+        p = 0.3  # Probability parameter (higher = more skewed to smaller values)
         # Generate a geometric random variable
         steps = 0
         while random.random() > p and min_val + steps < max_val:
@@ -246,6 +246,16 @@ def generate_synth_torch_single(
     return True, reason
 
 
+def generate_synth_torch_single_wrapper(
+    work_id: int,
+    config: SynthConfig,
+) -> Tuple[bool, str]:
+    try:
+        return generate_synth_torch_single(work_id, config)
+    except Exception as e:
+        print(f"Error: Issue with generating synth model {work_id} with config {config}")
+        return False, str(e)
+
 @pydra.main(SynthConfig)
 def main(config: SynthConfig):
     print(config)
@@ -263,8 +273,9 @@ def main(config: SynthConfig):
 
         work_ids = list(range(config.num_total_samples))
 
-        synth_generation_results = maybe_multithread(
-            func=generate_synth_torch_single, 
+        # synth_generation_results = maybe_multithread(
+        synth_generation_results = maybe_multiprocess(
+            func=generate_synth_torch_single_wrapper, 
             instances=work_ids, 
             num_workers=config.num_worker, 
             time_interval=0.1, 

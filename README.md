@@ -10,7 +10,12 @@ uv pip install -r requirements.txt
 
 ## NEW
 
-* Need to filter out combinations to avoid duplicating what is in KernelBench
+Generate! 
+```
+python3 generate_synth_torch.py .parallel  num_total_samples=5000
+```
+make sure you check the generation file path and API configs
+
 
 ## OLD
 ### Running the code
