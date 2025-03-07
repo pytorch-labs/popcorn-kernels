@@ -1,19 +1,19 @@
 prompt = """
-Given a pattern, which is a list of PyTorch modules and operators, I want you to use them to implement an architecture in PyTorch (class inherit from nn.Module) by combining these patterns in a way that is valid PyTorch code. You can arrange the patterns in a way that makes sense to you.
+Given a pattern, which is a set of PyTorch modules and operators, I want you to use them to implement an architecture in PyTorch (class inherit from nn.Module) by combining these patterns in a way that is valid PyTorch code. You can arrange the patterns in a way that makes sense to you.
 
 Make sure
 1. Make sure you have an init and a forward method, with clearly documented inputs output params' types and shapes and params for initializing the model. 
-2. The model is valid PyTorch code. Make sure the shapes are all correct and will match.
-3. Wrap the output code in a code block, followed by Final Pattern: [list of modules].
+2. The model is valid PyTorch code. Make sure the shapes are all correct and match so the function executes.
+3. Wrap the output code in a code block, followed by an ordered sequence of operators used as: `Final Pattern: [sequence of modules]`. Make sure to only use names in the original set provided.
 
 
-For reference, here is an example of the output code for the pattern [Conv2D, ReLU, BiasAdd]:
+For reference, here is an example of the output code for the set [Conv2D, ReLU, BiasAdd]:
 
 ```
-# This is a random torch model generated with the following pattern: 
-# [Conv2D, ReLU, BiasAdd]
-# We put the operation in the order of Conv2D, ReLU, BiasAdd.
-# return the final pattern as [Conv2D, ReLU, BiasAdd]
+# This is a random torch model generated with the following set of operators: 
+# {Conv2D, ReLU, BiasAdd}
+# Use only the torch operators: Conv2D, ReLU, BiasAdd.
+# return the final pattern as an ordered sequence of elements in {Conv2D, ReLU, BiasAdd}
 
 import torch
 import torch.nn as nn
@@ -28,6 +28,7 @@ class Model(nn.Module):
         self.bias = nn.Parameter(torch.randn(bias_shape)) 
 
     def forward(self, x):
+        x = torch.relu(x)
         x = self.conv(x)
         x = torch.relu(x)
         x = x + self.bias
@@ -49,12 +50,14 @@ def get_init_inputs():
     # in the format of [ list[init args], dict[init kwargs (usually empty)]]
     return [[in_channels, out_channels, kernel_size, bias_shape], {}]
 ```
-Final Pattern: [Conv2D, ReLU, BiasAdd]
+`Final Pattern: [ReLU, Conv2D, ReLU, BiasAdd]`
 
 
 Your task:
 
-Now write the code for the pattern {{pattern}}, name the class "Model".
-Also output the final pattern as list in the format of Final Pattern: [list of modules]
+Now write the code for the pattern {{pattern}}, name the class "Model". 
+After writing the code, write the list of operators used in the forward pass exactly in order in the format:
+
+`Final Pattern: [ordered sequence of torch modules in forward()]`
 
 """

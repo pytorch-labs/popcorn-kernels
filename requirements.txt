@@ -13,3 +13,4 @@ pydra-config
 tomli
 torch==2.5
 numpy
+tqdm

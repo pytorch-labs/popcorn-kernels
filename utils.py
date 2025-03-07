@@ -7,10 +7,13 @@ import os
 from google import genai
 from google.genai import types
 import torch
+import concurrent.futures
+import time
+from tqdm import tqdm
 
 from typing import Any, List, Tuple, Dict, Optional
 
-def generate_gemini(prompt: str, model: str = "gemini-2.0-flash"):
+def generate_gemini(prompt: str, model: str = "gemini-2.0-flash", verbose: bool = False):
     """
     Querying Gemini API
     """
@@ -42,7 +45,8 @@ def generate_gemini(prompt: str, model: str = "gemini-2.0-flash"):
         "max_output_tokens": generate_content_config.max_output_tokens,
         "response_mime_type": generate_content_config.response_mime_type
     }
-    print(f"Querying Gemini {model} with config: {config_dict}")
+    if verbose:
+        print(f"Querying Gemini {model} with config: {config_dict}")
 
     response = client.models.generate_content(
         model=model,
@@ -201,3 +205,47 @@ if __name__ == "__main__":
         print("Model test successful!")
     else:
         print(f"Model test failed: {error}")
+
+
+def maybe_multithread(func, instances, num_workers, time_interval=0.0, *shared_args, **shared_kwargs):
+    """
+    From KernelBench repo
+    Multithreaded execution of func, with optional time interval between queries
+    Ideal for querying LLM APIs, does not provide process isolation
+    """
+    output_data = []
+    if num_workers not in [1, None]:
+        with tqdm(total=len(instances), smoothing=0) as pbar:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=num_workers) as executor:
+
+                # Submit tasks one at a time with delay between them
+                futures = []
+                for instance in instances:
+                    futures.append(
+                        executor.submit(
+                            func,
+                            instance,
+                            *shared_args,
+                            **shared_kwargs
+                        )
+                    )
+                    time.sleep(time_interval)  # sleep between submitting each task
+
+
+
+                # Wait for each future to complete
+                for future in concurrent.futures.as_completed(futures):
+                    pbar.update(1)
+                    try:
+                        result = future.result()
+                        if result is not None:
+                            output_data.append(result)
+                    except Exception as e:
+                        print("Got an error!", e)
+                        continue
+    else:
+        for instance in tqdm(instances):
+            output = func(instance, *shared_args, **shared_kwargs)
+            if output is not None: output_data.append(output)
+
+    return output_data
