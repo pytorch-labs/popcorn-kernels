@@ -34,19 +34,23 @@ class Model(nn.Module):
         x = x + self.bias
         return x
 
-# some example shapes for the input and output of the model, specify the minimum amount you need but make sure they will match.
-batch_size = 128
-in_channels = 3
-out_channels = 16
-height, width = 32, 32
-kernel_size = 3
-bias_shape = (out_channels, 1, 1)
 
 def get_inputs():
+    # some example shapes for the input and output of the model, specify the minimum amount you need but make sure they will match.
+    batch_size = 128
+    in_channels = 3
+    height, width = 32, 32
+
     # in the format of a list of tensors randomized
     return [torch.randn(batch_size, in_channels, height, width)]
 
 def get_init_inputs():
+    # some example shapes for the input and output of the model, specify the minimum amount you need but make sure they will match.
+    in_channels = 3
+    out_channels = 16
+    kernel_size = 3
+    bias_shape = (out_channels, 1, 1)
+
     # in the format of [ list[init args], dict[init kwargs (usually empty)]]
     return [[in_channels, out_channels, kernel_size, bias_shape], {}]
 ```

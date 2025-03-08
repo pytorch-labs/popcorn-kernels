@@ -11,6 +11,14 @@ uv pip install -r requirements.txt
 ## NEW
 
 Generate! 
+
+Try genereate one!
+```
+python3 generate_synth_torch.py .single_debug
+```
+
+
+Start generate a ton of them!
 ```
 python3 generate_synth_torch.py .parallel  num_total_samples=5000
 ```
