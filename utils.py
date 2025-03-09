@@ -165,6 +165,12 @@ def swap_forward_call(pytorch_code, entry_point, generate_forward_call):
 
     return astor.to_source(tree)
 
+def num_generations_in_dir(dir_path: os.PathLike) -> int:
+    """
+    Count the number of files in the directory
+    """
+    return len([f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))])
+
 def test_synthetic_model(torch_src: str, entry_point: str) -> Tuple[bool, Optional[str]]:
     """
     Tests a synthetic model by loading it with exec, initializing it with get_init_inputs,
@@ -312,6 +318,7 @@ def maybe_multiprocess(func, instances, num_workers, time_interval=0.0, *shared_
             if output is not None: output_data.append(output)
 
     return output_data
+
 
 
 def main():

@@ -21,7 +21,7 @@ from functools import partial
 REPO_DIR = os.path.dirname(os.path.abspath(__file__))
 from operators import core_operators, compound_operators, supporting_operators
 from tqdm import tqdm
-from utils import extract_final_pattern, extract_last_code, generate_gemini, generate_local_server_openai, maybe_multiprocess, test_synthetic_model, maybe_multithread
+from utils import extract_final_pattern, extract_last_code, generate_gemini, generate_local_server_openai, maybe_multiprocess, test_synthetic_model, maybe_multithread, num_generations_in_dir
 from typing import Tuple
 import threading
 from pathlib import Path
@@ -198,7 +198,7 @@ def generate_synth_torch_single(
                                                 port=config.port, 
                                                 model=config.model_name, 
                                                 temperature=0.7, 
-                                                max_tokens=4096,
+                                                max_tokens=2048,
                                                 verbose=config.verbose
                                                 )
     else: # check openai or gemini type
@@ -295,7 +295,8 @@ def generate_synth_torch_single(
 
     print(f"Successfully generate {file_name} with final pattern {final_pattern} | input pattern {pattern}")
     if config.mode == "parallel":
-        print(f"[Stats] {num_success.value} successful synthetic programs out of {num_generated.value} generated, yield {(num_success.value/num_generated.value)*100:.2f}%")
+        num_current_files = num_generations_in_dir(os.path.join(REPO_DIR, config.program_dir))
+        print(f"[Stats] {num_success.value} successful synthetic programs out of {num_generated.value} generated, yield {(num_success.value/num_generated.value)*100:.2f}%, current total synthetic programs: {num_current_files}")
     with open(write_file_path, "w") as f:
         f.write(code)
 
@@ -322,9 +323,9 @@ def main(config: SynthConfig):
     print(config)
 
     # Check number of existing files in run directory
-    run_dir = os.path.join(REPO_DIR, config.program_dir)
-    existing_files = len([f for f in os.listdir(run_dir) if os.path.isfile(os.path.join(run_dir, f))])
-    print(f"Found {existing_files} existing files in {run_dir}")
+    program_dir_full_path = os.path.join(REPO_DIR, config.program_dir)
+    existing_file_count = num_generations_in_dir(program_dir_full_path)
+    print(f"Found {existing_file_count} existing files in {program_dir_full_path}")
 
     if config.mode == "single":
         print("Running in single debug mode")
@@ -382,9 +383,9 @@ def main(config: SynthConfig):
                 print(f"- {reason}: {count} occurrences")
 
     # Show final count of files in run directory
-    final_files = sum(os.path.isfile(os.path.join(run_dir, f)) for f in os.listdir(run_dir))
-    print(f"\nFinal count: {final_files} files in {run_dir}")
-    print(f"Generated {final_files - existing_files} new files")
+    final_file_count = num_generations_in_dir(program_dir_full_path)
+    print(f"\nFinal count: {final_file_count} files in {program_dir_full_path}")
+    print(f"Generated {final_file_count - existing_file_count} new files")
 
 
 if __name__ == "__main__":
