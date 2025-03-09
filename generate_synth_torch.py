@@ -6,6 +6,8 @@ Generate torch models synthetically
 # import operators that we defined
 import subprocess
 import re
+import traceback
+
 import random
 import os
 import dotenv
@@ -24,9 +26,14 @@ from typing import Tuple
 import threading
 from pathlib import Path
 import numpy as np
+from multiprocessing import Value
 
 # Create a file lock for thread-safe logging
 log_lock = threading.Lock()
+
+# Replace the global variables with shared counters
+num_generated = mp.Value('i', 0)  
+num_success = mp.Value('i', 0)
 
 class SynthConfig(pydra.Config):
     def __init__(self):
@@ -150,6 +157,7 @@ def generate_synth_torch_single(
     """
     Generate a single torch model with synthetically
     """
+    
     if config.verbose:
         print(f"Generating Synth Model {work_id} for total: {config.num_total_samples}")
     
@@ -202,6 +210,11 @@ def generate_synth_torch_single(
     if config.write_to_file:
         with open(os.path.join(REPO_DIR, config.debug_dir, "response.txt"), "w") as f:
             f.write(response)
+
+    # Update the counters using with blocks for thread safety
+    if config.mode == "parallel":
+        with num_generated.get_lock():
+            num_generated.value += 1
 
     code = extract_last_code(response, "python")
     final_pattern = extract_final_pattern(response)
@@ -271,14 +284,18 @@ def generate_synth_torch_single(
         
     # Step 6. We made it here, let's save the model    
     reason = "success"
+    if config.mode == "parallel":
+        with num_success.get_lock():
+            num_success.value += 1
     write_file_path = os.path.join(REPO_DIR, config.program_dir, file_name)
     if os.path.exists(write_file_path):
         if config.verbose:
             print(f"File {file_name} already exists!")
         reason = "success_overwrite"
 
-    print(f"Successfully generate, {file_name} with pattern {pattern}")
-
+    print(f"Successfully generate {file_name} with final pattern {final_pattern} | input pattern {pattern}")
+    if config.mode == "parallel":
+        print(f"[Stats] {num_success.value} successful synthetic programs out of {num_generated.value} generated, yield {(num_success.value/num_generated.value)*100:.2f}%")
     with open(write_file_path, "w") as f:
         f.write(code)
 
@@ -294,6 +311,10 @@ def generate_synth_torch_single_wrapper(
         return generate_synth_torch_single(work_id, config)
     except Exception as e:
         print(f"Error: Issue with generating synth model {work_id} with config {config}")
+        print(f"Exception details: {str(e)}")
+        print(f"Exception type: {type(e).__name__}")
+        print(f"Full traceback:\n{traceback.format_exc()}")
+        
         return False, str(e)
 
 @pydra.main(SynthConfig)

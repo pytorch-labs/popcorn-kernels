@@ -62,6 +62,7 @@ def get_init_inputs():
 Your task:
 
 Now write the code for the pattern {{pattern}}, name the class "Model". 
+You can be creative about how you combine the operators (repeat, reorder, interesting input shapes), as long as it is correct in the end.
 After writing the code, write the list of operators used in the forward pass exactly in order in the format:
 
 `Final Pattern: [ordered sequence of torch modules in forward()]`
