@@ -37,6 +37,7 @@ class Model(nn.Module):
 
 def get_inputs():
     # some example shapes for the input and output of the model, specify the minimum amount you need but make sure they will match.
+    # for you, you can be creative with the shape as long as they make sense
     batch_size = 128
     in_channels = 3
     height, width = 32, 32
@@ -46,6 +47,7 @@ def get_inputs():
 
 def get_init_inputs():
     # some example shapes for the input and output of the model, specify the minimum amount you need but make sure they will match.
+    # for you, you can be creative with the shape as long as they make sense
     in_channels = 3
     out_channels = 16
     kernel_size = 3

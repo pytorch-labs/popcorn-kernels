@@ -6,6 +6,8 @@ import ast, astor
 import os
 from google import genai
 from google.genai import types
+from openai import OpenAI
+
 import torch
 import concurrent.futures
 import time
@@ -54,6 +56,42 @@ def generate_gemini(prompt: str, model: str = "gemini-2.0-flash", verbose: bool 
         config=generate_content_config,
     )
     return response.text
+
+def generate_local_server_openai(
+    prompt: str,    
+    model: str = "define-your-local-model",
+    server_address: str = "0.0.0.0",
+    port: int = 10210,
+    temperature: float = 0,
+    max_tokens: int = 100,
+    verbose: bool = False,
+):
+    """
+    For Querying local server (vLLM, SGLang, Tokasaurus, etc.)
+    Assume OpenAI Interface, but API key is not needed
+    """
+    base_url = f"http://{server_address}:{port}/v1"
+    if verbose:
+        print(f"Querying {model} with config: {base_url}")
+    client = OpenAI(
+        api_key='fake-key', # do not need this
+        base_url=base_url,
+        # make it very large since local server could be throughput oriented machine, give them enough time for generation
+        timeout=100_000
+    )
+
+    response = client.completions.create(
+        model="default",
+        prompt=prompt,
+        temperature=temperature,
+        n=1,
+        max_tokens=max_tokens,
+    )
+    
+    outputs = [choice.text for choice in response.choices]
+
+    # print(f"Outputs: {outputs}") # debug
+    return outputs[0]
 
 def extract_last_code(output_string: str, code_language_type: str) -> str:
     """
@@ -190,22 +228,6 @@ def test_synthetic_model(torch_src: str, entry_point: str) -> Tuple[bool, Option
     except Exception as e:
         return False, f"Error: {str(e)}"
 
-# Example usage:
-if __name__ == "__main__":
-    # Example file path (adjust according to your project structure)
-    file_path = os.path.join(os.getcwd(), "synth_torch_debug/synth_torch_Conv2d_AvgPool2d.py")
-    # Ensure file exists before testing
-    print(f"Current working directory: {os.getcwd()}")
-    assert os.path.exists(file_path), f"Error: File {file_path} does not exist"
-    entry_point = "SynthModel_Conv2d_AvgPool2d"
-    with open(file_path, 'r') as f:
-        file_content = f.read()
-    success, error = test_synthetic_model(file_content, entry_point)
-    if success:
-        print("Model test successful!")
-    else:
-        print(f"Model test failed: {error}")
-
 
 def maybe_multithread(func, instances, num_workers, time_interval=0.0, *shared_args, **shared_kwargs):
     """
@@ -252,6 +274,13 @@ def maybe_multithread(func, instances, num_workers, time_interval=0.0, *shared_a
 
 
 def maybe_multiprocess(func, instances, num_workers, time_interval=0.0, *shared_args, **shared_kwargs):
+    """
+    From KernelBench repo
+    Multiprocessed execution of func,
+    Ideal for querying LLM APIs, bu this one also provides process isolation
+
+    TODO: add optional time interval between queries
+    """
     output_data = []
     if num_workers not in [1, None]:
         with tqdm(total=len(instances), smoothing=0) as pbar:
@@ -283,3 +312,27 @@ def maybe_multiprocess(func, instances, num_workers, time_interval=0.0, *shared_
             if output is not None: output_data.append(output)
 
     return output_data
+
+
+def main():
+    generate_local_server_openai(prompt="Hello, world!", model="gpt-4o-mini", server_address="matx2.stanford.edu", port=10210, temperature=0.7, max_tokens=10, verbose=True)
+
+
+if __name__ == "__main__":
+    main()
+
+# # Example usage:
+# if __name__ == "__main__":
+#     # Example file path (adjust according to your project structure)
+#     file_path = os.path.join(os.getcwd(), "synth_torch_debug/synth_torch_Conv2d_AvgPool2d.py")
+#     # Ensure file exists before testing
+#     print(f"Current working directory: {os.getcwd()}")
+#     assert os.path.exists(file_path), f"Error: File {file_path} does not exist"
+#     entry_point = "SynthModel_Conv2d_AvgPool2d"
+#     with open(file_path, 'r') as f:
+#         file_content = f.read()
+#     success, error = test_synthetic_model(file_content, entry_point)
+#     if success:
+#         print("Model test successful!")
+#     else:
+#         print(f"Model test failed: {error}")

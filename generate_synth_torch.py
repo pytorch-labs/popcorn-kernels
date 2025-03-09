@@ -1,12 +1,6 @@
 """
-Demonstrations of how to genreate torch models synthetically
+Generate torch models synthetically
 
-
-Currently just does one example
-
-Notes: things I havent' thought about
-- how to name them? (ops, orders, numerical?)
-- how to make sure they don't already exist in the generations
 """
 
 # import operators that we defined
@@ -25,7 +19,7 @@ from functools import partial
 REPO_DIR = os.path.dirname(os.path.abspath(__file__))
 from operators import core_operators, compound_operators, supporting_operators
 from tqdm import tqdm
-from utils import extract_final_pattern, extract_last_code, generate_gemini, maybe_multiprocess, test_synthetic_model, maybe_multithread
+from utils import extract_final_pattern, extract_last_code, generate_gemini, generate_local_server_openai, maybe_multiprocess, test_synthetic_model, maybe_multithread
 from typing import Tuple
 import threading
 from pathlib import Path
@@ -38,26 +32,39 @@ class SynthConfig(pydra.Config):
     def __init__(self):
         super().__init__()
 
+
+        # Section: Generation Config
         # range of number of core operators
-        self.num_core_ops_range = [0,4]
+        # self.num_core_ops_range = [0,4]
+        self.num_core_ops_range = [1,5]
 
         # range of number of compound operators
+        # self.num_compound_ops_range = [0,5]
         self.num_compound_ops_range = [0,5]
 
         # range of number of supporting operators
         self.num_supporting_ops_range = [1,8]
 
+        # knob to control the number of operators generated
+        self.p_value = 0.3
+
+        # Section: Model Config
         self.model_name = "gemini-2.0-flash"
-        
+        self.server_address = "matx2.stanford.edu"
+        self.port = 10210 
+
+        # Section: File Config
         # directory to save the generations to
         self.program_dir = "synth_torch_generations"
         self.kernelbench_level2_problem_path = "kernelbench_level2_problems.json"
 
+        # Section: Generation Config
         self.verbose = False
         self.write_to_file = False
         
         self.mode = None
 
+        
     def single_debug(self):
         self.mode = "single"
         self.num_total_samples = 1
@@ -72,14 +79,15 @@ class SynthConfig(pydra.Config):
         self.num_total_samples = 100
         self.num_worker = 50
         self.write_to_file = False
-        self.program_dir = "/matx/u/simonguo/synth_torch_generations"
+        self.program_dir = "/matx/u/simonguo/synth_torch_generations_local_qwen"
 
     def __repr__(self):
         return f"SynthConfig({self.to_dict()})"
 
 
 def generate_patterns_pattern(
-    operator_lists_with_ranges: list[tuple[list[str], tuple[int, int]]]
+    operator_lists_with_ranges: list[tuple[list[str], tuple[int, int]]], 
+    p_value: float = 0.3
 ) -> list:
     """
     Generate a pattern by randomly selecting operators from multiple lists.
@@ -90,11 +98,14 @@ def generate_patterns_pattern(
     Returns:
         A string with the selected operators joined by underscores
     """
-    def weighted_random(min_val, max_val):
-        p = 0.3  # Probability parameter (higher = more skewed to smaller values)
+    def weighted_random(min_val, max_val, p_value):
+        # p = 0.3  # Probability parameter (higher = more skewed to smaller values)
+        # if it is higher, than you generate less operators
+        # if it is lower, than you generate more operators; more errors, but more unique
+        # start high than start it lower
         # Generate a geometric random variable
         steps = 0
-        while random.random() > p and min_val + steps < max_val:
+        while random.random() > p_value and min_val + steps < max_val:
             steps += 1
         return min_val + steps
 
@@ -102,7 +113,7 @@ def generate_patterns_pattern(
     
     for operators, count_range in operator_lists_with_ranges:
         # Determine how many operators to select from this list
-        num_to_select = weighted_random(count_range[0], count_range[1])
+        num_to_select = weighted_random(count_range[0], count_range[1], p_value)
         # num_to_select = random.randint(count_range[0], count_range[1])
         
         # Select random operators from the list
@@ -148,7 +159,8 @@ def generate_synth_torch_single(
         # (compound_operators, config.num_compound_ops_range),
         (supporting_operators, config.num_supporting_ops_range),
     ]
-    pattern = generate_patterns_pattern(operator_lists_with_ranges)
+    
+    pattern = generate_patterns_pattern(operator_lists_with_ranges, config.p_value)
     
     if config.verbose:
         print(f"Pattern to compose program: {pattern}")
@@ -172,7 +184,17 @@ def generate_synth_torch_single(
         with open(os.path.join(REPO_DIR, config.debug_dir, "prompt.txt"), "w") as f:
             f.write(prompt)
 
-    response = generate_gemini(prompt, model=config.model_name, verbose=config.verbose)
+    if config.model_name == "local":
+        response = generate_local_server_openai(prompt=prompt, 
+                                                server_address=config.server_address,
+                                                port=config.port, 
+                                                model=config.model_name, 
+                                                temperature=0.7, 
+                                                max_tokens=4096,
+                                                verbose=config.verbose
+                                                )
+    else: # check openai or gemini type
+        response = generate_gemini(prompt=prompt, model=config.model_name, verbose=config.verbose)
 
     if config.verbose:
         print(response)
@@ -191,19 +213,35 @@ def generate_synth_torch_single(
         if config.verbose:
             print("No code or final pattern in response")
         return False, "extraction_failure"
-    
 
-    # TODO: check this is not in KernelBench (test set)
+    # Check this is not in KernelBench (test set)
     kernelbench_problem_set = set(json.load(open(config.kernelbench_level2_problem_path)))
     if check_if_model_exists_in_kernelbench(final_pattern, kernelbench_problem_set):
         return False
 
     # Step 3. Make sure this program is valid
 
-    # according to Sahan's pipeline, these two should be the same
-    file_name = f"SynthModel_{'_'.join(final_pattern)}.py"
-    entry_point = f"SynthModel_{'_'.join(final_pattern)}"
+    proposed_entry_point = f"SynthModel_{'_'.join(final_pattern)}"
 
+    if os.path.exists(os.path.join(REPO_DIR, config.program_dir, f"{proposed_entry_point}.py")):
+        if config.verbose:
+            print(f"Model {proposed_entry_point} already exists in {config.program_dir}!")
+                
+        # Add numeric suffix to handle duplicates
+        suffix = 1
+        while os.path.exists(os.path.join(REPO_DIR, config.program_dir, f"{proposed_entry_point}_{suffix}.py")):
+            suffix += 1
+        proposed_entry_point = f"{proposed_entry_point}_{suffix}"
+        print(f"Already exists, renaming to {proposed_entry_point}")
+        reason = "duplicate"
+    
+
+    # according to Sahan's pipeline, these two should be the same
+    # file_name = f"SynthModel_{'_'.join(final_pattern)}.py"
+    # entry_point = f"SynthModel_{'_'.join(final_pattern)}"
+
+    file_name = f"{proposed_entry_point}.py"
+    entry_point = proposed_entry_point
 
     # Step 4. Swap the forward call with entry point name
     code = code.replace("Model", f"{entry_point}")
@@ -238,6 +276,8 @@ def generate_synth_torch_single(
         if config.verbose:
             print(f"File {file_name} already exists!")
         reason = "success_overwrite"
+
+    print(f"Successfully generate, {file_name} with pattern {pattern}")
 
     with open(write_file_path, "w") as f:
         f.write(code)
