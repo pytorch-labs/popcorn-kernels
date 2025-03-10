@@ -1,11 +1,14 @@
 """
 Generate torch models synthetically
 
+Two modes:
+- single_debug: for debugging
+- parallel: for generating a lot of model
+
+Sample a combinations of operators -> Ask LLM to generate a program with inputs -> Check if it is valid -> Test it -> Save it
+We test by checking if the program is runnable and if it can be compiled by torch.compile
 """
 
-# import operators that we defined
-import subprocess
-import re
 import traceback
 
 import random
@@ -16,10 +19,10 @@ import pydra
 import shutil
 import json
 import multiprocessing as mp
-import copy
-from functools import partial
-REPO_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# import operators that we defined
 from operators import core_operators, compound_operators, supporting_operators
+
 from tqdm import tqdm
 from utils import extract_final_pattern, extract_last_code, generate_gemini, generate_local_server_openai, maybe_multiprocess, test_synthetic_model, maybe_multithread, num_generations_in_dir
 from typing import Tuple
@@ -28,6 +31,10 @@ from pathlib import Path
 import numpy as np
 from multiprocessing import Value
 
+
+REPO_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# For Multi-Process Only
 # Create a file lock for thread-safe logging
 log_lock = threading.Lock()
 
@@ -59,6 +66,8 @@ class SynthConfig(pydra.Config):
         self.model_name = "gemini-2.0-flash"
         self.server_address = "matx2.stanford.edu"
         self.port = 10210 
+        self.max_tokens = 2048
+        self.temperature = 0.7
 
         # Section: File Config
         # directory to save the generations to
@@ -68,6 +77,8 @@ class SynthConfig(pydra.Config):
         # Section: Generation Config
         self.verbose = False
         self.write_to_file = False
+
+        self.log_path = "logs"
         
         self.mode = None
 
@@ -197,12 +208,16 @@ def generate_synth_torch_single(
                                                 server_address=config.server_address,
                                                 port=config.port, 
                                                 model=config.model_name, 
-                                                temperature=0.7, 
-                                                max_tokens=2048,
+                                                temperature=config.temperature, 
+                                                max_tokens=config.max_tokens,
                                                 verbose=config.verbose
                                                 )
     else: # check openai or gemini type
-        response = generate_gemini(prompt=prompt, model=config.model_name, verbose=config.verbose)
+        response = generate_gemini(prompt=prompt, 
+                                   model=config.model_name,
+                                   temperature=config.temperature,
+                                   max_tokens=config.max_tokens,
+                                   verbose=config.verbose)
 
     if config.verbose:
         print(response)
@@ -275,7 +290,7 @@ def generate_synth_torch_single(
             print(f"Error: {error}")
         
         # Log only the failed operators to a file with thread safety
-        log_path = Path("failed_operators.log")
+        log_path = Path(os.path.join(REPO_DIR, config.log_path, "failed_operators.log"))
         with log_lock:
             with open(log_path, "a") as log_file:
                 log_file.write(f"{', '.join(str(op) for op in pattern)}\n")

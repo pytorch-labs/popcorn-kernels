@@ -10,11 +10,22 @@ import tqdm
 import concurrent.futures
 from typing import List
 
+"""
+Sahan's old script 
+
+Using all nn module available in PyTorch
+
+
+Problem
+- should not use Loss functions
+- very low yield
+"""
+
+
 torch_nn_modules = [
     "AdaptiveAvgPool1d",
     "AdaptiveAvgPool2d",
     "AdaptiveAvgPool3d",
-    "AdaptiveLogSoftmaxWithLoss",
     "AdaptiveMaxPool1d",
     "AdaptiveMaxPool2d",
     "AdaptiveMaxPool3d",
@@ -29,7 +40,6 @@ torch_nn_modules = [
     "BatchNorm3d",
     "Bilinear",
     "CELU",
-    "CTCLoss",
     "ChannelShuffle",
     "CircularPad1d",
     "CircularPad2d",
@@ -44,9 +54,7 @@ torch_nn_modules = [
     "ConvTranspose1d",
     "ConvTranspose2d",
     "ConvTranspose3d",
-    "CosineEmbeddingLoss",
     "CosineSimilarity",
-    "CrossEntropyLoss",
     "CrossMapLRN2d",
     "Dropout",
     "Dropout1d",
@@ -64,20 +72,15 @@ torch_nn_modules = [
     "GLU",
     "GRU",
     "GRUCell",
-    "GaussianNLLLoss",
     "GroupNorm",
     "Hardshrink",
     "Hardsigmoid",
     "Hardswish",
     "Hardtanh",
-    "HingeEmbeddingLoss",
-    "HuberLoss",
     "Identity",
     "InstanceNorm1d",
     "InstanceNorm2d",
     "InstanceNorm3d",
-    "KLDivLoss",
-    "L1Loss",
     "LPPool1d",
     "LPPool2d",
     "LPPool3d",
@@ -102,8 +105,6 @@ torch_nn_modules = [
     "LocalResponseNorm",
     "LogSigmoid",
     "LogSoftmax",
-    "MSELoss",
-    "MarginRankingLoss",
     "MaxPool1d",
     "MaxPool2d",
     "MaxPool3d",
@@ -114,19 +115,13 @@ torch_nn_modules = [
     "Module",
     "ModuleDict",
     "ModuleList",
-    "MultiLabelMarginLoss",
-    "MultiLabelSoftMarginLoss",
-    "MultiMarginLoss",
     "MultiheadAttention",
-    "NLLLoss",
-    "NLLLoss2d",
     "PReLU",
     "PairwiseDistance",
     "ParameterDict",
     "ParameterList",
     "PixelShuffle",
     "PixelUnshuffle",
-    "PoissonNLLLoss",
     "RMSNorm",
     "RNN",
     "RNNBase",
@@ -145,8 +140,6 @@ torch_nn_modules = [
     "Sequential",
     "SiLU",
     "Sigmoid",
-    "SmoothL1Loss",
-    "SoftMarginLoss",
     "Softmax",
     "Softmax2d",
     "Softmin",
@@ -162,8 +155,6 @@ torch_nn_modules = [
     "TransformerDecoderLayer",
     "TransformerEncoder",
     "TransformerEncoderLayer",
-    "TripletMarginLoss",
-    "TripletMarginWithDistanceLoss",
     "Unflatten",
     "Unfold",
     "Upsample",

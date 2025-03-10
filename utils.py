@@ -15,7 +15,7 @@ from tqdm import tqdm
 
 from typing import Any, List, Tuple, Dict, Optional
 
-def generate_gemini(prompt: str, model: str = "gemini-2.0-flash", verbose: bool = False):
+def generate_gemini(prompt: str, model: str = "gemini-2.0-flash", temperature: float = 1, max_tokens: int = 4096, verbose: bool = False):
     """
     Querying Gemini API
     """
@@ -32,10 +32,10 @@ def generate_gemini(prompt: str, model: str = "gemini-2.0-flash", verbose: bool 
     ]
 
     generate_content_config = types.GenerateContentConfig(
-        temperature=1,
+        temperature=temperature,
         top_p=0.95,
         top_k=40,
-        max_output_tokens=8192,
+        max_output_tokens=max_tokens,
         response_mime_type="text/plain",
     )
 

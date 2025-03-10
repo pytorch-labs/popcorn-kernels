@@ -13,11 +13,21 @@ TIMEOUT_SECONDS=600
 
 # You can list a variety of configs to sweep different variations
 COMMANDS=(
+    # optimzie for more programs 
+    "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS p_value=0.5"
+
+
+    # most balanced config
+    "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS p_value=0.3"
+
+    # find less common programs
     "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS p_value=0.2"
     "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS p_value=0.1"
-    "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS p_value=0.3"
+
+    # long sequence
     "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS p_value=0.3 max_tokens=4096"
-    "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS p_value=0.5"
+
+    # change composition of operators
     "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS num_core_ops_range=[1,5] num_compound_ops_range=[0,4] num_supporting_ops_range=[2,10] p_value=0.25"
     "python3 generate_synth_torch.py .parallel model_name=local num_total_samples=$PER_ITERATION_TOTAL_SAMPLES num_worker=$PER_ITERATION_TOTAL_WORKERS num_core_ops_range=[2,4] num_compound_ops_range=[0,4] num_supporting_ops_range=[3,9] p_value=0.25"
 )

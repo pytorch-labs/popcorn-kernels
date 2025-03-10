@@ -2,7 +2,7 @@
 archive/
 *.pyc
 
-synth_torch_debugs/
+synth_torch_debug/
 synth_torch_generations/
 
 logs/
