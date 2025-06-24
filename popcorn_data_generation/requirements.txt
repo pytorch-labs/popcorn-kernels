@@ -1,0 +1,16 @@
+datasketch==1.6.5
+matplotlib
+numpy==2.2.2
+openai==1.60.1
+python-dotenv==1.0.1
+tomli==2.2.1
+tqdm==4.67.1
+triton==3.2.0
+autoflake
+eradicate
+ruff==0.9.4
+pydra-config
+tomli
+torch==2.5
+numpy
+tqdm
