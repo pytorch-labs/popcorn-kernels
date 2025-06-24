@@ -1,0 +1,20 @@
+*.pyc
+
+# directories
+scratch
+
+# cache
+.cache
+paritybench/__pycache__/**/*
+paritybench/__pycache__/*
+__pycache__/**/*
+
+
+paritybench_download
+default_run
+output
+runs
+errors.csv
+scratch
+
+logs/*

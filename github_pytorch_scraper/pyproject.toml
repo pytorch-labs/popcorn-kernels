@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "popcorn-scraper"
+version = "0.1.0"
+description = "Github Scaper for Project Popcorn"
+authors = ["Sahan Paliskara <sahancpal@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12.9"
+datasets = "^3.3.2"
+jupyterlab = "^4.3.5"
+smart-open = {extras = ["s3"], version = "^7.1.0"}
+torch = "^2.6.0"
+expecttest = "^0.3.0"
+astor = "^0.8.1"
+hypothesis = "^6.127.2"
+ruff = "^0.9.8"
+pandas = "^2.2.3"
+scipy = "^1.15.2"
+tensorflow = "^2.18.0"
+tqdm = "^4.67.1"
+matplotlib = "^3.10.1"
+pytest = "^8.3.4"
+scikit-learn = "^1.6.1"
+torchaudio = "^2.6.0"
+torchtext = "^0.18.0"
+torchvision = "^0.21.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
