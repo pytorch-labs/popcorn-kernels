@@ -5,11 +5,9 @@
 
 import argparse
 import copy
-import gc
 import glob
 import json
 import os
-import signal
 import subprocess
 import tempfile
 import time
@@ -568,7 +566,7 @@ def process_and_filter_parallel(
 					except mp.TimeoutError:
 						# Handle timeout case
 						pbar.update(1)
-					except Exception as e:
+					except Exception:
 						# Handle any other exceptions
 						pbar.update(1)
 

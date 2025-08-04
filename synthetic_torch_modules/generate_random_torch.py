@@ -10,10 +10,8 @@ import tomli
 import dotenv
 import uuid
 import argparse
-import os
 import tqdm
 import concurrent.futures
-from typing import List
 
 """
 Sahan's old script 

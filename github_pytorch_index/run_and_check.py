@@ -7,7 +7,6 @@ import argparse
 import importlib
 import os
 import random
-import shutil
 
 import tempfile
 

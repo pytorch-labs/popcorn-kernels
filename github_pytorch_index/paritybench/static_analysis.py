@@ -541,7 +541,7 @@ class Flatten(ast.NodeTransformer):
 
 		fs2 = FlattenStatement(self)
 		node.target = fs2.to_tmp_visit(node.target)
-		assert not fs2.prefix, f'For.targets should not add to prefix'
+		assert not fs2.prefix, 'For.targets should not add to prefix'
 
 		if node.body:
 			node.body = fs2.suffix + node.body

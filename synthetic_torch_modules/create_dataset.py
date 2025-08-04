@@ -5,7 +5,6 @@
 
 import argparse
 import glob
-import io
 import json
 import os
 import subprocess
@@ -15,7 +14,6 @@ from io import BytesIO
 
 import tqdm
 from compile_code import compile_from_folder
-from torch.utils._get_clean_triton import get_clean_triton
 
 
 def remove_python_comments(source: str) -> str:
@@ -141,7 +139,7 @@ def extract_output_code(dir_path):
 			commentless_code = remove_python_comments(code)
 			with open(linted_code_file, 'w') as f:
 				f.write(commentless_code)
-		except Exception as e:
+		except Exception:
 			# print(f"Failed to clean triton code for {uuid}: {e}")
 			bad_files.append(uuid)
 	# apply ruff linter

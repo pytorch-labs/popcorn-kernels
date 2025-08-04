@@ -8,7 +8,7 @@ import json
 with open('/matx/u/simonguo/gh_triton_scrape/metadata.json', 'r') as f:
 	try:
 		data = json.load(f)
-		print(f'JSON is well-formed')
+		print('JSON is well-formed')
 
 		print('================================================')
 		print('\nProject names:')

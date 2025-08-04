@@ -5,8 +5,7 @@
 
 import hashlib
 import json
-from collections import defaultdict
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple
 
 import datasketch
 import matplotlib.pyplot as plt

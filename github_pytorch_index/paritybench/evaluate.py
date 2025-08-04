@@ -3,16 +3,12 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import dataclasses
 import logging
 import os
-import re
-import subprocess
 import threading
 import time
 from functools import partial
 from multiprocessing.pool import ThreadPool
-from os.path import isfile
 
 import pandas as pd
 import torch
@@ -24,15 +20,12 @@ from paritybench.utils import (
 	get_cosine_and_fp64_outputs,
 	get_skiplist,
 	get_tol,
-	import_file,
 	patch_torch_manual_seed,
 	reset_rng_state,
 	subproc_wrapper,
 	wrap_args,
-	wrap_kwargs,
 )
 from run_and_check import import_Model_and_args_from_code
-from torch._decomp import core_aten_decompositions
 from torch._dynamo.testing import same
 from torch.testing._internal.jit_utils import JitTestCase
 

@@ -26,9 +26,8 @@ import json
 import multiprocessing as mp
 
 # import operators that we defined
-from operators import core_operators, compound_operators, supporting_operators
+from operators import core_operators, supporting_operators
 
-from tqdm import tqdm
 from utils import (
 	extract_final_pattern,
 	extract_last_code,
@@ -36,14 +35,11 @@ from utils import (
 	generate_local_server_openai,
 	maybe_multiprocess,
 	test_synthetic_model,
-	maybe_multithread,
 	num_generations_in_dir,
 )
 from typing import Tuple
 import threading
 from pathlib import Path
-import numpy as np
-from multiprocessing import Value
 
 
 REPO_DIR = os.path.dirname(os.path.abspath(__file__))

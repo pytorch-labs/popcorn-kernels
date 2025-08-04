@@ -10,20 +10,15 @@ import logging
 import os
 import platform
 import random
-import re
 import resource
 import signal
 import sys
 import tempfile
 import time
-import types
-import weakref
 
-from typing import Any, Mapping, Tuple
 
 import numpy as np
 import torch
-import torch.fx._pytree as fx_pytree
 import torch.utils._pytree as pytree
 
 from paritybench.reporting import ErrorAggregatorDict, Stats
