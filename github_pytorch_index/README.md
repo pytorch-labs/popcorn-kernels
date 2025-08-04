@@ -13,7 +13,7 @@ Built upon [pytorch-jit-paritybench](https://github.com/jansel/pytorch-jit-parit
 ### Core Pipeline
 
 1. **Repository Discovery & Download**
-   - Crawls GitHub using `torch_repos.json` (pre-ranked by stars)
+   - Crawls GitHub using `torch_repos.json` (pre-ranked by stars) (or up to 2000 of the most popular repositories mentioning torch)
    - Downloads repositories in parallel with configurable sharding
    - Supports resumable downloads and error recovery
 
@@ -69,7 +69,7 @@ source set_env.sh
 
 ### Quick Start
 
-Run the complete pipeline:
+Run the complete pipeline (expects torch_repos.json, see step 1 below):
 ```bash
 ./scripts/run_full_pipline.sh --jobs=8 --run-dir=runs/experiment1
 ```
@@ -118,12 +118,13 @@ Run the complete pipeline:
 
 #### Synthetic Data Integration
 ```bash
-# Evaluate with synthetic PyTorch programs
+# Evaluate with synthetic PyTorch programs which are in --synthetic_data_dir 
+# These can be created by using the synthetic_torch_modules library
 python main.py --evaluate-all --compile_mode dynamo --backend inductor \
   --device cuda --jobs 20 --run-dir runs/run1 \
   --synthetic_data_dir ./synthetic_data_examples
 
-# Use with pipeline scripts
+# Use with pipeline scripts 
 ./scripts/run_full_pipline.sh --jobs=8 --run-dir=runs/combined \
   --synthetic-data-dir=../synthetic_torch_modules/generated_programs/
 ```

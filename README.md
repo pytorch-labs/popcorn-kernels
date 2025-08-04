@@ -39,21 +39,17 @@ Generates synthetic PyTorch programs using language models, creating diverse neu
    ```bash
    uv pip install -r requirements.txt
    ```
-
-2. **Run the full pipeline** (GitHub scraping + evaluation):
-   ```bash
-   cd github_pytorch_index/
-   ./scripts/run_full_pipline.sh --jobs=8 --run-dir=runs/experiment1
-   ```
-
-3. **Generate synthetic data**:
+2. **[Optional] Generate synthetic data**:
    ```bash
    cd synthetic_torch_modules/
    python3 generate_synth_torch.py .parallel num_total_samples=1000
    ```
 
-4. **Combine datasets** by using synthetic data with the main pipeline:
+3. **Run the full pipeline** (GitHub scraping + evaluation):
    ```bash
+   cd github_pytorch_index/
+   ./scripts/run_full_pipline.sh --jobs=8 --run-dir=runs/experiment1
+   <!-- If you did step 2 then run -->
    cd github_pytorch_index/
    ./scripts/run_full_pipline.sh --jobs=8 --run-dir=runs/combined \
      --synthetic-data-dir=../synthetic_torch_modules/generated_programs/
