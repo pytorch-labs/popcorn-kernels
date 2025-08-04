@@ -1,0 +1,68 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+.cache/
+
+# Environment files
+.env
+.venv/
+venv/
+ENV/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific directories
+# GitHub PyTorch Index
+github_pytorch_index/scratch/
+github_pytorch_index/paritybench_download/
+github_pytorch_index/default_run/
+github_pytorch_index/output/
+github_pytorch_index/runs/
+github_pytorch_index/logs/
+github_pytorch_index/errors.csv
+github_pytorch_index/generated/
+
+# Synthetic Torch Modules
+synthetic_torch_modules/archive/
+synthetic_torch_modules/synth_torch_debug/
+synthetic_torch_modules/synth_torch_generations/
+synthetic_torch_modules/logs/
+
+# Common output directories
+runs/
+logs/
+output/
+*.parquet
+*.csv
+
+# Old individual requirements files (now unified at root)
+github_pytorch_index/requirements.txt
+synthetic_torch_modules/requirements.txt
+
+# Claude Code documentation (generated)
+CLAUDE.md
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Temporary files
+tmp/
+temp/

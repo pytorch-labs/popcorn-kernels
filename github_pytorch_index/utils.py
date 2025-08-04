@@ -1,3 +1,8 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
 import os  # To remove the temporary file after processing
 import subprocess  # To run external commands (i.e. Ruff)
 import tempfile  # To create a temporary file to store the code

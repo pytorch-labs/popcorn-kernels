@@ -1,8 +1,0 @@
-.env
-archive/
-*.pyc
-
-synth_torch_debug/
-synth_torch_generations/
-
-logs/

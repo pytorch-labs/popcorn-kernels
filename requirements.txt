@@ -1,0 +1,38 @@
+# Core ML and Data Processing
+torch==2.7.1
+torchvision==0.21.0
+torchaudio==2.6.0
+triton==3.2.0
+numpy==2.2.2
+scipy==1.13.1
+pandas==2.2.3
+scikit-learn==1.6.1
+tensorflow==2.18.0
+
+# Data and Datasets
+datasets==3.2.0
+pyarrow==19.0.0
+datasketch==1.6.5
+
+# Testing and Validation
+pytest==8.3.4
+hypothesis==6.125.2
+expecttest==0.3.0
+
+# Code Quality and Formatting  
+ruff==0.9.6
+autoflake
+eradicate
+astor==0.8.1
+
+# Utilities
+tqdm==4.67.1
+matplotlib==3.9.4
+python-dotenv==1.0.1
+tomli==2.2.1
+
+# LLM and API
+openai==1.60.1
+
+# Configuration Management
+pydra-config

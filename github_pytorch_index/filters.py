@@ -1,3 +1,8 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
 # this file is for all the filters we stick on for examples with the added benefit of we track things using the produced files.
 import ast
 
